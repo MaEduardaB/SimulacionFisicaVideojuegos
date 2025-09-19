@@ -54,7 +54,15 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-	}
+
+	RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 0.0, 0.0), Vector4(1, 1, 1, 1)));
+
+	RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 10.0, 0.0), Vector4(0, 1, 0, 1)));
+
+	RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(10.0, 0.0, 0.0), Vector4(1, 0, 0, 1)));
+
+	RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 0.0, 10.0), Vector4(0, 0, 1, 1)));
+}
 
 
 // Function to configure what happens in each step of physics
@@ -82,9 +90,10 @@ void cleanupPhysics(bool interactive)
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
-	
 	gFoundation->release();
-	}
+
+	DeregisterAllRenderItem();
+}
 
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
