@@ -12,6 +12,10 @@ Vector3D Vector3D::operator +(const Vector3D& other) const {
 	return Vector3D(other._x + _x, other._y + _y, other._z + _z);
 };
 
+Vector3D Vector3D::operator -(const Vector3D& other) const {
+	return Vector3D(_x - other._x, _y - other._y, _z - other._z);
+}; 
+
 void Vector3D::operator +=(const Vector3D& other) {
 	_x += other._x;
 	_y += other._y;

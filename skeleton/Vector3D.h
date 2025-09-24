@@ -6,6 +6,7 @@ public:
 	Vector3D(const Vector3D & other);
 
 	Vector3D operator+(const Vector3D& other) const;
+	Vector3D operator-(const Vector3D& other) const;
 
 	void operator +=(const Vector3D& other);
 	void operator -=(const Vector3D& other);
