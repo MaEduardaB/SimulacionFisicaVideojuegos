@@ -43,7 +43,7 @@ Vector3D Vector3D::operator/(const Vector3D& other) const
 	return Vector3D();
 }
 
-void Vector3D::operator=(const Vector3D& other) const
+void Vector3D::operator=(const Vector3D& other)
 {
 	_x = other._x;
 	_y = other._y;
