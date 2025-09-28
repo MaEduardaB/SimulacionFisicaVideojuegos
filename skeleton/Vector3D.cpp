@@ -1,53 +1,53 @@
 #include "Vector3D.h"
 #include <math.h>
 
-Vector3D::Vector3D(const Vector3D& other)
+Vector3::Vector3(const Vector3& other)
 {
 	_x = other._x;
 	_y = other._y;
 	_z = other._z;
 }
 
-Vector3D Vector3D::operator +(const Vector3D& other) const {
-	return Vector3D(other._x + _x, other._y + _y, other._z + _z);
+Vector3 Vector3::operator +(const Vector3& other) const {
+	return Vector3(other._x + _x, other._y + _y, other._z + _z);
 };
 
-Vector3D Vector3D::operator -(const Vector3D& other) const {
-	return Vector3D(_x - other._x, _y - other._y, _z - other._z);
+Vector3 Vector3::operator -(const Vector3& other) const {
+	return Vector3(_x - other._x, _y - other._y, _z - other._z);
 }; 
 
-void Vector3D::operator +=(const Vector3D& other) {
+void Vector3::operator +=(const Vector3& other) {
 	_x += other._x;
 	_y += other._y;
 	_z += other._z;
 };
 
-void Vector3D::operator -=(const Vector3D& other) {
+void Vector3::operator -=(const Vector3& other) {
 	_x -= other._x;
 	_y -= other._y;
 	_z -= other._z;
 };
 
-Vector3D Vector3D::operator *(float num) const {
-	return Vector3D(_x * num, _y * num, _z * num);
+Vector3 Vector3::operator *(float num) const {
+	return Vector3(_x * num, _y * num, _z * num);
 }
 
-float Vector3D::operator*(const Vector3D& other) const
+float Vector3::operator*(const Vector3& other) const
 {
 	return (_x * other._x + _y * other._y + _z * other._z);
 }
 
-Vector3D Vector3D::cross(const Vector3D& other) const
+Vector3 Vector3::cross(const Vector3& other) const
 {
-	return Vector3D(_y * other._z - _z * other._y, _z * other._x - _x* other._z, _x * other._y - _y * other._x);
+	return Vector3(_y * other._z - _z * other._y, _z * other._x - _x* other._z, _x * other._y - _y * other._x);
 }
 
-Vector3D Vector3D::operator/(const Vector3D& other) const
+Vector3 Vector3::operator/(const Vector3& other) const
 {
-	return Vector3D();
+	return Vector3();
 }
 
-void Vector3D::operator=(const Vector3D& other)
+void Vector3::operator=(const Vector3& other)
 {
 	_x = other._x;
 	_y = other._y;
@@ -56,7 +56,7 @@ void Vector3D::operator=(const Vector3D& other)
 
 
 
-float Vector3D::normalize() {
+float Vector3::normalize() {
 	float _mod = sqrt((_x * _x) + (_y * _y) + (_z * _z));
 	_x = _x / _mod;
 	_y = _y / _mod;
@@ -64,15 +64,15 @@ float Vector3D::normalize() {
 	return _mod;
 }
 
-float Vector3D::getX() const
+float Vector3::getX() const
 {
 	return _x;
 }
-float Vector3D::getY() const
+float Vector3::getY() const
 {
 	return _y;
 }
-float Vector3D::getZ() const
+float Vector3::getZ() const
 {
 	return _z;
 }

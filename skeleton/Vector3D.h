@@ -1,28 +1,28 @@
 #pragma once
-class Vector3D
+class Vector3
 {
 public:
-	Vector3D(float x = 0, float y = 0, float z = 0) : _x(x), _y(y), _z(z) {};
-	Vector3D(const Vector3D & other);
+	Vector3(float x = 0, float y = 0, float z = 0) : _x(x), _y(y), _z(z) {};
+	Vector3(const Vector3 & other);
 
-	Vector3D operator+(const Vector3D& other) const;
-	Vector3D operator-(const Vector3D& other) const;
+	Vector3 operator+(const Vector3& other) const;
+	Vector3 operator-(const Vector3& other) const;
 
-	void operator +=(const Vector3D& other);
-	void operator -=(const Vector3D& other);
+	void operator +=(const Vector3& other);
+	void operator -=(const Vector3& other);
 
-	Vector3D operator *(float num) const;
+	Vector3 operator *(float num) const;
 
-	float operator *(const Vector3D& other) const; // producto escalar
+	float operator *(const Vector3& other) const; // producto escalar
 
 	// producto vectorial
-	Vector3D cross(const Vector3D& other) const;
+	Vector3 cross(const Vector3& other) const;
 
 
-	Vector3D operator /(float num) const;
-	Vector3D operator /(const Vector3D& other) const;
+	Vector3 operator /(float num) const;
+	Vector3 operator /(const Vector3& other) const;
 
-	void operator =(const Vector3D& other);
+	void operator =(const Vector3& other);
 
 	float normalize();
 

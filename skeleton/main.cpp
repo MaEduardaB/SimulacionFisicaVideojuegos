@@ -7,6 +7,7 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
+#include "Particle.h"
 
 #include <iostream>
 
@@ -62,6 +63,9 @@ void initPhysics(bool interactive)
 	RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(10.0, 0.0, 0.0), Vector4(1, 0, 0, 1)));
 
 	RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 0.0, 10.0), Vector4(0, 0, 1, 1)));
+
+
+	
 }
 
 
@@ -104,8 +108,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	//case 'B': break;
 	//case ' ':	break;
-	case ' ':
+	case 'P':
 	{
+
 		break;
 	}
 	default:
