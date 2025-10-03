@@ -1,13 +1,12 @@
 #include "Particle.h"
-#include "RenderUtils.hpp"
 #include <PxPhysicsAPI.h>
 
 #include <math.h>
+#include <iostream>
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 ace, INTEGRATETYPES type) : _transform({ pos.getX(), pos.getY(), pos.getZ()}), _velocity(vel), _aceleration(ace), _type(type)
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 ace, INTEGRATETYPES type) : Entity(pos), _velocity(vel), _aceleration(ace), _type(type)
 {
-	_render = new RenderItem(CreateShape(physx::PxSphereGeometry(1)), &_transform, Vector4(0, 0, 1, 1));
-	_dumping_time = 0.98;
+	_damping = 0.98;
 	_transform_ant = _transform;
 }
 
@@ -31,7 +30,6 @@ void Particle::integrate(double t)
 		integrateVerlet(t);
 	}
 
-
 	_transform_ant = _new_last_pos;
 }
 
@@ -39,13 +37,13 @@ void Particle::integrateEuler(double t)
 {
 	_transform.p = _transform.p + t * _velocity;
 	_velocity += t * _aceleration;
-	dump();
+	damp(t);
 }
 
 void Particle::integrateEuler_Semi(double t)
 {
 	_velocity += t * _aceleration;
-	dump();
+	damp(t);
 	_transform.p = _transform.p + t * _velocity;
 
 }
@@ -55,13 +53,13 @@ void Particle::integrateVerlet(double t)
 	if (_transform_ant == _transform) integrateEuler(t);
 	else {
 		_transform.p = 2 * _transform.p - _transform_ant.p + pow(t, 2) * _aceleration;
-		dump();
+		damp(t);
 	}
 }
 
-void Particle::dump()
+void Particle::damp(double t)
 {
-	_velocity *= pow(_dumping, _dumping_time);
+	_velocity = _velocity * pow(_damping, t);
 }
 
 
@@ -78,7 +76,7 @@ void Particle::setAceleration(Vector3 newA)
 
 void Particle::setDumping(float newDum)
 {
-	_dumping = newDum;
+	_damping = newDum;
 }
 
 void Particle::setTime(float newTime)

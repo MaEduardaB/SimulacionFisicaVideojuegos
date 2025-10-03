@@ -8,11 +8,12 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include "Particle.h"
+#include "Scene1.h"
+#include "Scene2.h"
 
 #include <iostream>
 
 std::string display_text = "This is a test";
-
 
 using namespace physx;
 
@@ -31,6 +32,8 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
+
+Scene2* scene;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -65,7 +68,7 @@ void initPhysics(bool interactive)
 	RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 0.0, 10.0), Vector4(0, 0, 1, 1)));
 
 
-	
+	scene = new Scene2();
 }
 
 
@@ -77,6 +80,9 @@ void stepPhysics(bool interactive, double t)
 	PX_UNUSED(interactive);
 
 	gScene->simulate(t);
+
+	scene->update(t);
+
 	gScene->fetchResults(true);
 }
 
@@ -110,7 +116,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'P':
 	{
-
+		scene->createBullet();
 		break;
 	}
 	default:

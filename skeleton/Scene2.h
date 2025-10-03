@@ -1,21 +1,23 @@
 #pragma once
 #include "Scene.h"
-class Scene1 :
+
+class Bullet;
+class Scene2 :
     public Scene
 {
 public:
-	Scene1();
-	~Scene1() override;
+	Scene2();
+	~Scene2() override;
 
 	void update(double t) override;
 	void render() const override;
 	void exit() override;
 	void enter() override;
 
-	void createParticle();
+	void createBullet();
 
 protected:
 
-	std::vector<Particle*> gObjects;
+	std::vector<Bullet*> gObjects;
 };
 
