@@ -46,12 +46,22 @@ void Scene2::enter()
 void Scene2::createBullet()
 {
 
-	auto cam = GetCamera();
-	PxVec3 dir = cam->getDir();
-	Bullet* bull = new Bullet(cam->getTransform().p,  Vector3(dir.x, dir.y, dir.z).getNormalized(), Vector3(0, -4.8, 0), 10.0);
-	gObjects.push_back(bull);
-	/*std::cout << "Creadno\n";
-	Particle* part = new Particle(Vector3(0,0,0), Vector3(5,10,0), Vector3(0,-9.8,0), INTEGRATETYPES::EULER);
-	gObjects.push_back(part);*/
+    auto cam = GetCamera();
+    PxVec3 dir = cam->getDir().getNormalized();
 
+    double masaReal = 0.008;     // kg 
+    double velReal = 380.0;      // m/s
+    double velSim = 50.0;        // m/s
+    Vector3 gravedad(0, -4.8, 0);
+
+    Bullet* bull = new Bullet(
+        cam->getTransform().p,
+        Vector3(dir.x, dir.y, dir.z),
+        masaReal,
+        velReal,
+        velSim,
+        gravedad
+    );
+
+    gObjects.push_back(bull);
 }
