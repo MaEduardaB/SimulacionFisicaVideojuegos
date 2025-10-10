@@ -18,6 +18,10 @@
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="ParticleGen.cpp" />
+    <ClCompile Include="GaussianGen.cpp" />
+    <ClCompile Include="UniformGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -37,10 +41,18 @@
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="ParticleGen.h" />
+    <ClInclude Include="GaussianGen.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="UniformGen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
 </Project>

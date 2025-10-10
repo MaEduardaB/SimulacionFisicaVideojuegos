@@ -51,7 +51,7 @@ void Scene2::createBullet()
 
     double masaReal = 0.008;     // kg 
     double velReal = 380.0;      // m/s
-    double velSim = 50.0;        // m/s
+    double velSim = 25.0;        // m/s
     Vector3 gravedad(0, -4.8, 0);
 
     Bullet* bull = new Bullet(
@@ -63,5 +63,15 @@ void Scene2::createBullet()
         gravedad
     );
 
+    Bullet* bull2 = new Bullet(
+        cam->getTransform().p,
+        Vector3(dir.x, dir.y, dir.z),
+        masaReal + 100,
+        velReal,
+        velSim,
+        gravedad
+    );
+
     gObjects.push_back(bull);
+    gObjects.push_back(bull2);
 }

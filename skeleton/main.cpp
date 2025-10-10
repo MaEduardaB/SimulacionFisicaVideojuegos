@@ -12,6 +12,8 @@
 #include "Scene2.h"
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 std::string display_text = "This is a test";
 
@@ -84,6 +86,9 @@ void stepPhysics(bool interactive, double t)
 	scene->update(t);
 
 	gScene->fetchResults(true);
+
+
+	std::this_thread::sleep_for(std::chrono::microseconds(10));
 }
 
 // Function to clean data

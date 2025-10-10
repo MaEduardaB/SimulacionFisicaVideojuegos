@@ -26,25 +26,23 @@ void Bullet::integrate(double t)
     physx::PxTransform lastTransform = _transform;
 
     // Fuerza = masa * gravedad
-    Vector3 fuerza = _aceleration * _mass;
-    Vector3 aceleracionReal = fuerza / _mass;
 
     switch (_type) {
     case EULER:
         _transform.p = _transform.p + t * _velocity;
-        _velocity += t * aceleracionReal;
+        _velocity += t * _aceleration;
         break;
     case EULER_SEMI_IMPILICITO:
-        _velocity += t * aceleracionReal;
+        _velocity += t * _aceleration;
         _transform.p = _transform.p + t * _velocity;
         break;
     case VERLET:
         if (_transform_ant == _transform) {
             _transform.p = _transform.p + t * _velocity;
-            _velocity += t * aceleracionReal;
+            _velocity += t * _aceleration;
         }
         else {
-            _transform.p = 2 * _transform.p - _transform_ant.p + pow(t, 2) * aceleracionReal;
+            _transform.p = 2 * _transform.p - _transform_ant.p + pow(t, 2) * _aceleration;
         }
         break;
     }
