@@ -32,6 +32,7 @@ public:
 	Vector3 getVelocity() const;
 	Vector3 getAceleration() const;
 	double getMass() const;
+	bool getElim() const;
 
 protected:
 
@@ -49,6 +50,8 @@ protected:
 	double _lifeTIme;
 
 	double _damping;
+
+	bool _elim;
 
 };
 

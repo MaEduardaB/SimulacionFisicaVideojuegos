@@ -12,10 +12,12 @@ public:
 		double duration,
 		double prob_Gen,
 		int n_particles);
-	
+
 	std::list<Particle*> generateP() override;
 
+	
 private:
+
 	std::normal_distribution<double> _u{ 0,1 };
 };
 

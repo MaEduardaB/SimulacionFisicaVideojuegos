@@ -13,7 +13,7 @@ Bullet::Bullet(Vector3 pos, Vector3 dir, double massReal, double velReal, double
 	_mass = massReal * (velReal * velReal) / (velSim * velSim);
 
 
-	std::cout << "Masa real: " << _massReal << " | Masa simulada: " << _mass << "\n";
+	//std::cout << "Masa real: " << _massReal << " | Masa simulada: " << _mass << "\n";
 }
 
 Bullet::~Bullet()

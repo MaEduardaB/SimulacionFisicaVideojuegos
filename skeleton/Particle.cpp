@@ -4,7 +4,8 @@
 #include <math.h>
 #include <iostream>
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 ace, INTEGRATETYPES type) : Entity(pos), _velocity(vel), _aceleration(ace), _type(type)
+Particle::Particle(Vector3 pos, Vector3 vel, Vector3 ace, INTEGRATETYPES type) : Entity(pos), _velocity(vel), 
+	_aceleration(ace), _type(type), _elim(false)
 {
 	_damping = 0.98;
 	_transform_ant = _transform;
@@ -97,6 +98,11 @@ Vector3 Particle::getAceleration() const
 double Particle::getMass() const
 {
 	return _mass;
+}
+
+bool Particle::getElim() const
+{
+	return _elim;
 }
 
 

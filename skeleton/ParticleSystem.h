@@ -6,14 +6,13 @@ class ParticleGen;
 class ParticleSystem
 {
 public:
-
+	ParticleSystem();
 	void update(double t);
 
 protected:
 
-
-private:
-
+	void cleanParticles();
+	void generateParticles();
 	std::list<Particle*> _particles;
 	std::list<ParticleGen*> _generators;
 

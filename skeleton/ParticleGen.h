@@ -20,6 +20,7 @@ public:
 				int n_particles);
 
 	virtual std::list<Particle*> generateP() = 0;
+	virtual void clearP() = 0;
 
 	void setPosition(Vector3);
 	const Vector3& getPosition() const;
@@ -39,6 +40,7 @@ protected:
 	Vector3 _pos;
 	double _duration;
 	double _prob_Gen;
-	int _n_particles;
+	int _n_particles_min;
+	int _n_particles_max;
 };
 
