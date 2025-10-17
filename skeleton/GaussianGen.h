@@ -15,9 +15,7 @@ public:
 
 	std::list<Particle*> generateP() override;
 
-	
 private:
-
 	std::normal_distribution<double> _u{ 0,1 };
 };
 

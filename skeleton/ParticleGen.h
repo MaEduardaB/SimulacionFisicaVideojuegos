@@ -38,9 +38,8 @@ protected:
 	std::mt19937 _mt;
 	Vector3 _vel;
 	Vector3 _pos;
-	double _duration;
+	double _dur;
 	double _prob_Gen;
-	int _n_particles_min;
-	int _n_particles_max;
+	int _n_particles;
 };
 

@@ -274,6 +274,7 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="callbacks.hpp" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="GaussianGen.h" />

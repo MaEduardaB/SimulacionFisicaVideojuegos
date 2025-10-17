@@ -1,14 +1,14 @@
 #include "Particle.h"
 #include <PxPhysicsAPI.h>
-
 #include <math.h>
 #include <iostream>
+#include "ParticleGen.h"
+#include "Constants.h"
 
-Particle::Particle(Vector3 pos, Vector3 vel, Vector3 ace, INTEGRATETYPES type) : Entity(pos), _velocity(vel), 
-	_aceleration(ace), _type(type), _elim(false)
+Particle::Particle(PARTICLES p) : Entity(p._transform), _velocity(),
+	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping)
 {
-	_damping = 0.98;
-	_transform_ant = _transform;
+	_transform_ant = physx::PxTransform(p._transform);
 }
 
 Particle::~Particle()
@@ -63,8 +63,7 @@ void Particle::damp(double t)
 	_velocity = _velocity * pow(_damping, t);
 }
 
-
-
+#pragma region SETTERSGETTERS
 void Particle::setVelocity(Vector3 newVel)
 {
 	_velocity = newVel;
@@ -105,4 +104,4 @@ bool Particle::getElim() const
 	return _elim;
 }
 
-
+#pragma endregion

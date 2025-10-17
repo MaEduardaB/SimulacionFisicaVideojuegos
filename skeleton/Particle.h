@@ -1,21 +1,12 @@
 #pragma once
-
-#include <PxPhysicsAPI.h>
 #include "Entity.h"
+#include "Constants.h"
 using namespace physx;
-
-
-enum INTEGRATETYPES {
-	EULER,
-	EULER_SEMI_IMPILICITO,
-	VERLET
-};
 
 class Particle : public Entity
 {
-
 public:
-	Particle(Vector3 pos, Vector3 vel, Vector3 ace, INTEGRATETYPES type);
+	Particle(PARTICLES p);
 	~Particle();
 
 	void integrate(double t) override;
