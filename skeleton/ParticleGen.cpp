@@ -1,5 +1,6 @@
 #include "ParticleGen.h"
 #include "Constants.h"
+#include "Particle.h"
 
 ParticleGen::ParticleGen()
 	: _mt(), _vel(), _pos(), _dur(0.0), _prob_Gen(0.0), _n_particles(1)

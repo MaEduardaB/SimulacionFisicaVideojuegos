@@ -1,0 +1,10 @@
+^C:\USERS\AMOR2\UNIVERDIDAD\MARIA\3\SIMULACIONFISICAVIDEOJUEGOS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Amor2/Univerdidad/Maria/3/SimulacionFisicaVideojuegos -BC:/Users/Amor2/Univerdidad/Maria/3/SimulacionFisicaVideojuegos/build --check-stamp-file C:/Users/Amor2/Univerdidad/Maria/3/SimulacionFisicaVideojuegos/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

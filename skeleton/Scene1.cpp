@@ -45,7 +45,7 @@ void Scene1::enter()
 void Scene1::createParticle()
 {
 	std::cout << "Creadno\n";
-	Particle* part = new Particle(Vector3(0,0,0), Vector3(5,10,0), Vector3(0,-9.8,0), INTEGRATETYPES::EULER);
-	gObjects.push_back(part);
+	//Particle* part = new Particle(Vector3(0,0,0), Vector3(5,10,0), Vector3(0,-9.8,0), INTEGRATETYPES::EULER);
+	//gObjects.push_back(part);
 
 }

@@ -18,7 +18,8 @@ std::list<Particle*> GaussianGen::generateP()
     std::list<Particle*> particles;
     std::uniform_real_distribution<double> prob(0.0, 1.0);
 
-    int numParticles = std::distCount(_mt);
+    //int numParticles = std::distCount(_mt);
+    int numParticles = 0;
 
     for (int i = 0; i < _n_particles; ++i)
     {
