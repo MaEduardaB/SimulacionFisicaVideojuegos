@@ -9,12 +9,16 @@ public:
 	ParticleSystem();
 	void update(double t);
 
-protected:
+	void addForce();
 
+protected:
+	void clearForces();
 	void cleanParticles();
 	void generateParticles();
-	std::list<Particle*> _particles;
-	std::list<ParticleGen*> _generators;
+	std::list<Particle*> _particles; // lista de particulas del sistema
+	std::list<ParticleGen*> _generators; // lista de generadores de particulas
+
+	// lista de fuerzas que se aplican a todas las particulas de ese sistema
 
 };
 

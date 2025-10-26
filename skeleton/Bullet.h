@@ -5,7 +5,7 @@ class Bullet :
 {
 public: 
     Bullet(Vector3 pos, Vector3 dir, double massReal, double velReal, double velSim, Vector3 gravedad);
-    ~Bullet();
+    //~Bullet();
 
     void integrate(double t) override;
 private:

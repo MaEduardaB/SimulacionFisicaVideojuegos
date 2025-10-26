@@ -6,6 +6,7 @@ C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Bullet.c
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Particle.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\Particle.obj
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Entity.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\Entity.obj
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Vector3D.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\Vector3D.obj
+C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\ForceGenerator.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\ForceGenerator.obj
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\GaussianGen.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\GaussianGen.obj
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\ParticleGen.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\ParticleGen.obj
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\ParticleSystem.obj
@@ -14,4 +15,5 @@ C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Render\R
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\Scene.obj
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene1.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\Scene1.obj
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene2.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\Scene2.obj
+C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene3.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\Scene3.obj
 C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\UniformGen.cpp;C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\build\game.dir\Debug\UniformGen.obj

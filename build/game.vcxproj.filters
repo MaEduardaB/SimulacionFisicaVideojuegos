@@ -25,6 +25,9 @@
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Vector3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\ForceGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\GaussianGen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -47,6 +50,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\UniformGen.cpp">

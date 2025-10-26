@@ -27,6 +27,7 @@ set(MY_SOURCE_FILES
     "Particle.cpp"
     "Entity.cpp"
     "Vector3D.cpp"
+    "ForceGenerator.cpp"
     "GaussianGen.cpp"
     
     "ParticleGen.cpp"
@@ -37,6 +38,7 @@ set(MY_SOURCE_FILES
     "Scene.cpp"
     "Scene1.cpp"
     "Scene2.cpp"
+    "Scene3.cpp"
     "UniformGen.cpp"
     "SceneManager.cpp")
 

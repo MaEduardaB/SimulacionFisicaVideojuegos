@@ -363,6 +363,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Particle.cpp" />
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Entity.cpp" />
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Vector3D.cpp" />
+    <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\ForceGenerator.cpp" />
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\GaussianGen.cpp" />
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\ParticleGen.cpp" />
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\ParticleSystem.cpp" />
@@ -371,6 +372,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene.cpp" />
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene1.cpp" />
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene2.cpp" />
+    <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\Scene3.cpp" />
     <ClCompile Include="C:\Users\Amor2\Univerdidad\Maria\3\SimulacionFisicaVideojuegos\skeleton\UniformGen.cpp" />
   </ItemGroup>
   <ItemGroup />

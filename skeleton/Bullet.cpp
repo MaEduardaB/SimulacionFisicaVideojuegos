@@ -6,7 +6,7 @@
 
 
 Bullet::Bullet(Vector3 pos, Vector3 dir, double massReal, double velReal, double velSim, Vector3 gravedad) : 
-    Particle({pos, dir, gravedad,  INTEGRATETYPES::EULER_SEMI_IMPILICITO}), _mass(0.0)
+    Particle({pos, dir * velSim, gravedad,  INTEGRATETYPES::EULER_SEMI_IMPILICITO, 10.0f, 0.0f, 0.99f})
 {
 	_massReal = massReal;
 
@@ -16,10 +16,10 @@ Bullet::Bullet(Vector3 pos, Vector3 dir, double massReal, double velReal, double
 	//std::cout << "Masa real: " << _massReal << " | Masa simulada: " << _mass << "\n";
 }
 
-Bullet::~Bullet()
-{
-	Particle::~Particle();
-}
+// Bullet::~Bullet()
+// {
+// 	Particle::~Particle();
+// }
 
 void Bullet::integrate(double t)
 {

@@ -9,21 +9,21 @@
 #include <iostream>
 using namespace physx;
 
-Scene2::Scene2()
+Scene2::Scene2(): _gObjects()
 {
 }
 
 Scene2::~Scene2()
 {
-	for (auto e : gObjects) {
+	for (auto e : _gObjects) {
 		delete e;
 	}
 }
 
 void Scene2::update(double t)
 {
-	for (int i = 0; i < gObjects.size(); ++i) {
-		gObjects[i]->integrate(t);
+	for (int i = 0; i < _gObjects.size(); ++i) {
+		_gObjects[i]->integrate(t);
 	}
 
 }
@@ -37,13 +37,18 @@ void Scene2::render() const
 
 void Scene2::exit()
 {
+    for (auto e : _gObjects) {
+		delete e;
+	}
+	_gObjects.clear();
+
 }
 
 void Scene2::enter()
 {
 }
 
-void Scene2::createBullet()
+void Scene2::create()
 {
 
     auto cam = GetCamera();
@@ -72,6 +77,6 @@ void Scene2::createBullet()
         gravedad
     );
 
-    gObjects.push_back(bull);
-    gObjects.push_back(bull2);
+    _gObjects.push_back(bull);
+    _gObjects.push_back(bull2);
 }

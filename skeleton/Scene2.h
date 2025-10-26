@@ -14,10 +14,10 @@ public:
 	void exit() override;
 	void enter() override;
 
-	void createBullet();
+	void create() override;
 
 protected:
 
-	std::vector<Bullet*> gObjects;
+	std::vector<Bullet*> _gObjects;
 };
 

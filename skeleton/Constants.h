@@ -14,11 +14,10 @@ enum INTEGRATETYPES {
 };
 
 struct PARTICLES {
+    Vector3 _transform;
 
     Vector3 _velocity;
     Vector3 _aceleration;
-
-    Vector3 _transform;
 
     INTEGRATETYPES _type;
 

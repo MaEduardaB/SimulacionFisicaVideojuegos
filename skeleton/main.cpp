@@ -10,6 +10,7 @@
 #include "Particle.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "Scene3.h"
 
 #include <iostream>
 #include <chrono>
@@ -35,7 +36,8 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 
-Scene2* scene;
+std::vector<Scene*> _scenes;
+int current_scene = 0;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -69,8 +71,15 @@ void initPhysics(bool interactive)
 
 	RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 0.0, 10.0), Vector4(0, 0, 1, 1)));
 
+	Scene1* scene = new Scene1();
 
-	scene = new Scene2();
+	Scene2* scene2 = new Scene2();
+	Scene3* scene3 = new Scene3();
+	_scenes.push_back(scene);
+	_scenes.push_back(scene2);
+	_scenes.push_back(scene3);
+
+	current_scene = 0;
 }
 
 
@@ -83,8 +92,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 
-	scene->update(t);
-
+	_scenes[current_scene]->update(t);
 	gScene->fetchResults(true);
 
 
@@ -121,10 +129,23 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'P':
 	{
-		scene->createBullet();
+		std::cout << "Creando\n";
+		_scenes[current_scene]->create();
 		break;
 	}
 	default:
+		if (key >= '0' && key <= '9') //cuando estamos en el estado de dos escenas no cambiamos de escena
+		{
+			int scene_index = key - '0';
+			if (scene_index < _scenes.size()) {
+				std::cout << "Cambiando a escena " << scene_index << "\n";
+				_scenes[current_scene]->exit();
+				current_scene = scene_index;
+				_scenes[current_scene]->enter();
+			}
+			
+		}
+			break;
 		break;
 	}
 }

@@ -12,10 +12,10 @@ public:
 	void exit() override;
 	void enter() override;
 
-	void createParticle();
+	void create() override;
 
 protected:
 
-	std::vector<Particle*> gObjects;
+	std::vector<Particle*> _gObjects;
 };
 

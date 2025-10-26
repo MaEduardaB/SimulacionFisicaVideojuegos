@@ -5,7 +5,7 @@
 #include "ParticleGen.h"
 #include "Constants.h"
 
-Particle::Particle(PARTICLES p) : Entity(p._transform), _velocity(),
+Particle::Particle(PARTICLES p) : Entity(p._transform), _velocity(p._velocity), _mass(p._mass),
 	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping)
 {
 	_transform_ant = physx::PxTransform(p._transform);
@@ -13,13 +13,13 @@ Particle::Particle(PARTICLES p) : Entity(p._transform), _velocity(),
 
 Particle::~Particle()
 {
-	delete(_render);
+	Entity::~Entity();
 }
 
 void Particle::integrate(double t)
 {
 	physx::PxTransform _new_last_pos  = _transform;
-	
+	std::cout << "Integrando particula\n";
 	switch (_type) {
 	case EULER:
 		integrateEuler(t);

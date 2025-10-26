@@ -8,3 +8,8 @@ Entity::Entity(Vector3 pos) : _transform({ pos.x, pos.y, pos.z })
 
 	RegisterRenderItem(_render);
 }
+
+Entity::~Entity()
+{
+	DeregisterRenderItem(_render);
+}

@@ -9,6 +9,7 @@ class Entity
 {
 public:
 	Entity(Vector3 pos);
+	~Entity();
 	//virtual void render() const = 0;
 	virtual void integrate(double t) {};
 
