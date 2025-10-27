@@ -129,7 +129,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case 'P':
 	{
-		std::cout << "Creando\n";
+		//std::cout << "Creando\n";
 		_scenes[current_scene]->create();
 		break;
 	}

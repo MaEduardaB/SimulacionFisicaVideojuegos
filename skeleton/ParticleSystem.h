@@ -7,14 +7,15 @@ class ParticleSystem
 {
 public:
 	ParticleSystem();
+	~ParticleSystem();
 	void update(double t);
-
+	void addGenerator(ParticleGen* gen);
 	void addForce();
-
-protected:
-	void clearForces();
 	void cleanParticles();
-	void generateParticles();
+	void clearForces();
+
+	const std::list<Particle*>& getParticles() const;
+protected:
 	std::list<Particle*> _particles; // lista de particulas del sistema
 	std::list<ParticleGen*> _generators; // lista de generadores de particulas
 

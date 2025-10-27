@@ -6,7 +6,7 @@
 #include "Constants.h"
 
 Particle::Particle(PARTICLES p) : Entity(p._transform), _velocity(p._velocity), _mass(p._mass),
-	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping)
+	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping), _age(0.0)
 {
 	_transform_ant = physx::PxTransform(p._transform);
 }
@@ -18,8 +18,14 @@ Particle::~Particle()
 
 void Particle::integrate(double t)
 {
+	_age += t;
+	if(_age >= _lifeTIme) {
+		_elim = true;
+		return;
+	}
+
 	physx::PxTransform _new_last_pos  = _transform;
-	std::cout << "Integrando particula\n";
+	//std::cout << "Integrando particula\n";
 	switch (_type) {
 	case EULER:
 		integrateEuler(t);
@@ -82,6 +88,7 @@ void Particle::setDumping(float newDum)
 void Particle::setTime(float newTime)
 {
 	_lifeTIme = newTime;
+	_age = 0.0;
 }
 
 Vector3 Particle::getVelocity() const

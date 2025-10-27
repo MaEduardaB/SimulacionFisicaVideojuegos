@@ -22,6 +22,7 @@
     <ClCompile Include="ParticleGen.cpp" />
     <ClCompile Include="GaussianGen.cpp" />
     <ClCompile Include="UniformGen.cpp" />
+    <ClCompile Include="Scene3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="UniformGen.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Scene3.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

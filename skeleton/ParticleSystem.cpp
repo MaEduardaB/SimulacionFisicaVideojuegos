@@ -6,6 +6,13 @@ ParticleSystem::ParticleSystem() : _particles(), _generators()
 {
 }
 
+ParticleSystem::~ParticleSystem()
+{
+	for (auto p : _particles)
+		delete p;
+	_particles.clear();
+}
+
 void ParticleSystem::update(double t)
 {
 	for (auto it = _particles.begin(); it != _particles.end(); )
@@ -25,6 +32,16 @@ void ParticleSystem::update(double t)
 	}
 }
 
+void ParticleSystem::addGenerator(ParticleGen* gen)
+{
+	if (gen)
+		_generators.push_back(gen);
+}
+
+void ParticleSystem::addForce()
+{
+}
+
 void ParticleSystem::cleanParticles()
 {
 	for (auto it = _generators.begin(); it != _generators.end(); ++it)
@@ -37,13 +54,11 @@ void ParticleSystem::cleanParticles()
 	}
 }
 
-void ParticleSystem::generateParticles()
+void ParticleSystem::clearForces()
 {
-	for (auto it = _generators.begin(); it != _generators.end(); ++it)
-	{
-		ParticleGen* gen = *it;
-		if (gen != nullptr) 
-			gen->clearP();
-		
-	}
+}
+
+const std::list<Particle*>& ParticleSystem::getParticles() const
+{
+	return _particles;
 }

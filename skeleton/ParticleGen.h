@@ -20,7 +20,7 @@ public:
 				int n_particles);
 
 	virtual std::list<Particle*> generateP() = 0;
-	virtual void clearP() = 0;
+	virtual void clearParticles() = 0;
 
 	void setPosition(Vector3);
 	const Vector3& getPosition() const;

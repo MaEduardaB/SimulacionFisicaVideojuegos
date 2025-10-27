@@ -43,6 +43,6 @@ protected:
 	double _damping;
 
 	bool _elim;
-
+	double _age = 0.0;
 };
 

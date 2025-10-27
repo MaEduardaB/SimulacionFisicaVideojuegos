@@ -2,6 +2,7 @@
 #include "ParticleSystem.h"
 #include "GaussianGen.h"
 #include "UniformGen.h"
+#include "ParticleGen.h"
 
 
 #include "core.hpp"
@@ -38,11 +39,22 @@ void Scene3::exit()
 void Scene3::enter()
 {
     // Crear sistema de particulas con generador uniforme y gaussiano
+    std::cout << "Creando ParticleSystem\n";
 
     _particleSystem = new ParticleSystem();
+
+    std::mt19937 mt(std::random_device{}());
+
+    GaussianGen* gg = new GaussianGen(mt, Vector3(5, 10, 0), Vector3(0, 0, 0), 2.0, 1.0, 10);
+    UniformGen* ug = new UniformGen(mt, Vector3(5, 5, 0), Vector3(1, 1, 0), 3.0, 0.8, 5);
+
+    _particleSystem->addGenerator(gg);
+    _particleSystem->addGenerator(ug);
+
+    _particleSystem->cleanParticles(); 
 }
 
 void Scene3::create()
 {
-
+    _particleSystem->cleanParticles();
 }

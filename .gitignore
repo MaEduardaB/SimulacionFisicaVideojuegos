@@ -1,43 +1,64 @@
-# Prerequisites
+# --- Compilación intermedia ---
 *.d
-
-# Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
-
-# Precompiled Headers
 *.gch
 *.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
 *.mod
 *.smod
-
-# Compiled Static libraries
 *.lai
 *.la
 *.a
 *.lib
-
-# Executables
+*.so
+*.dylib
+*.dll
 *.exe
 *.out
 *.app
+*.pdb
+*.ilk
+*.idb
+*.log
+*.ipch
+*.opensdf
+*.sdf
+*.suo
+*.user
+*.userosscache
 
-#Any directory
-bin/**
-common/**
-.vs/**
-.vs/game/FileContentIndex**
-skeleton/debug/**
-/skeleton/.vs/game/**
+# --- CMake ---
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
 
-# Zip files
+# --- Visual Studio ---
+.vs/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.tlog
+*.lastbuildstate
+
+# --- Binarios y outputs ---
+/bin/
+/lib/
+/out/
+/Debug/
+/Release/
+/x64/
+
+# --- Archivos temporales ---
+*.cache
+*.tmp
 *.zip
+
+# --- Carpetas específicas a ignorar ---
+# (Solo ignora si contienen outputs, no código fuente)
+skeleton/debug/
+skeleton/.vs/
+.vs/game/FileContentIndex**
