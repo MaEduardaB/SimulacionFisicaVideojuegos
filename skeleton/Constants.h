@@ -7,6 +7,8 @@ class RenderItem;
 
 constexpr float GlobalGravity = -9.8f;
 
+enum class PARTICLE_TYPE { NORMAL, FIREWORK, SPARK };
+
 enum INTEGRATETYPES {
     EULER,
     EULER_SEMI_IMPILICITO,
@@ -20,7 +22,8 @@ struct PARTICLES {
     Vector3 _aceleration;
 
     INTEGRATETYPES _type;
-
+    PARTICLE_TYPE _p_type;
+    
     double _lifeTIme;
     double _mass;
     double _damping;

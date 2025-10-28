@@ -39,6 +39,7 @@ set(MY_SOURCE_FILES
     "Scene1.cpp"
     "Scene2.cpp"
     "Scene3.cpp"
+    "FireworkGen.cpp"
     "UniformGen.cpp"
     "SceneManager.cpp")
 

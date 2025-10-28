@@ -3,6 +3,7 @@
 #include "GaussianGen.h"
 #include "UniformGen.h"
 #include "ParticleGen.h"
+#include "FireworkGen.h"
 
 
 #include "core.hpp"
@@ -44,12 +45,14 @@ void Scene3::enter()
     _particleSystem = new ParticleSystem();
 
     std::mt19937 mt(std::random_device{}());
+    
+    FireworkGen* fg = new FireworkGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 20);
+    _particleSystem->addGenerator(fg);
+    // GaussianGen* gg = new GaussianGen(mt, Vector3(5, 10, 0), Vector3(0, 0, 0), 2.0, 1.0, 10);
+    // UniformGen* ug = new UniformGen(mt, Vector3(5, 5, 0), Vector3(1, 1, 0), 3.0, 0.8, 5);
 
-    GaussianGen* gg = new GaussianGen(mt, Vector3(5, 10, 0), Vector3(0, 0, 0), 2.0, 1.0, 10);
-    UniformGen* ug = new UniformGen(mt, Vector3(5, 5, 0), Vector3(1, 1, 0), 3.0, 0.8, 5);
-
-    _particleSystem->addGenerator(gg);
-    _particleSystem->addGenerator(ug);
+    // _particleSystem->addGenerator(gg);
+    // _particleSystem->addGenerator(ug);
 
     _particleSystem->cleanParticles(); 
 }

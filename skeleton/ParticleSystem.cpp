@@ -22,6 +22,8 @@ void ParticleSystem::update(double t)
 			p->integrate(t);
 
 			if (p->getElim()) {
+				p->triggerDeath(*this);
+
 				it = _particles.erase(it);
 				delete p;
 			}
@@ -30,6 +32,8 @@ void ParticleSystem::update(double t)
 			}
 		}
 	}
+
+
 }
 
 void ParticleSystem::addGenerator(ParticleGen* gen)
@@ -56,6 +60,12 @@ void ParticleSystem::cleanParticles()
 
 void ParticleSystem::clearForces()
 {
+}
+
+void ParticleSystem::addParticle(Particle* p)
+{
+    if (p)
+        _particles.push_back(p);
 }
 
 const std::list<Particle*>& ParticleSystem::getParticles() const

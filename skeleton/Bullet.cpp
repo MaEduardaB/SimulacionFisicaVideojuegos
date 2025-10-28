@@ -6,7 +6,7 @@
 
 
 Bullet::Bullet(Vector3 pos, Vector3 dir, double massReal, double velReal, double velSim, Vector3 gravedad) : 
-    Particle({pos, dir * velSim, gravedad,  INTEGRATETYPES::EULER_SEMI_IMPILICITO, 10.0f, 0.0f, 0.99f})
+    Particle({pos, dir * velSim, gravedad,  INTEGRATETYPES::EULER_SEMI_IMPILICITO, PARTICLE_TYPE::NORMAL, 10.0f, 0.0f, 0.99f})
 {
 	_massReal = massReal;
 

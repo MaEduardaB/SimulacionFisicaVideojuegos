@@ -3,12 +3,42 @@
 #include <math.h>
 #include <iostream>
 #include "ParticleGen.h"
+#include "ParticleSystem.h"
 #include "Constants.h"
+#include <random>
 
-Particle::Particle(PARTICLES p) : Entity(p._transform), _velocity(p._velocity), _mass(p._mass),
+Particle::Particle(PARTICLES p) : Entity(p._transform, Vector4(1 , 1 , 1 , 1)), _velocity(p._velocity), _mass(p._mass),
 	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping), _age(0.0)
 {
 	_transform_ant = physx::PxTransform(p._transform);
+
+
+	 static std::mt19937 mt(std::random_device{}());
+    std::uniform_real_distribution<float> u01(0.0f, 1.0f);
+
+	Vector4 color;
+
+    switch (p._p_type)
+    {
+        case PARTICLE_TYPE::SPARK:
+            // Tonos rojos-amarillos: R 0.8-1.0, G 0.2-7.0, B 0-0.2
+            color.x = 0.8f + 0.2f * u01(mt);
+            color.y = 0.2f + 0.5f * u01(mt);
+            color.z = 0.2f * u01(mt);
+            color.w = 1.0f;
+            break;
+
+        case PARTICLE_TYPE::FIREWORK:
+            color = Vector4(0.8f, 0.5f, 0.2f, 1.0f);
+            break;
+
+        case PARTICLE_TYPE::NORMAL:
+        default:
+            color = Vector4(0.0f, 0.0f, 1.0f, 1.0f); // azul
+            break;
+    }
+
+	setColor(color);
 }
 
 Particle::~Particle()
@@ -38,6 +68,12 @@ void Particle::integrate(double t)
 	}
 
 	_transform_ant = _new_last_pos;
+}
+
+void Particle::triggerDeath(ParticleSystem& system) const
+{
+    if (_onDeath)
+        _onDeath(system, *this);
 }
 
 void Particle::integrateEuler(double t)
@@ -80,7 +116,7 @@ void Particle::setAceleration(Vector3 newA)
 	_aceleration = newA;
 }
 
-void Particle::setDumping(float newDum)
+void Particle::setDamping(float newDum)
 {
 	_damping = newDum;
 }
@@ -109,6 +145,11 @@ double Particle::getMass() const
 bool Particle::getElim() const
 {
 	return _elim;
+}
+
+void Particle::setOnDeath(std::function<void(ParticleSystem&, const Particle&)> cb)
+{
+    _onDeath = cb;
 }
 
 #pragma endregion
