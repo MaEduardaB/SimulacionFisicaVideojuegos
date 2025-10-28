@@ -4,6 +4,7 @@
 #include "UniformGen.h"
 #include "ParticleGen.h"
 #include "FireworkGen.h"
+#include "FogGen.h"
 
 
 #include "core.hpp"
@@ -29,6 +30,7 @@ void Scene3::update(double t)
 
 void Scene3::render() const
 {
+
 }
 
 void Scene3::exit()
@@ -45,9 +47,10 @@ void Scene3::enter()
     _particleSystem = new ParticleSystem();
 
     std::mt19937 mt(std::random_device{}());
-    
-    FireworkGen* fg = new FireworkGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 20);
-    _particleSystem->addGenerator(fg);
+    FogGen* fogGen = new FogGen(mt, Vector3(0, 0, 0), Vector3(0, 10, 0), 5.0, 1.0, 50, 5.0f);
+    _particleSystem->addGenerator(fogGen);
+    // FireworkGen* fg = new FireworkGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 20);
+    // _particleSystem->addGenerator(fg);
     // GaussianGen* gg = new GaussianGen(mt, Vector3(5, 10, 0), Vector3(0, 0, 0), 2.0, 1.0, 10);
     // UniformGen* ug = new UniformGen(mt, Vector3(5, 5, 0), Vector3(1, 1, 0), 3.0, 0.8, 5);
 

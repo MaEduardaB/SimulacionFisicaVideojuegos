@@ -31,7 +31,6 @@ Particle::Particle(PARTICLES p) : Entity(p._transform, Vector4(1 , 1 , 1 , 1)), 
         case PARTICLE_TYPE::FIREWORK:
             color = Vector4(0.8f, 0.5f, 0.2f, 1.0f);
             break;
-
         case PARTICLE_TYPE::NORMAL:
         default:
             color = Vector4(0.0f, 0.0f, 1.0f, 1.0f); // azul

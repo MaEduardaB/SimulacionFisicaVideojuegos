@@ -8,7 +8,7 @@ class RenderItem;
 class Entity
 {
 public:
-	Entity(Vector3 pos, Vector4 _color);
+	Entity(Vector3 pos, Vector4 _color, float size = 0.5f);
 	~Entity();
 	//virtual void render() const = 0;
 	virtual void integrate(double t) {};

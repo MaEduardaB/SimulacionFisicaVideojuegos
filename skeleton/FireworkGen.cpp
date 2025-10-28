@@ -22,11 +22,9 @@ std::list<Particle*> FireworkGen::generateP()
     std::list<Particle*> particles;
     std::uniform_real_distribution<double> prob(0.0, 1.0);
 
-    // Probabilidad de emisión
     if (prob(_mt) > _prob_Gen)
         return particles;
 
-    // 🚀 Crear el cohete
     Vector3 launchPos = _pos;
     Vector3 launchVel = _vel + Vector3(0.0, 20.0 + 10.0 * prob(_mt), 0.0);
 
