@@ -52,7 +52,7 @@ void Particle::integrate(double t)
 		_elim = true;
 		return;
 	}
-
+	//_aceleration = _totalForce * static_cast<float>(1.0 / _mass);
 	physx::PxTransform _new_last_pos  = _transform;
 	//std::cout << "Integrando particula\n";
 	switch (_type) {
@@ -65,7 +65,7 @@ void Particle::integrate(double t)
 	case VERLET:
 		integrateVerlet(t);
 	}
-
+	//clearForces();
 	_transform_ant = _new_last_pos;
 }
 
@@ -73,6 +73,17 @@ void Particle::triggerDeath(ParticleSystem& system) const
 {
     if (_onDeath)
         _onDeath(system, *this);
+}
+
+void Particle::addForce(const Vector3 &force)
+{
+	_totalForce += force;
+}
+
+void Particle::clearForces()
+{
+	_totalForce = Vector3(0.0f);
+	_aceleration = Vector3(0.0f);
 }
 
 void Particle::integrateEuler(double t)

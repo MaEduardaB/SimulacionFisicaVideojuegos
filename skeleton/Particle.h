@@ -30,6 +30,9 @@ public:
     void setOnDeath(std::function<void(ParticleSystem&, const Particle&)> cb);
     void triggerDeath(ParticleSystem& sys) const;
 
+    // --- Force application ---
+    void addForce(const Vector3& force);
+
 protected:
 	// --- Callback al morir ---
     std::function<void(ParticleSystem&, const Particle&)> _onDeath;
@@ -40,6 +43,8 @@ protected:
     void integrateVerlet(double t);
     void damp(double t);
 
+    // --- Force application ---
+    void clearForces();
 
 	// --- Propiedades físicas ---
 	Vector3 _velocity;
@@ -54,5 +59,7 @@ protected:
 
 	bool _elim;
 	double _age = 0.0;
+
+    Vector3 _totalForce;
 };
 

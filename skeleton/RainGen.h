@@ -1,12 +1,12 @@
 #pragma once
 #include "ParticleGen.h"
-class FireworkGen :
+class RainGen :
     public ParticleGen
 {
 public:
 
-    FireworkGen();
-    FireworkGen(std::mt19937 mt,
+    RainGen();
+    RainGen(std::mt19937 mt,
 				Vector3 vel,
 				Vector3 pos,
 				double duration,
@@ -17,6 +17,6 @@ public:
 	std::list<Particle*> generateP() override;
 
 private:
-    std::uniform_real_distribution<double> _u{ -1,1 };
+    std::uniform_real_distribution<double> _u{ 0,1 };
 };
 

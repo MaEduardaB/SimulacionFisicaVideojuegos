@@ -28,6 +28,8 @@ set(MY_SOURCE_FILES
     "Entity.cpp"
     "Vector3D.cpp"
     "ForceGenerator.cpp"
+    "GravityForce.cpp"
+    "ForceRegestry.cpp"
     "GaussianGen.cpp"
     
     "ParticleGen.cpp"
@@ -39,7 +41,9 @@ set(MY_SOURCE_FILES
     "Scene1.cpp"
     "Scene2.cpp"
     "Scene3.cpp"
+    "Scene4.cpp"
     "FireworkGen.cpp"
+    "RainGen.cpp"
     "FogGen.cpp"
     "UniformGen.cpp"
     "SceneManager.cpp")

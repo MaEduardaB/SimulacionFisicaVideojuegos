@@ -1,24 +1,23 @@
-#include "FireworkGen.h"
+#include "RainGen.h"
 #include "Constants.h"
 #include "Particle.h"
-#include "ForceRegestry.h"
 #include "ParticleSystem.h" // Necesario para el callback
 
-FireworkGen::FireworkGen()
+RainGen::RainGen()
     : ParticleGen(), _u(-1.0, 1.0)
 {
 }
 
-FireworkGen::FireworkGen(std::mt19937 mt, Vector3 vel, Vector3 pos, double duration, double prob_Gen, int n_particles)
+RainGen::RainGen(std::mt19937 mt, Vector3 vel, Vector3 pos, double duration, double prob_Gen, int n_particles)
     : ParticleGen(mt, vel, pos, duration, prob_Gen, n_particles), _u(-1.0, 1.0)
 {
 }
 
-void FireworkGen::clearParticles()
+void RainGen::clearParticles()
 {
 }
 
-std::list<Particle*> FireworkGen::generateP()
+std::list<Particle*> RainGen::generateP()
 {
     std::list<Particle*> particles;
     std::uniform_real_distribution<double> prob(-1.0, 1.0);
@@ -32,7 +31,7 @@ std::list<Particle*> FireworkGen::generateP()
     PARTICLES prop;
     prop._transform = launchPos;
     prop._velocity = launchVel;
-    prop._aceleration = Vector3(0.0, 0.0, 0.0);
+    prop._aceleration = Vector3(0.0, -9.81, 0.0);
     prop._mass = 1.0;
     prop._damping = 0.99;
     prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
@@ -40,7 +39,7 @@ std::list<Particle*> FireworkGen::generateP()
 
     Particle* rocket = new Particle(prop);
     rocket->setTime(_dur + 1.0 * prob(_mt));
-    
+
     rocket->setOnDeath([this](ParticleSystem& system, const Particle& p) {
         std::uniform_real_distribution<double> rand(-1.0, 1.0);
         std::uniform_real_distribution<double> t(0.5, 1.5);
