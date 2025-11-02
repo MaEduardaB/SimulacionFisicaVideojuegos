@@ -7,14 +7,24 @@ ForceRegestry::ForceRegestry() : _registry()
 
 }
 
-void ForceRegestry::add(Particle *p, ForceGenerator *fg)
+void ForceRegestry::add(Particle* p, ForceGenerator* fg)
 {
-    _registry.push_back(std::make_pair(p, fg));
+    if (p && fg)
+        _registry.emplace_back(p, fg);
+}
+
+void ForceRegestry::remove(Particle* p, ForceGenerator* fg)
+{
+    _registry.remove_if([&](const std::pair<Particle*, ForceGenerator*>& reg) {
+        bool sameP = (!p || reg.first == p);
+        bool sameF = (!fg || reg.second == fg);
+        return sameP && sameF;
+    });
 }
 
 void ForceRegestry::clear()
 {
-    _registry.clear();   
+    _registry.clear();
 }
 
 void ForceRegestry::updateForces()
@@ -22,6 +32,24 @@ void ForceRegestry::updateForces()
     for (auto& entry : _registry) {
         Particle* p = entry.first;
         ForceGenerator* fg = entry.second;
-        fg->updateForce(p);
+        if (p && fg) {
+            fg->updateForce(p);
+        }
     }
+}
+
+void ForceRegestry::removeInvalid(const std::list<std::unique_ptr<Particle>>& particles)
+{
+    _registry.remove_if([&](const std::pair<Particle*, ForceGenerator*>& entry) {
+        Particle* p = entry.first;
+        // Verifica si el puntero sigue existiendo en la lista de partículas
+        bool alive = false;
+        for (const auto& up : particles) {
+            if (up.get() == p) {
+                alive = true;
+                break;
+            }
+        }
+        return !alive; // elimina si ya no existe
+    });
 }

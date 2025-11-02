@@ -7,8 +7,8 @@
 #include "Constants.h"
 #include <random>
 
-Particle::Particle(PARTICLES p) : Entity(p._transform, Vector4(1 , 1 , 1 , 1)), _velocity(p._velocity), _mass(p._mass),
-	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping), _age(0.0)
+Particle::Particle(PARTICLES p) : Entity(p._transform, Vector4(1 , 1 , 1 , 1), p._size), _velocity(p._velocity), _mass(p._mass),
+	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping), _age(0.0), _totalForce(0.0f)
 {
 	_transform_ant = physx::PxTransform(p._transform);
 
@@ -17,8 +17,8 @@ Particle::Particle(PARTICLES p) : Entity(p._transform, Vector4(1 , 1 , 1 , 1)), 
     std::uniform_real_distribution<float> u01(0.0f, 1.0f);
 
 	Vector4 color;
-
-    switch (p._p_type)
+	_p_type = p._p_type;
+    switch (_p_type)
     {
         case PARTICLE_TYPE::SPARK:
             // Tonos rojos-amarillos: R 0.8-1.0, G 0.2-7.0, B 0-0.2
@@ -47,12 +47,24 @@ Particle::~Particle()
 
 void Particle::integrate(double t)
 {
-	_age += t;
-	if(_age >= _lifeTIme) {
-		_elim = true;
-		return;
+	if(_p_type == PARTICLE_TYPE::RAIN) {
+		if(_transform.p.y <= 0.0f) {
+			_elim = true;
+			return;
+		}
+	}else {
+		_age += t;
+		if(_age >= _lifeTIme) {
+			_elim = true;
+			return;
+		}
 	}
-	//_aceleration = _totalForce * static_cast<float>(1.0 / _mass);
+	
+
+	if (_mass > 0.0)
+        _aceleration = _totalForce * static_cast<float>(1.0 / _mass);
+   
+
 	physx::PxTransform _new_last_pos  = _transform;
 	//std::cout << "Integrando particula\n";
 	switch (_type) {
@@ -65,7 +77,8 @@ void Particle::integrate(double t)
 	case VERLET:
 		integrateVerlet(t);
 	}
-	//clearForces();
+
+	clearForces();
 	_transform_ant = _new_last_pos;
 }
 
@@ -73,6 +86,7 @@ void Particle::triggerDeath(ParticleSystem& system) const
 {
     if (_onDeath)
         _onDeath(system, *this);
+		
 }
 
 void Particle::addForce(const Vector3 &force)
@@ -83,7 +97,6 @@ void Particle::addForce(const Vector3 &force)
 void Particle::clearForces()
 {
 	_totalForce = Vector3(0.0f);
-	_aceleration = Vector3(0.0f);
 }
 
 void Particle::integrateEuler(double t)
@@ -150,6 +163,11 @@ Vector3 Particle::getAceleration() const
 double Particle::getMass() const
 {
 	return _mass;
+}
+
+PARTICLE_TYPE Particle::getParticleType() const
+{
+    return _p_type;
 }
 
 bool Particle::getElim() const

@@ -18,6 +18,8 @@ public:
 	void remove(Particle* p, ForceGenerator* fg);
 	void clear();
 	void updateForces();
+
+	void removeInvalid(const std::list<std::unique_ptr<Particle>>& particles);
 protected:
 	std::list<std::pair<Particle*, ForceGenerator*>> _registry;
 };

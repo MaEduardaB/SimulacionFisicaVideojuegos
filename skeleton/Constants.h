@@ -7,7 +7,7 @@ class RenderItem;
 
 constexpr float GlobalGravity = -9.8f;
 
-enum class PARTICLE_TYPE { NORMAL, FIREWORK, SPARK, FOG };
+enum class PARTICLE_TYPE { NORMAL, FIREWORK, SPARK, FOG, RAIN };
 
 enum INTEGRATETYPES {
     EULER,

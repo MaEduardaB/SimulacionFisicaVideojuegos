@@ -23,6 +23,12 @@
     <ClCompile Include="GaussianGen.cpp" />
     <ClCompile Include="UniformGen.cpp" />
     <ClCompile Include="Scene3.cpp" />
+    <ClCompile Include="FireworkGen.cpp" />
+    <ClCompile Include="FogGen.cpp" />
+    <ClCompile Include="ForceGenerator.cpp" />
+    <ClCompile Include="ForceRegestry.cpp" />
+    <ClCompile Include="GravityForce.cpp" />
+    <ClCompile Include="RainGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -49,6 +55,12 @@
     <ClInclude Include="UniformGen.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Scene3.h" />
+    <ClInclude Include="FireworkGen.h" />
+    <ClInclude Include="FogGen.h" />
+    <ClInclude Include="ForceGenerator.h" />
+    <ClInclude Include="ForceRegestry.h" />
+    <ClInclude Include="GravityForce.h" />
+    <ClInclude Include="RainGen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

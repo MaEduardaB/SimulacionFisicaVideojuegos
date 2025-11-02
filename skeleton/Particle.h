@@ -23,6 +23,7 @@ public:
     Vector3 getVelocity() const;
     Vector3 getAceleration() const;
     double getMass() const;
+    PARTICLE_TYPE getParticleType() const;
     bool getElim() const;
     const PxTransform& getTransform() const { return _transform; }
 
@@ -51,6 +52,7 @@ protected:
 	physx::PxTransform _transform_ant;
 
 	INTEGRATETYPES _type;
+    PARTICLE_TYPE _p_type;
 	double _mass;
 	Vector3 _aceleration;
 	double _lifeTIme;

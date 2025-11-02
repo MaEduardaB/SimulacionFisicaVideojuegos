@@ -4,6 +4,7 @@
 #include "UniformGen.h"
 #include "ParticleGen.h"
 #include "FireworkGen.h"
+#include "RainGen.h"
 #include "FogGen.h"
 
 
@@ -48,21 +49,26 @@ void Scene3::enter()
     _particleSystem = new ParticleSystem();
 
     std::mt19937 mt(std::random_device{}());
-    //FogGen* fogGen = new FogGen(mt, Vector3(0, 0, 0), Vector3(0, 10, 0), 5.0, 1.0, 50, 5.0f);
-    //_particleSystem->addGenerator(fogGen);
-    FireworkGen* fg = new FireworkGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 20);
-    _particleSystem->addGenerator(fg);
-    _particleSystem->createGravity();
+    // FogGen* fogGen = new FogGen(mt, Vector3(0, 0, 0), Vector3(0, 10, 0), 5.0, 1.0, 500, 15.0f);
+    // _particleSystem->addGenerator(fogGen);
+    
+    // FireworkGen* fg = new FireworkGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 20);
+    // _particleSystem->addGenerator(fg);
+
+    RainGen* rg = new RainGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 3);
+    _particleSystem->addGenerator(rg);
+    //_particleSystem->createGravity();
     // GaussianGen* gg = new GaussianGen(mt, Vector3(5, 10, 0), Vector3(0, 0, 0), 2.0, 1.0, 10);
     // UniformGen* ug = new UniformGen(mt, Vector3(5, 5, 0), Vector3(1, 1, 0), 3.0, 0.8, 5);
 
     // _particleSystem->addGenerator(gg);
     // _particleSystem->addGenerator(ug);
 
-    _particleSystem->cleanParticles(); 
+    _particleSystem->createParticles();
+    _particleSystem->createGravity();
 }
 
 void Scene3::create()
 {
-    _particleSystem->cleanParticles();
+    _particleSystem->createParticles();
 }

@@ -57,10 +57,10 @@ void Scene4::enter()
     // _particleSystem->addGenerator(gg);
     // _particleSystem->addGenerator(ug);
 
-    _particleSystem->cleanParticles(); 
+    _particleSystem->createParticles(); 
 }
 
 void Scene4::create()
 {
-    _particleSystem->cleanParticles();
+    _particleSystem->createParticles();
 }

@@ -16,26 +16,26 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::update(double t)
 {
-	for (auto it = _particles.begin(); it != _particles.end(); )
-	{
-		Particle* p = it->get();
-		if (p != nullptr) {
-			p->integrate(t);
-
-			if (p->getElim()) {
-				p->triggerDeath(*this);
-
-				it = _particles.erase(it); // unique_ptr destructor frees memory
-			}
-			else {
-				++it;
-			}
-		}
-		else {
-			it = _particles.erase(it);
-		}
-	}
 	_force_registry->updateForces();
+	for (auto it = _particles.begin(); it != _particles.end(); )
+    {
+        Particle* p = it->get();
+        if (p != nullptr) {
+            p->integrate(t);
+
+            if (p->getElim()) {
+                p->triggerDeath(*this);
+                it = _particles.erase(it);
+            } else {
+                ++it;
+            }
+        } else {
+            it = _particles.erase(it);
+        }
+    }
+
+    _force_registry->removeInvalid(_particles);
+
 }
 
 void ParticleSystem::addGenerator(ParticleGen* gen)
@@ -48,7 +48,7 @@ void ParticleSystem::addForce()
 {
 }
 
-void ParticleSystem::cleanParticles()
+void ParticleSystem::createParticles()
 {
 	for (auto it = _generators.begin(); it != _generators.end(); ++it)
 	{
@@ -62,8 +62,11 @@ void ParticleSystem::cleanParticles()
 
 			for (Particle* p : rawList) {
 				if (p) {
-					rawPtrs.push_back(p);
-					_particles.emplace_back(std::unique_ptr<Particle>(p));
+					 bool applyGravity = (p->getParticleType() != PARTICLE_TYPE::FOG); // niebla no recibe gravedad
+                    _particles.emplace_back(std::unique_ptr<Particle>(p));
+
+                    if (applyGravity && _gravityForce)
+                        _force_registry->add(p, _gravityForce.get());
 				}
 			}
 
@@ -77,10 +80,13 @@ void ParticleSystem::clearForces()
 {
 }
 
-void ParticleSystem::addParticle(Particle* p)
+void ParticleSystem::addParticle(Particle* p, bool applyGravity)
 {
 	if (p)
 		_particles.emplace_back(std::unique_ptr<Particle>(p));
+
+	if (applyGravity && _gravityForce)
+        _force_registry->add(p, _gravityForce.get());
 }
 
 const std::list<std::unique_ptr<Particle>>& ParticleSystem::getParticles() const
@@ -90,23 +96,33 @@ const std::list<std::unique_ptr<Particle>>& ParticleSystem::getParticles() const
 
 void ParticleSystem::createGravity()
 {
-	_gravityForce = new GravityForce();
+	 if (!_gravityForce)
+        _gravityForce = std::make_unique<GravityForce>();
+
 	generateGravityForce(_particles);
 }
 
 void ParticleSystem::generateGravityForce(const std::list<Particle*>& newParticles)
 {
-	for (auto p : newParticles) {
-		if (p)
-			_force_registry->add(p, _gravityForce);
-	}
+	if (!_gravityForce)
+        return;
+
+    for (auto p : newParticles)
+    {
+        if (p)
+            _force_registry->add(p, _gravityForce.get());
+    }
 }
 
 void ParticleSystem::generateGravityForce(const std::list<std::unique_ptr<Particle>>& newParticles)
 {
-	for (const auto& up : newParticles) {
-		Particle* p = up.get();
-		if (p)
-			_force_registry->add(p, _gravityForce);
-	}
+	if (!_gravityForce)
+        return;
+
+    for (const auto& up : newParticles)
+    {
+        Particle* p = up.get();
+        if (p)
+            _force_registry->add(p, _gravityForce.get());
+    }
 }

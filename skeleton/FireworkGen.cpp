@@ -33,7 +33,7 @@ std::list<Particle*> FireworkGen::generateP()
     prop._transform = launchPos;
     prop._velocity = launchVel;
     prop._aceleration = Vector3(0.0, 0.0, 0.0);
-    prop._mass = 1.0;
+    prop._mass = 10.0;
     prop._damping = 0.99;
     prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
     prop._p_type = PARTICLE_TYPE::FIREWORK;
@@ -43,7 +43,7 @@ std::list<Particle*> FireworkGen::generateP()
     
     rocket->setOnDeath([this](ParticleSystem& system, const Particle& p) {
         std::uniform_real_distribution<double> rand(-1.0, 1.0);
-        std::uniform_real_distribution<double> t(0.5, 1.5);
+        std::uniform_real_distribution<double> t(0.8, 1.5);
 
         for (int i = 0; i < _n_particles; ++i)
         {
@@ -56,7 +56,7 @@ std::list<Particle*> FireworkGen::generateP()
             PARTICLES sprop;
             sprop._transform = p.getTransform().p; 
             sprop._velocity = sparkVel;
-            sprop._aceleration = Vector3(0.0, -9.81, 0.0);
+            sprop._aceleration = Vector3(0.0, 0.0, 0.0);
             sprop._mass = 0.2;
             sprop._damping = 0.98;
             sprop._p_type = PARTICLE_TYPE::SPARK;

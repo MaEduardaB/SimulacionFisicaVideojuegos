@@ -15,9 +15,9 @@ public:
 	void update(double t);
 	void addGenerator(ParticleGen* gen);
 	void addForce();
-	void cleanParticles();
+	void createParticles();
 	void clearForces();
-	void addParticle(Particle* p);
+	void addParticle(Particle* p, bool applyGravity = true);
 	const std::list<std::unique_ptr<Particle>>& getParticles() const;
 	void createGravity();
 protected:
@@ -33,7 +33,7 @@ protected:
 	std::list<Particle*> _newParticles;
 
 	//std::list<ForceGenerator*> _force_generators;
-	GravityForce* _gravityForce;
+	std::unique_ptr<GravityForce> _gravityForce;
 	ForceRegestry* _force_registry;
 
 };

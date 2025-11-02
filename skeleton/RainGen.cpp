@@ -25,49 +25,55 @@ std::list<Particle*> RainGen::generateP()
     if (prob(_mt) > _prob_Gen)
         return particles;
 
-    Vector3 launchPos = _pos;
-    Vector3 launchVel = _vel + Vector3(10 * prob(_mt), 30.0 + 10.0 * prob(_mt), 0.0);
+    int n_drops = _n_particles;
+    for (int i = 0; i < n_drops; ++i)
+    {
+        Vector3 launchPos = Vector3(_u(_mt)*10.0f, 40.0f, _u(_mt)*15.0f);
 
-    PARTICLES prop;
-    prop._transform = launchPos;
-    prop._velocity = launchVel;
-    prop._aceleration = Vector3(0.0, -9.81, 0.0);
-    prop._mass = 1.0;
-    prop._damping = 0.99;
-    prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
-    prop._p_type = PARTICLE_TYPE::FIREWORK;
+        PARTICLES prop;
+        prop._transform = launchPos;
+        prop._velocity = Vector3(0.0f, 0.0f, 0.0f);
+        prop._aceleration = Vector3(0.0f, 0.0f, 0.0f);
+        prop._mass = 10.0f;
+        prop._damping = 0.99;
+        prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
+        prop._p_type = PARTICLE_TYPE::RAIN;
 
-    Particle* rocket = new Particle(prop);
-    rocket->setTime(_dur + 1.0 * prob(_mt));
+        Particle* drop = new Particle(prop);
+        drop->setTime(_dur + 1.0 * prob(_mt));
 
-    rocket->setOnDeath([this](ParticleSystem& system, const Particle& p) {
-        std::uniform_real_distribution<double> rand(-1.0, 1.0);
-        std::uniform_real_distribution<double> t(0.5, 1.5);
+        // Callback al morir para “explotar” gotas
+        drop->setOnDeath([this](ParticleSystem& system, const Particle& p) {
+            std::uniform_real_distribution<float> randXY(-1.0f, 1.0f);
+            std::uniform_real_distribution<float> velY(1.0f, 2.0f);
+            std::uniform_real_distribution<float> life(0.5f, 1.5f);
 
-        for (int i = 0; i < _n_particles; ++i)
-        {
-            Vector3 sparkVel(
-                10.0 * rand(_mt),
-                10.0 * rand(_mt),
-                10.0 * rand(_mt)
-            );
+            for (int j = 0; j < _n_particles; ++j)
+            {
+                Vector3 sparkVel(
+                    2.0f * randXY(_mt),
+                    velY(_mt),
+                    2.0f * randXY(_mt)
+                );
 
-            PARTICLES sprop;
-            sprop._transform = p.getTransform().p; 
-            sprop._velocity = sparkVel;
-            sprop._aceleration = Vector3(0.0, -9.81, 0.0);
-            sprop._mass = 0.2;
-            sprop._damping = 0.98;
-            sprop._p_type = PARTICLE_TYPE::SPARK;
-            sprop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
+                PARTICLES sprop;
+                sprop._transform = p.getTransform().p;
+                sprop._velocity = sparkVel;
+                sprop._aceleration = Vector3(0.0f, 0.0f, 0.0f);
+                sprop._mass = 10.0f;
+                sprop._damping = 0.98f;
+                sprop._p_type = PARTICLE_TYPE::NORMAL;
+                sprop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
+                sprop._size = 0.5f;
 
-            Particle* spark = new Particle(sprop);
-            spark->setTime(t(_mt));
+                Particle* spark = new Particle(sprop);
+                spark->setTime(life(_mt));
+                system.addParticle(spark);
+            }
+        });
 
-            system.addParticle(spark);
-        }
-    });
+        particles.push_back(drop);
+    }
 
-    particles.push_back(rocket);
     return particles;
 }
