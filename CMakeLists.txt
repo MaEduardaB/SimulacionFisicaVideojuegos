@@ -29,6 +29,8 @@ set(MY_SOURCE_FILES
     "Vector3D.cpp"
     "ForceGenerator.cpp"
     "GravityForce.cpp"
+    "WindForce.cpp"
+    "WindForceM.cpp"
     "ForceRegestry.cpp"
     "GaussianGen.cpp"
     
@@ -43,6 +45,7 @@ set(MY_SOURCE_FILES
     "Scene3.cpp"
     "Scene4.cpp"
     "FireworkGen.cpp"
+    "GameScene.cpp"
     "RainGen.cpp"
     "FogGen.cpp"
     "UniformGen.cpp"

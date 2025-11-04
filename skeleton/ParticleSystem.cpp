@@ -2,7 +2,11 @@
 #include "ParticleGen.h"
 #include "Particle.h"
 #include "GravityForce.h"
+#include "WindForce.h"
+#include "WindForceM.h"
 #include "ForceRegestry.h"
+#include "TorbellinoForce.h"
+
 
 ParticleSystem::ParticleSystem() : _particles(), _generators(), _force_registry(new ForceRegestry()), _gravityForce(nullptr)
 {
@@ -35,7 +39,6 @@ void ParticleSystem::update(double t)
     }
 
     _force_registry->removeInvalid(_particles);
-
 }
 
 void ParticleSystem::addGenerator(ParticleGen* gen)
@@ -54,7 +57,6 @@ void ParticleSystem::createParticles()
 	{
 		ParticleGen* gen = *it;                   
 		if (gen != nullptr) {
-			// gen->generateP() returns a list of raw Particle*; wrap them into unique_ptr
 			std::list<Particle*> rawList = gen->generateP();
 
 			// collect raw pointers to pass to force generation
@@ -64,14 +66,15 @@ void ParticleSystem::createParticles()
 				if (p) {
 					 bool applyGravity = (p->getParticleType() != PARTICLE_TYPE::FOG); // niebla no recibe gravedad
                     _particles.emplace_back(std::unique_ptr<Particle>(p));
-
-                    if (applyGravity && _gravityForce)
-                        _force_registry->add(p, _gravityForce.get());
+                    rawPtrs.push_back(p);
+                    /*if (applyGravity && _gravityForce)
+                        _force_registry->add(p, _gravityForce.get());*/
 				}
 			}
 
-			// now setup gravity forces for the newly added particles
 			generateGravityForce(rawPtrs);
+            generateWindForce(rawPtrs);
+            generateTorbellinoForce(rawPtrs);
 		}
 	}
 }
@@ -87,6 +90,9 @@ void ParticleSystem::addParticle(Particle* p, bool applyGravity)
 
 	if (applyGravity && _gravityForce)
         _force_registry->add(p, _gravityForce.get());
+
+    _force_registry->add(p, _windForceM.get());
+
 }
 
 const std::list<std::unique_ptr<Particle>>& ParticleSystem::getParticles() const
@@ -102,6 +108,38 @@ void ParticleSystem::createGravity()
 	generateGravityForce(_particles);
 }
 
+void ParticleSystem::createWind(const Vector3 &windVelocity, const Vector3 &areaCenter, const Vector3 &areaHalfSize, float k1, float k2)
+{
+    if (!_windForceM)
+        _windForceM = std::make_unique<WindForceM>(windVelocity, areaCenter, areaHalfSize);
+    
+    _windForceM->setObjectProperties(
+        80.0f,                        // area frontal (m2)
+        0.5f,                        // C_D
+        Vector3(0.0f, 0.0f, 1.0f)    // orientacion
+    );
+
+    for (const auto& up : _particles)
+    {
+        Particle* p = up.get();
+        if (p)
+            _force_registry->add(p, _windForceM.get());
+    }
+}
+
+void ParticleSystem::createTorbellino(const Vector3& center, float radio, float intensidad)
+{
+    if (!_torbellinoForce)
+        _torbellinoForce = std::make_unique<TorbellinoForce>(center, radio, intensidad);
+
+    for (const auto& up : _particles)
+    {
+        Particle* p = up.get();
+        if (p)
+            _force_registry->add(p, _torbellinoForce.get());
+    }
+}
+
 void ParticleSystem::generateGravityForce(const std::list<Particle*>& newParticles)
 {
 	if (!_gravityForce)
@@ -111,6 +149,30 @@ void ParticleSystem::generateGravityForce(const std::list<Particle*>& newParticl
     {
         if (p)
             _force_registry->add(p, _gravityForce.get());
+    }
+}
+
+void ParticleSystem::generateWindForce(const std::list<Particle*>& newParticles)
+{
+    if (!_windForceM)
+        return;
+
+    for (auto p : newParticles)
+    {
+        if (p)
+            _force_registry->add(p, _windForceM.get());
+    }
+}
+
+void ParticleSystem::generateTorbellinoForce(const std::list<Particle*>& newParticles)
+{
+    if (!_torbellinoForce)
+        return;
+
+    for (auto p : newParticles)
+    {
+        if (p)
+            _force_registry->add(p, _torbellinoForce.get());
     }
 }
 

@@ -5,8 +5,6 @@
 #include "core.hpp"
 #include "ForceGenerator.h"
 
-#include<list>
-
 class Particle;
 
 class GravityForce : public ForceGenerator

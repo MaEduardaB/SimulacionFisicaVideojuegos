@@ -29,6 +29,11 @@
     <ClCompile Include="ForceRegestry.cpp" />
     <ClCompile Include="GravityForce.cpp" />
     <ClCompile Include="RainGen.cpp" />
+    <ClCompile Include="WindForce.cpp" />
+    <ClCompile Include="Scene4.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="WindForceM.cpp" />
+    <ClCompile Include="TorbellinoForce.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -61,6 +66,11 @@
     <ClInclude Include="ForceRegestry.h" />
     <ClInclude Include="GravityForce.h" />
     <ClInclude Include="RainGen.h" />
+    <ClInclude Include="WindForce.h" />
+    <ClInclude Include="Scene4.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="WindForceM.h" />
+    <ClInclude Include="TorbellinoForce.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

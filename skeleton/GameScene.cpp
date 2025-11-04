@@ -1,4 +1,4 @@
-#include "Scene3.h"
+#include "GameScene.h"
 #include "ParticleSystem.h"
 #include "GaussianGen.h"
 #include "UniformGen.h"
@@ -6,8 +6,7 @@
 #include "FireworkGen.h"
 #include "RainGen.h"
 #include "FogGen.h"
-#include "WindForce.h"
-#include "TorbellinoForce.h"
+
 
 #include "core.hpp"
 #include "RenderUtils.hpp"
@@ -16,33 +15,33 @@
 #include <iostream>
 using namespace physx;
 
-Scene3::Scene3() : _particleSystem(nullptr)
+GameScene::GameScene() : _particleSystem(nullptr)
 {
 }
 
-Scene3::~Scene3()
+GameScene::~GameScene()
 {
 	delete _particleSystem;
 }
 
-void Scene3::update(double t)
+void GameScene::update(double t)
 {
 	_particleSystem->update(t);
 
 }
 
-void Scene3::render() const
+void GameScene::render() const
 {
 
 }
 
-void Scene3::exit()
+void GameScene::exit()
 {
     delete _particleSystem;
     _particleSystem = nullptr;
 }
 
-void Scene3::enter()
+void GameScene::enter()
 {
     // Crear sistema de particulas con generador uniforme y gaussiano
     std::cout << "Creando ParticleSystem\n";
@@ -56,11 +55,7 @@ void Scene3::enter()
     // FireworkGen* fg = new FireworkGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 20);
     // _particleSystem->addGenerator(fg);
 
-    //_particleSystem->createWind(Vector3(20.0f, 0.0f, 0.0f), Vector3(0.0f, 00.0f, 0.0f), Vector3(140.0f, 140.0f, 140.0f), 0.8, 0.8);
-    
-    _particleSystem->createTorbellino(Vector3(0, 0, 0), 50.0f, 10.0f);
-
-    RainGen* rg = new RainGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 30);
+    RainGen* rg = new RainGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 3);
     _particleSystem->addGenerator(rg);
     //_particleSystem->createGravity();
     // GaussianGen* gg = new GaussianGen(mt, Vector3(5, 10, 0), Vector3(0, 0, 0), 2.0, 1.0, 10);
@@ -71,12 +66,9 @@ void Scene3::enter()
 
     _particleSystem->createParticles();
     _particleSystem->createGravity();
-
-
-    //RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(20)), new PxTransform(0.0, 20.0, 10.0), Vector4(0, 0, 1, 0.2)));
 }
 
-void Scene3::create()
+void GameScene::create()
 {
     _particleSystem->createParticles();
 }
