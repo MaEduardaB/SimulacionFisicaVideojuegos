@@ -11,6 +11,7 @@ class WindForce;
 class WindForceM;
 class ForceGenerator;
 class TorbellinoForce;
+class ExplosionsForce;
 class ParticleSystem
 {
 public:
@@ -34,6 +35,9 @@ public:
 		float radio,
 		float intensidad);
 
+	void createExplosion(const Vector3& center, float K, float radius, float decaimento, float expansionVel = 0.0f);
+	void updateExplosions(float dt);
+
 protected:
 	void generateGravityForce(const std::list<Particle*>& newParticles);
 	void generateWindForce(const std::list<Particle*>& newParticles);
@@ -45,7 +49,6 @@ protected:
 	std::list<std::unique_ptr<Particle>> _particles; // lista de particulas del sistema
 	std::list<ParticleGen*> _generators; // lista de generadores de particulas
 
-	// lista de fuerzas que se aplican a todas las particulas de ese sistema
 	std::list<Particle*> _newParticles;
 
 	//std::list<ForceGenerator*> _force_generators;
@@ -55,6 +58,8 @@ protected:
 	std::unique_ptr<TorbellinoForce> _torbellinoForce;
 
 	ForceRegestry* _force_registry;
+
+	std::list<std::unique_ptr<ExplosionsForce>> _explosions;
 
 };
 

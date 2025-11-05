@@ -11,7 +11,7 @@ Particle::Particle(PARTICLES p) : Entity(p._transform, Vector4(1 , 1 , 1 , 1), p
 	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping), _age(0.0), _totalForce(0.0f)
 {
 	_transform_ant = physx::PxTransform(p._transform);
-
+	_lifeTime = 10000;
 
 	 static std::mt19937 mt(std::random_device{}());
     std::uniform_real_distribution<float> u01(0.0f, 1.0f);
@@ -54,7 +54,7 @@ void Particle::integrate(double t)
 		}
 	}else {
 		_age += t;
-		if(_age >= _lifeTIme) {
+		if(_age >= _lifeTime) {
 			_elim = true;
 			return;
 		}
@@ -146,7 +146,7 @@ void Particle::setDamping(float newDum)
 
 void Particle::setTime(float newTime)
 {
-	_lifeTIme = newTime;
+	_lifeTime = newTime;
 	_age = 0.0;
 }
 

@@ -55,7 +55,7 @@ protected:
     PARTICLE_TYPE _p_type;
 	double _mass;
 	Vector3 _aceleration;
-	double _lifeTIme;
+	double _lifeTime;
 
 	double _damping;
 

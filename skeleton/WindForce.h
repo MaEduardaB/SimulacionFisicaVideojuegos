@@ -19,7 +19,7 @@ public:
     bool isInsideArea(const Vector3& pos) const;
 
 protected:
-     Vector3 _windVelocity;
+    Vector3 _windVelocity;
     Vector3 _areaCenter;     // centro
     Vector3 _areaHalfSize;   // tamaño 
     float _k1, _k2;

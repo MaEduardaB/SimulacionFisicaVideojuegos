@@ -11,6 +11,7 @@
 #include "Scene1.h"
 #include "Scene2.h"
 #include "Scene3.h"
+#include "GameScene.h"
 
 #include <iostream>
 #include <chrono>
@@ -39,6 +40,8 @@ ContactReportCallback gContactReportCallback;
 std::vector<Scene*> _scenes;
 int current_scene = 0;
 
+Camera* _cam;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -62,7 +65,7 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-
+	_cam = GetCamera();
 	// RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 0.0, 0.0), Vector4(1, 1, 1, 1)));
 
 	// RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 10.0, 0.0), Vector4(0, 1, 0, 1)));
@@ -75,9 +78,11 @@ void initPhysics(bool interactive)
 
 	Scene2* scene2 = new Scene2();
 	Scene3* scene3 = new Scene3();
+	GameScene* game = new GameScene(_cam);
 	_scenes.push_back(scene);
 	_scenes.push_back(scene2);
 	_scenes.push_back(scene3);
+	_scenes.push_back(game);
 
 	current_scene = 0;
 }

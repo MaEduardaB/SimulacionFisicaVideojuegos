@@ -38,6 +38,18 @@ void ForceRegestry::updateForces()
     }
 }
 
+
+void ForceRegestry::removeForce(ForceGenerator* fg)
+{
+    for (auto it = _registry.begin(); it != _registry.end(); )
+    {
+        if (it->second == fg)
+            it = _registry.erase(it);
+        else
+            ++it;
+    }
+}
+
 void ForceRegestry::removeInvalid(const std::list<std::unique_ptr<Particle>>& particles)
 {
     _registry.remove_if([&](const std::pair<Particle*, ForceGenerator*>& entry) {

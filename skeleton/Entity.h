@@ -14,6 +14,7 @@ public:
 	virtual void integrate(double t) {};
 	void setColor(const Vector4& color);
 	physx::PxTransform getTransform() const { return _transform; }
+	void setTransform(physx::PxTransform _n) { _transform = _n; }
 protected:
 	physx::PxTransform _transform;
 	RenderItem* _render;

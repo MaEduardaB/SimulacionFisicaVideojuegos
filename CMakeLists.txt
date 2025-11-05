@@ -29,6 +29,7 @@ set(MY_SOURCE_FILES
     "Vector3D.cpp"
     "ForceGenerator.cpp"
     "GravityForce.cpp"
+    "ExplosionForce.cpp"
     "WindForce.cpp"
     "WindForceM.cpp"
     "ForceRegestry.cpp"

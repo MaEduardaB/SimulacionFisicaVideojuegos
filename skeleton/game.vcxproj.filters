@@ -34,6 +34,9 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="WindForceM.cpp" />
     <ClCompile Include="TorbellinoForce.cpp" />
+    <ClCompile Include="ExplosionsForce.cpp" />
+    <ClCompile Include="Clouds.cpp" />
+    <ClCompile Include="CloudSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -71,6 +74,9 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="WindForceM.h" />
     <ClInclude Include="TorbellinoForce.h" />
+    <ClInclude Include="ExplosionsForce.h" />
+    <ClInclude Include="Clouds.h" />
+    <ClInclude Include="CloudSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

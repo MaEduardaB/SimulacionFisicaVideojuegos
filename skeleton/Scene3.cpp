@@ -58,7 +58,7 @@ void Scene3::enter()
 
     //_particleSystem->createWind(Vector3(20.0f, 0.0f, 0.0f), Vector3(0.0f, 00.0f, 0.0f), Vector3(140.0f, 140.0f, 140.0f), 0.8, 0.8);
     
-    _particleSystem->createTorbellino(Vector3(0, 0, 0), 50.0f, 10.0f);
+    //_particleSystem->createTorbellino(Vector3(0, 0, 0), 50.0f, 10.0f);
 
     RainGen* rg = new RainGen(mt, Vector3(0, 0, 0), Vector3(0, 0, 0), 1.0, 1.0, 30);
     _particleSystem->addGenerator(rg);
@@ -79,4 +79,5 @@ void Scene3::enter()
 void Scene3::create()
 {
     _particleSystem->createParticles();
+    _particleSystem->createExplosion(Vector3(0,40,0), 5000,20,1,10);
 }

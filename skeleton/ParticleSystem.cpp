@@ -6,6 +6,8 @@
 #include "WindForceM.h"
 #include "ForceRegestry.h"
 #include "TorbellinoForce.h"
+#include "ExplosionsForce.h"
+#include <iostream>
 
 
 ParticleSystem::ParticleSystem() : _particles(), _generators(), _force_registry(new ForceRegestry()), _gravityForce(nullptr)
@@ -20,7 +22,9 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::update(double t)
 {
-	_force_registry->updateForces();
+    _force_registry->updateForces();
+    updateExplosions(t);
+
 	for (auto it = _particles.begin(); it != _particles.end(); )
     {
         Particle* p = it->get();
@@ -137,6 +141,41 @@ void ParticleSystem::createTorbellino(const Vector3& center, float radio, float 
         Particle* p = up.get();
         if (p)
             _force_registry->add(p, _torbellinoForce.get());
+    }
+}
+
+void ParticleSystem::createExplosion(const Vector3& center, float K, float radius, float decaimento, float expansionVel)
+{
+    auto explosion = std::make_unique<ExplosionsForce>(center, K, radius, decaimento, expansionVel);
+
+    for (const auto& up : _particles)
+    {
+        Particle* p = up.get();
+        if (p)
+            _force_registry->add(p, explosion.get());
+    }
+
+    _explosions.push_back(std::move(explosion));
+}
+
+void ParticleSystem::updateExplosions(float dt)
+{
+    for (auto it = _explosions.begin(); it != _explosions.end(); )
+    {
+        ExplosionsForce* e = it->get();
+        e->updateTime(dt);
+
+        if (e->hasFaded())
+        {
+            // Eliminar del ForceRegistry antes de borrar la fuerza
+            _force_registry->removeForce(e);
+            it = _explosions.erase(it);
+            std::cout << "elim Explosion\n";
+        }
+        else
+        {
+            ++it;
+        }
     }
 }
 

@@ -48,10 +48,10 @@ Camera::Camera(const PxVec3& eye, const PxVec3& dir)
 
 void Camera::handleMouse(int button, int state, int x, int y)
 {
-	PX_UNUSED(state);
+	/*PX_UNUSED(state);
 	PX_UNUSED(button);
 	mMouseX = x;
-	mMouseY = y;
+	mMouseY = y;*/
 }
 
 bool Camera::handleKey(unsigned char key, int x, int y, float speed)
@@ -105,6 +105,13 @@ PxTransform Camera::getTransform() const
 
 	PxMat33 m(mDir.cross(viewY), viewY, -mDir);
 	return PxTransform(mEye, PxQuat(m));
+}
+
+void Camera::moveTo(physx::PxTransform _n)
+{
+	PxVec3 targetEye(_n.p.x, _n.p.y + 60.0f, 100.0f);
+	mEye += (targetEye - mEye) * 0.05f;
+	mDir = PxVec3(0.0f, -0.3f, -1.0f).getNormalized();
 }
 
 PxVec3 Camera::getEye() const
