@@ -21,9 +21,9 @@ void CloudSystem::update(double t, const Vector3& playerPos)
 {
     _spawnTimer += (float)t;
 
-    float spawnRate = max(0.5f, 3.0f - (float)playerPos.y * 0.001f);
+    float spawnRate = max(0.15f, 3.0f - (float)playerPos.y * 0.001f);
     if (_spawnTimer > spawnRate) {
-        int newClouds = min(5, (int)(_clouds.size() / 10 + 2));
+        int newClouds = min(3, (int)(_clouds.size() / 10 + 2));
         for (int i = 0; i < newClouds; ++i)
             spawnCloudAbove(playerPos.y);
         _spawnTimer = 0.0f;
@@ -31,8 +31,8 @@ void CloudSystem::update(double t, const Vector3& playerPos)
 
     for (auto* c : _clouds) {
         Vector3 pos = c->getPos();
-        pos.x += _randOffset(_mt) * 0.1f * (float)t * 0.001f;
-        pos.z += _randOffset(_mt) * 0.1f * (float)t * 0.001f;
+        pos.x += _randOffset(_mt) * 0.8f * (float)t * 0.001f;
+        pos.z += _randOffset(_mt) * 0.8f * (float)t * 0.001f;
         c->setPos(pos);
     }
 

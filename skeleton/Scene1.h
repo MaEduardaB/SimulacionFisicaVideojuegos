@@ -1,10 +1,13 @@
 #pragma once
 #include "Scene.h"
+#include <vector>
+
+class Particle;
 class Scene1 :
     public Scene
 {
 public:
-	Scene1();
+	Scene1(Snippets::Camera* cam);
 	~Scene1() override;
 
 	void update(double t) override;
@@ -12,9 +15,10 @@ public:
 	void exit() override;
 	void enter() override;
 
-	void create() override;
+	void keyPressed(unsigned char key) override;
 
 protected:
+	Snippets::Camera* _cam;
 
 	std::vector<Particle*> _gObjects;
 };

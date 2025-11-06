@@ -1,3 +1,7 @@
+#include <fstream>
+#include <PxPhysicsAPI.h>
+#include <iostream>
+
 #include "GameScene.h"
 #include "ParticleSystem.h"
 #include "GaussianGen.h"
@@ -16,17 +20,20 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 
-#include <PxPhysicsAPI.h>
-#include <iostream>
 using namespace physx;
 
-GameScene::GameScene(Camera* cam) : _particleSystem(nullptr), _cam(cam)
+GameScene::GameScene(Camera* cam)  : _particleSystem(nullptr),
+      _cloudSystem(nullptr),
+      _cam(cam),
+    _player(nullptr)
 {
 }
 
 GameScene::~GameScene()
 {
-	delete _particleSystem;
+	 for (auto* ps : _particleSystems)
+        delete ps;
+    _particleSystems.clear();
 
     delete _cloudSystem;
     _cloudSystem = nullptr;
@@ -34,7 +41,7 @@ GameScene::~GameScene()
 
 void GameScene::enter()
 {
-    std::cout << "Iniciando GameScene...\n";
+    //std::cout << "Iniciando GameScene\n";
 
     _particleSystem = new ParticleSystem();
 
@@ -52,29 +59,43 @@ void GameScene::enter()
     _player = new Particle(prop);
     _particleSystem->addParticle(_player);
 
-    // --- Suelo ---
+    const char* filename = "../assets/grass.jpg";
+
+    std::ifstream test(filename);
+    if (test.is_open()) {
+        std::cout << "[OK] Archivo encontrado: ../assets/grass.png\n";
+    } else {
+        std::cout << "[ERROR] No se encontró el archivo: ../assets/grass.png\n";
+    }
+    test.close();
+
+    // --- Cargar texturas ---
+    GLuint texGrass = LoadTexture(filename);
+    GLuint texSky = LoadTexture("../assets/sky.png");
+    
+    // --- Suelo con textura ---
     RenderItem* suelo = new RenderItem(
         CreateShape(PxBoxGeometry(1000, 1, 1000)),
         new PxTransform(PxVec3(0, 0, 0)),
-        Vector4(0.3f, 0.3f, 0.3f, 1.0f));
-
+        Vector4(1, 1, 1, 1));  // el color no importa mucho si hay textura
+    suelo->textureID = texGrass;  // <- asignamos textura (debes añadir este campo)
     RegisterRenderItem(suelo);
     _decoration.push_back(suelo);
 
-    // --- Pared en eje X (pared derecha) ---
+    // --- Pared con textura de cielo ---
     RenderItem* paredX = new RenderItem(
         CreateShape(PxBoxGeometry(1000, 1000, 1)),
-        new PxTransform(PxVec3(0, 0, -500)), Vector4(0.3f, 0.3f, 0.3f, 1.0f));
-
+        new PxTransform(PxVec3(0, 0, -500)),
+        Vector4(1, 1, 1, 1));
+    paredX->textureID = texSky;
     RegisterRenderItem(paredX);
     _decoration.push_back(paredX);
 
-    // --- Pared en eje Z (pared fondo) ---
     RenderItem* paredZ = new RenderItem(
         CreateShape(PxBoxGeometry(1, 1000, 1000)),
         new PxTransform(PxVec3(-500, 0, 0), PxQuat(PxPi / 2, PxVec3(1, 0, 0))),
-        Vector4(0.3f, 0.3f, 0.3f, 1.0f));
-
+        Vector4(1, 1, 1, 1));
+    paredZ->textureID = texSky;
     RegisterRenderItem(paredZ);
     _decoration.push_back(paredZ);
 
@@ -120,7 +141,7 @@ void GameScene::enter()
 
     //_particleSystem->createParticles();
 
-    _cloudSystem = new CloudSystem(-50, 50, -100, -50);
+    _cloudSystem = new CloudSystem(-50, 50, -200, -150);
 
 }
 
@@ -159,11 +180,28 @@ void GameScene::render() const
 
 void GameScene::exit()
 {
-    delete _particleSystem;
-    _particleSystem = nullptr;
+
+    if (_particleSystem) {
+        delete _particleSystem;
+        _particleSystem = nullptr;
+    }
+
+    if (_cloudSystem) {
+        delete _cloudSystem;
+        _cloudSystem = nullptr;
+    }
+
+    for (auto* ps : _particleSystems)
+        delete ps;
+    _particleSystems.clear();
+
+    _decoration.clear();
+    _player = nullptr;
+
+    DeregisterAllRenderItem();
 }
 
-void GameScene::create()
+void GameScene::keyPressed(unsigned char key)
 {
     _particleSystem->createParticles();
 }

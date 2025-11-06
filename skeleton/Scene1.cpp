@@ -1,5 +1,6 @@
 #include "Scene1.h"
 #include "Particle.h"
+#include "ParticleSystem.h"
 #include "Entity.h"
 
 #include "core.hpp"
@@ -8,8 +9,10 @@
 #include <iostream>
 using namespace physx;
 
-Scene1::Scene1(): _gObjects()
+Scene1::Scene1(Snippets::Camera* cam) : _gObjects()
 {
+	display_text = "Scene 1: Press 'p' to create particles.";
+	_cam = cam;
 }
 
 Scene1::~Scene1()
@@ -43,7 +46,7 @@ void Scene1::enter()
 {
 }
 
-void Scene1::create()
+void Scene1::keyPressed(unsigned char key)
 {
 	//std::cout << "Creadno\n";
 	PARTICLES prop;

@@ -1,5 +1,6 @@
 #pragma once
 #include "ParticleGen.h"
+#include "Constants.h"
 class FireworkGen :
     public ParticleGen
 {
@@ -18,5 +19,7 @@ public:
 
 private:
     std::uniform_real_distribution<double> _u{ -1,1 };
+
+	PARTICLES prop;
 };
 

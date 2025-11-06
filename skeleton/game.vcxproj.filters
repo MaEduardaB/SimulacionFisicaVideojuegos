@@ -37,6 +37,7 @@
     <ClCompile Include="ExplosionsForce.cpp" />
     <ClCompile Include="Clouds.cpp" />
     <ClCompile Include="CloudSystem.cpp" />
+    <ClCompile Include="StartScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="ExplosionsForce.h" />
     <ClInclude Include="Clouds.h" />
     <ClInclude Include="CloudSystem.h" />
+    <ClInclude Include="StartScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

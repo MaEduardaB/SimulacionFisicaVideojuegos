@@ -304,28 +304,83 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	assert(glGetError() == GL_NO_ERROR);
 }
 
-void renderShape(const PxShape& shape, const PxTransform& transform, const PxVec4& color)
+void renderShape(const PxShape& shape, const PxTransform& transform, const PxVec4& color, GLuint textureID)
 {
-	PxGeometryHolder h = shape.getGeometry();
+    PxGeometryHolder h = shape.getGeometry();
 
-	if (shape.getFlags() & PxShapeFlag::eTRIGGER_SHAPE)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    if (shape.getFlags() & PxShapeFlag::eTRIGGER_SHAPE)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	// render object
-	glPushMatrix();
-	PxMat44 mtx(transform);
-	glMultMatrixf(reinterpret_cast<const float*>(&mtx));
-	assert(glGetError() == GL_NO_ERROR);
-	glColor4f(color.x, color.y, color.z, 1.0f);
-	assert(glGetError() == GL_NO_ERROR);
-	renderGeometry(h, color.w < 0.999f);
-	assert(glGetError() == GL_NO_ERROR);
-	glPopMatrix();
-	assert(glGetError() == GL_NO_ERROR);
+    glPushMatrix();
+    PxMat44 mtx(transform);
+    glMultMatrixf(reinterpret_cast<const float*>(&mtx));
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	assert(glGetError() == GL_NO_ERROR);
+    // --- Activar textura si hay ---
+    if (textureID != 0)
+    {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glColor4f(1.0f, 1.0f, 1.0f, color.w);  // color blanco para ver bien la textura
+    }
+    else
+    {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f(color.x, color.y, color.z, color.w);
+    }
+
+    // --- Dibujar geometría ---
+    switch (h.getType())
+    {
+    case PxGeometryType::eBOX:
+    {
+        glScalef(h.box().halfExtents.x, h.box().halfExtents.y, h.box().halfExtents.z);
+
+        glBegin(GL_QUADS);
+        // Cara +Z
+        glTexCoord2f(0, 0); glVertex3f(-1, -1, 1);
+        glTexCoord2f(1, 0); glVertex3f(1, -1, 1);
+        glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
+        glTexCoord2f(0, 1); glVertex3f(-1, 1, 1);
+        // Cara -Z
+        glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
+        glTexCoord2f(1, 0); glVertex3f(1, -1, -1);
+        glTexCoord2f(1, 1); glVertex3f(1, 1, -1);
+        glTexCoord2f(0, 1); glVertex3f(-1, 1, -1);
+        // +X
+        glTexCoord2f(0, 0); glVertex3f(1, -1, -1);
+        glTexCoord2f(1, 0); glVertex3f(1, -1, 1);
+        glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
+        glTexCoord2f(0, 1); glVertex3f(1, 1, -1);
+        // -X
+        glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
+        glTexCoord2f(1, 0); glVertex3f(-1, -1, 1);
+        glTexCoord2f(1, 1); glVertex3f(-1, 1, 1);
+        glTexCoord2f(0, 1); glVertex3f(-1, 1, -1);
+        // +Y
+        glTexCoord2f(0, 0); glVertex3f(-1, 1, -1);
+        glTexCoord2f(1, 0); glVertex3f(1, 1, -1);
+        glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
+        glTexCoord2f(0, 1); glVertex3f(-1, 1, 1);
+        // -Y
+        glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
+        glTexCoord2f(1, 0); glVertex3f(1, -1, -1);
+        glTexCoord2f(1, 1); glVertex3f(1, -1, 1);
+        glTexCoord2f(0, 1); glVertex3f(-1, -1, 1);
+        glEnd();
+    }
+    break;
+
+    default:
+        renderGeometry(h, color.w < 0.999f);
+        break;
+    }
+
+    glPopMatrix();
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glDisable(GL_TEXTURE_2D);
 }
+
 
 void renderActors(PxRigidActor** actors, const PxU32 numActors, bool shadows, const PxVec4 & color)
 {

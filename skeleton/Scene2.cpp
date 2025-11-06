@@ -9,8 +9,10 @@
 #include <iostream>
 using namespace physx;
 
-Scene2::Scene2(): _gObjects()
+Scene2::Scene2(Snippets::Camera* cam): _gObjects()
 {
+	display_text = "Scene 2: Press 'p' to shoot light Bullet.\n Press 'b' to shoot Canon Bullet.";
+    _cam = cam;
 }
 
 Scene2::~Scene2()
@@ -27,9 +29,6 @@ void Scene2::update(double t)
 	}
 
 }
-
-
-
 
 void Scene2::render() const
 {
@@ -48,7 +47,7 @@ void Scene2::enter()
 {
 }
 
-void Scene2::create()
+void Scene2::keyPressed(unsigned char key)
 {
 
     auto cam = GetCamera();

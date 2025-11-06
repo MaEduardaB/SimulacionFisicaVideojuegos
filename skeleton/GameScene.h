@@ -19,7 +19,7 @@ public:
 	void exit() override;
 	void enter() override;
 
-	void create() override;
+	void keyPressed(unsigned char key) override;
 
 protected:
 	ParticleSystem* _particleSystem;

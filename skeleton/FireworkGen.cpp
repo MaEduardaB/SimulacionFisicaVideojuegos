@@ -12,6 +12,15 @@ FireworkGen::FireworkGen()
 FireworkGen::FireworkGen(std::mt19937 mt, Vector3 vel, Vector3 pos, double duration, double prob_Gen, int n_particles)
     : ParticleGen(mt, vel, pos, duration, prob_Gen, n_particles), _u(-1.0, 1.0)
 {
+    Vector3 launchPos = _pos;
+
+    prop._transform = launchPos;
+    prop._velocity = Vector3(0.0, 0.0, 0.0);
+    prop._aceleration = Vector3(0.0, 0.0, 0.0);
+    prop._mass = 10.0;
+    prop._damping = 0.99;
+    prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
+    prop._p_type = PARTICLE_TYPE::FIREWORK;
 }
 
 void FireworkGen::clearParticles()
@@ -29,15 +38,8 @@ std::list<Particle*> FireworkGen::generateP()
     Vector3 launchPos = _pos;
     Vector3 launchVel = _vel + Vector3(10 * prob(_mt), 30.0 + 10.0 * prob(_mt), 0.0);
 
-    PARTICLES prop;
-    prop._transform = launchPos;
     prop._velocity = launchVel;
-    prop._aceleration = Vector3(0.0, 0.0, 0.0);
-    prop._mass = 10.0;
-    prop._damping = 0.99;
-    prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
-    prop._p_type = PARTICLE_TYPE::FIREWORK;
-
+ 
     Particle* rocket = new Particle(prop);
     rocket->setTime(_dur + 1.0 * prob(_mt));
     

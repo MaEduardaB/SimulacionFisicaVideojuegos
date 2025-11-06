@@ -23,6 +23,7 @@ Scene4::~Scene4()
 	delete _particleSystem;
 }
 
+
 void Scene4::update(double t)
 {
 	_particleSystem->update(t);
@@ -60,7 +61,7 @@ void Scene4::enter()
     _particleSystem->createParticles(); 
 }
 
-void Scene4::create()
+void Scene4::keyPressed(unsigned char key)
 {
     _particleSystem->createParticles();
 }

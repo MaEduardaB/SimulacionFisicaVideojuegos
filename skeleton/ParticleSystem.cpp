@@ -14,11 +14,7 @@ ParticleSystem::ParticleSystem() : _particles(), _generators(), _force_registry(
 {
 }
 
-ParticleSystem::~ParticleSystem()
-{
-	// _particles stores unique_ptrs so they will be deleted automatically
-	_particles.clear();
-}
+ParticleSystem::~ParticleSystem() = default;
 
 void ParticleSystem::update(double t)
 {

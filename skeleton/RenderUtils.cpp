@@ -1,12 +1,49 @@
-#include <vector>
+#define WIN32_LEAN_AND_MEAN   // evita conflictos de Windows.h
+#include <Windows.h>
 
-#include "PxPhysicsAPI.h"
+#include <gl/GL.h>      
+#include <gl/GLU.h>
+#ifndef GLuint
+typedef unsigned int GLuint;
+#endif
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+#include <iostream>
+#include <vector>
+#include <filesystem>
 
 #include "core.hpp"
+#include "PxPhysicsAPI.h"
 #include "RenderUtils.hpp"
 
 
 using namespace physx;
+
+GLuint LoadTexture(const std::string& filename)
+{
+	int width, height, channels;
+	unsigned char* data = stbi_load(filename.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+	std::cout << "[DEBUG] Directorio actual: " << std::filesystem::current_path() << std::endl;
+	if (!data)
+	{
+		std::cerr << "Error cargando textura: " << filename << std::endl;
+		return 0;
+	}
+
+	GLuint texID;
+	glGenTextures(1, &texID);
+	glBindTexture(GL_TEXTURE_2D, texID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	stbi_image_free(data);
+	std::cout << "Textura cargada: " << filename << " (" << width << "x" << height << ")\n";
+	return texID;
+}
 
 extern void initPhysics(bool interactive);
 extern void stepPhysics(bool interactive, double t);	
@@ -107,7 +144,8 @@ void renderCallback()
 			auto actor = obj->actor;
 			if (actor)
 			{
-				renderShape(*obj->shape, actor->getGlobalPose(), obj->color);
+				renderShape(*obj->shape, actor->getGlobalPose(), obj->color, obj->textureID);
+
 				continue;
 			}
 		}

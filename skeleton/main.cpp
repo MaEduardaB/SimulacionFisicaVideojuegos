@@ -10,14 +10,16 @@
 #include "Particle.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "Scene.h"
 #include "Scene3.h"
+#include "SceneManager.h"
 #include "GameScene.h"
 
 #include <iostream>
 #include <chrono>
 #include <thread>
 
-std::string display_text = "This is a test";
+std::string display_text = "porra";
 
 using namespace physx;
 
@@ -36,11 +38,12 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-
-std::vector<Scene*> _scenes;
-int current_scene = 0;
-
 Camera* _cam;
+
+void update_display_text(const std::string& text)
+{
+	display_text = text;
+}
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -74,18 +77,15 @@ void initPhysics(bool interactive)
 
 	// RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 0.0, 10.0), Vector4(0, 0, 1, 1)));
 
-	Scene1* scene = new Scene1();
-
-	Scene2* scene2 = new Scene2();
-	Scene3* scene3 = new Scene3();
-	GameScene* game = new GameScene(_cam);
-	_scenes.push_back(scene);
-	_scenes.push_back(scene2);
-	_scenes.push_back(scene3);
-	_scenes.push_back(game);
-
-	current_scene = 0;
+	SceneManager& sm = SceneManager::instance();
+	sm.add_scene(new Scene1(_cam));
+	sm.add_scene(new Scene2(_cam));
+	sm.add_scene(new Scene3(_cam));
+	sm.add_scene(new GameScene(_cam));
+	sm.change_to_scene(0);
+	update_display_text(SceneManager::instance().get_display_text());
 }
+
 
 
 // Function to configure what happens in each step of physics
@@ -97,8 +97,10 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 
-	_scenes[current_scene]->update(t);
+	SceneManager::instance().update(t);
 	gScene->fetchResults(true);
+	
+	update_display_text(SceneManager::instance().get_display_text());
 
 
 	std::this_thread::sleep_for(std::chrono::microseconds(10));
@@ -110,16 +112,16 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
-	// -----------------------------------------------------
-	gPhysics->release();	
+	gPhysics->release();
+
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
 	gFoundation->release();
 
+	SceneManager::instance().clear_scenes();
 	DeregisterAllRenderItem();
 }
 
@@ -127,33 +129,9 @@ void cleanupPhysics(bool interactive)
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
-
-	switch(toupper(key))
-	{
-	//case 'B': break;
-	//case ' ':	break;
-	case 'P':
-	{
-		//std::cout << "Creando\n";
-		_scenes[current_scene]->create();
-		break;
-	}
-	default:
-		if (key >= '0' && key <= '9') //cuando estamos en el estado de dos escenas no cambiamos de escena
-		{
-			int scene_index = key - '0';
-			if (scene_index < _scenes.size()) {
-				std::cout << "Cambiando a escena " << scene_index << "\n";
-				_scenes[current_scene]->exit();
-				current_scene = scene_index;
-				_scenes[current_scene]->enter();
-			}
-			
-		}
-			break;
-		break;
-	}
+	SceneManager::instance().key_input(key);
 }
+
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
