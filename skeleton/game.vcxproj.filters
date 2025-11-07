@@ -38,6 +38,9 @@
     <ClCompile Include="Clouds.cpp" />
     <ClCompile Include="CloudSystem.cpp" />
     <ClCompile Include="StartScene.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="WinScene.cpp" />
+    <ClCompile Include="Scene5.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -79,6 +82,9 @@
     <ClInclude Include="Clouds.h" />
     <ClInclude Include="CloudSystem.h" />
     <ClInclude Include="StartScene.h" />
+    <ClInclude Include="GameOverScene.h" />
+    <ClInclude Include="WinScene.h" />
+    <ClInclude Include="Scene5.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

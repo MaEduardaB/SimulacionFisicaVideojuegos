@@ -107,11 +107,18 @@ PxTransform Camera::getTransform() const
 	return PxTransform(mEye, PxQuat(m));
 }
 
-void Camera::moveTo(physx::PxTransform _n)
+void Camera::moveTo(physx::PxTransform _n, bool isPlayer)
 {
-	PxVec3 targetEye(_n.p.x, _n.p.y + 60.0f, 100.0f);
-	mEye += (targetEye - mEye) * 0.05f;
-	mDir = PxVec3(0.0f, -0.3f, -1.0f).getNormalized();
+	if(isPlayer){
+		PxVec3 targetEye(0, _n.p.y + 60.0f, 100.0f);
+		mEye += (targetEye - mEye) * 0.05f;
+		mDir = PxVec3(0.0f, -0.3f, -1.0f).getNormalized();
+	}else{
+		PxVec3 targetEye(_n.p.x, _n.p.y + 60.0f, 100.0f);
+		mEye += (targetEye - mEye) * 0.05f;
+		mDir = PxVec3(0.0f, -0.3f, -1.0f).getNormalized();
+
+	}
 }
 
 PxVec3 Camera::getEye() const

@@ -21,7 +21,8 @@ bool WindForce::isInsideArea(const Vector3& pos) const
 
 void WindForce::updateForce(Particle* p)
 {
-    if (!isInsideArea(p->getTransform().p)) return;
+    if (!isInsideArea(p->getTransform().p) || !_active) return;
+    
     p->addForce(calculateForce(p));
 }
 

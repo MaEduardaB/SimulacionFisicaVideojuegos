@@ -264,6 +264,7 @@
     <ClCompile Include="FogGen.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="ForceRegestry.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GaussianGen.cpp" />
     <ClCompile Include="GravityForce.cpp" />
@@ -280,6 +281,7 @@
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="Scene3.cpp" />
     <ClCompile Include="Scene4.cpp" />
+    <ClCompile Include="Scene5.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TorbellinoForce.cpp" />
@@ -287,6 +289,7 @@
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="WindForceM.cpp" />
     <ClCompile Include="WindForce.cpp" />
+    <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -301,6 +304,7 @@
     <ClInclude Include="FogGen.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="ForceRegestry.h" />
+    <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GaussianGen.h" />
     <ClInclude Include="GravityForce.h" />
@@ -317,6 +321,7 @@
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="Scene3.h" />
     <ClInclude Include="Scene4.h" />
+    <ClInclude Include="Scene5.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="TorbellinoForce.h" />
@@ -324,6 +329,7 @@
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WindForceM.h" />
     <ClInclude Include="WindForce.h" />
+    <ClInclude Include="WinScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

@@ -1,11 +1,13 @@
 #pragma once
 #include "Scene.h"
 class ParticleSystem;
+namespace Snippets { class Camera; }
+
 class Scene4 :
     public Scene
 {
 public:
-	Scene4();
+	Scene4(Snippets::Camera* cam);
 	~Scene4() override;
 
 	void update(double t) override;
@@ -16,6 +18,6 @@ public:
 	void keyPressed(unsigned char key) override;
 
 protected:
-	ParticleSystem* _particleSystem;
+	Snippets::Camera* _cam;
 };
 

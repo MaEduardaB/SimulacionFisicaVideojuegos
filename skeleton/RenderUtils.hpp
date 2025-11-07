@@ -72,6 +72,11 @@ public:
 	GLuint textureID;
 
 	unsigned references;
+
+	bool visible = true;
+
+    void setVisible(bool v) { visible = v; }
+    bool isVisible() const { return visible; }
 };
 
 double GetLastTime();

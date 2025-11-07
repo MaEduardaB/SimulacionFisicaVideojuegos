@@ -9,7 +9,8 @@
 #include "FogGen.h"
 #include "WindForce.h"
 #include "TorbellinoForce.h"
-
+#include "SceneManager.h"
+#include "Constants.h"
 #include "core.hpp"
 #include "RenderUtils.hpp"
 
@@ -18,9 +19,10 @@
 using namespace physx;
 
 Scene3::Scene3(Snippets::Camera* cam){
-    _particleSystems = std::list<ParticleSystem*>();
-    _force_registry = new ForceRegestry();
+	display_text = "Scene 3: Press 'p' to create rain.";
     _cam = cam;
+    _force_registry = nullptr;
+    _particleSystems = std::list<ParticleSystem*>();
 }
 
 Scene3::~Scene3()
@@ -61,8 +63,14 @@ void Scene3::render() const
 
 void Scene3::enter()
 {
+	_cam->setDir(physx::PxVec3(-0.6f,-0.2f,-0.7f));
+	_cam->setEye(physx::PxVec3(50.0f, 50.0f, 50.0f));
+
+    _particleSystems = std::list<ParticleSystem*>();
+    _force_registry = new ForceRegestry();
+
     // Crear sistema de particulas con generador uniforme y gaussiano
-    std::cout << "Creando ParticleSystem\n";
+    //std::cout << "Creando ParticleSystem\n";
 
     _particleSystems.push_back(new ParticleSystem());
 
@@ -87,8 +95,16 @@ void Scene3::enter()
     // _particleSystem->addGenerator(gg);
     // _particleSystem->addGenerator(ug);
 
-    _particleSystems.front()->createParticles();
-    _particleSystems.front()->createGravity();
+   for (auto* ps : _particleSystems) {
+        if (ps) {
+            ps->createParticles();
+        }
+    }
+   for (auto* ps : _particleSystems) {
+        if (ps) {
+            ps->createGravity();
+        }
+    }
 
 
     //RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(20)), new PxTransform(0.0, 20.0, 10.0), Vector4(0, 0, 1, 0.2)));
@@ -96,6 +112,14 @@ void Scene3::enter()
 
 void Scene3::keyPressed(unsigned char key)
 {
-    _particleSystems.front()->createParticles();
-    //_particleSystem->createExplosion(Vector3(0,40,0), 5000,20,1,10);
+    if(key == 'G' || key == 'g') {
+		SceneManager::instance().change_to_scene(SCENE_TYPE::MAIN_MENU);
+	}
+	else if (key == 'p' || key == 'P') {
+       for (auto* ps : _particleSystems) {
+            if (ps) {
+                ps->createParticles();
+            }
+       }
+    }
 }

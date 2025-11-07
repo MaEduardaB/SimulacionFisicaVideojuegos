@@ -5,6 +5,10 @@
 class ParticleSystem;
 class Particle;
 class CloudSystem;
+class WindForce;
+class ExplosionsForce;
+class GravityForce;
+class WindForceM;
 class RenderItem;
 namespace Snippets { class Camera; }
 class GameScene :
@@ -18,7 +22,7 @@ public:
 	void render() const override;
 	void exit() override;
 	void enter() override;
-
+	void toggleWind(int index);
 	void keyPressed(unsigned char key) override;
 
 protected:
@@ -29,5 +33,10 @@ protected:
 
 	std::list<RenderItem*> _decoration;
 	CloudSystem* _cloudSystem;
+	GravityForce* _gravity;
+	std::list<RenderItem*> _windBoxes;       
+	std::list<WindForce*> _windForces; 
+	WindForce* _windUp; 
+	std::list<WindForceM*> _windForcesM; 
+	std::list<ExplosionsForce*> _explosions; 
 };
-

@@ -15,7 +15,6 @@ void StartScene::enter() {
 }
 
 void StartScene::update(double) {
-    // nada por ahora
 }
 
 void StartScene::render() const
@@ -26,7 +25,7 @@ void StartScene::exit() {}
 
 void StartScene::keyPressed(unsigned char key) {
     if (key == 'p' || key == 'P') {
-        std::cout << "Cambiando a GameScene...\n";
-        SceneManager::instance().change_to_scene(3); // índice del GameScene
+        std::cout << "Cambiando a GameScene\n";
+        SceneManager::instance().change_to_scene(SCENE_TYPE::GAME);
     }
 }

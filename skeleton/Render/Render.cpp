@@ -27,8 +27,9 @@
 // Copyright (c) 2004-2008 AGEIA Technologies, Inc. All rights reserved.
 // Copyright (c) 2001-2004 NovodeX AG. All rights reserved.  
 
-#include "Render.h"
+#include "../core.hpp"
 #include <assert.h>
+#include <PxPhysicsAPI.h>
 
 using namespace physx;
 
@@ -51,8 +52,15 @@ static float gCylinderData[]={
 #define MAX_NUM_MESH_VEC3S  1024
 static PxVec3 gVertexBuffer[MAX_NUM_MESH_VEC3S];
 
-void renderGeometry(const PxGeometryHolder& h, bool wireframe =false)
+void renderGeometry(const PxGeometryHolder& h, bool wireframe = false, const PxVec4& color = PxVec4(1,1,1,1))
 {
+    bool needsBlend = wireframe || color.w < 1.0f;
+    if (needsBlend) {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glDepthMask(GL_FALSE); 
+    }
+
 	auto geoType = h.getType();
 	switch(geoType)
 	{
@@ -288,7 +296,7 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 
 	// Display text
 	glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
-	drawText(display_text, 0, 0);
+	drawText(display_text, 400, 0);
 
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
@@ -334,40 +342,52 @@ void renderShape(const PxShape& shape, const PxTransform& transform, const PxVec
     case PxGeometryType::eBOX:
     {
         glScalef(h.box().halfExtents.x, h.box().halfExtents.y, h.box().halfExtents.z);
+		if (color.w < 1.0f) {
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glDepthMask(GL_FALSE);
+		}
+		glColor4f(color.x, color.y, color.z, color.w);
+		// Wireframe
+		
+		glBegin(GL_QUADS);
+			// Cara +Z
+			glTexCoord2f(0, 0); glVertex3f(-1, -1, 1);
+			glTexCoord2f(1, 0); glVertex3f(1, -1, 1);
+			glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
+			glTexCoord2f(0, 1); glVertex3f(-1, 1, 1);
+			// Cara -Z
+			glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
+			glTexCoord2f(1, 0); glVertex3f(1, -1, -1);
+			glTexCoord2f(1, 1); glVertex3f(1, 1, -1);
+			glTexCoord2f(0, 1); glVertex3f(-1, 1, -1);
+			// +X
+			glTexCoord2f(0, 0); glVertex3f(1, -1, -1);
+			glTexCoord2f(1, 0); glVertex3f(1, -1, 1);
+			glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
+			glTexCoord2f(0, 1); glVertex3f(1, 1, -1);
+			// -X
+			glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
+			glTexCoord2f(1, 0); glVertex3f(-1, -1, 1);
+			glTexCoord2f(1, 1); glVertex3f(-1, 1, 1);
+			glTexCoord2f(0, 1); glVertex3f(-1, 1, -1);
+			// +Y
+			glTexCoord2f(0, 0); glVertex3f(-1, 1, -1);
+			glTexCoord2f(1, 0); glVertex3f(1, 1, -1);
+			glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
+			glTexCoord2f(0, 1); glVertex3f(-1, 1, 1);
+			// -Y
+			glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
+			glTexCoord2f(1, 0); glVertex3f(1, -1, -1);
+			glTexCoord2f(1, 1); glVertex3f(1, -1, 1);
+			glTexCoord2f(0, 1); glVertex3f(-1, -1, 1);
+		glEnd();
 
-        glBegin(GL_QUADS);
-        // Cara +Z
-        glTexCoord2f(0, 0); glVertex3f(-1, -1, 1);
-        glTexCoord2f(1, 0); glVertex3f(1, -1, 1);
-        glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
-        glTexCoord2f(0, 1); glVertex3f(-1, 1, 1);
-        // Cara -Z
-        glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
-        glTexCoord2f(1, 0); glVertex3f(1, -1, -1);
-        glTexCoord2f(1, 1); glVertex3f(1, 1, -1);
-        glTexCoord2f(0, 1); glVertex3f(-1, 1, -1);
-        // +X
-        glTexCoord2f(0, 0); glVertex3f(1, -1, -1);
-        glTexCoord2f(1, 0); glVertex3f(1, -1, 1);
-        glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
-        glTexCoord2f(0, 1); glVertex3f(1, 1, -1);
-        // -X
-        glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
-        glTexCoord2f(1, 0); glVertex3f(-1, -1, 1);
-        glTexCoord2f(1, 1); glVertex3f(-1, 1, 1);
-        glTexCoord2f(0, 1); glVertex3f(-1, 1, -1);
-        // +Y
-        glTexCoord2f(0, 0); glVertex3f(-1, 1, -1);
-        glTexCoord2f(1, 0); glVertex3f(1, 1, -1);
-        glTexCoord2f(1, 1); glVertex3f(1, 1, 1);
-        glTexCoord2f(0, 1); glVertex3f(-1, 1, 1);
-        // -Y
-        glTexCoord2f(0, 0); glVertex3f(-1, -1, -1);
-        glTexCoord2f(1, 0); glVertex3f(1, -1, -1);
-        glTexCoord2f(1, 1); glVertex3f(1, -1, 1);
-        glTexCoord2f(0, 1); glVertex3f(-1, -1, 1);
-        glEnd();
-    }
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glDepthMask(GL_TRUE);
+		if (color.w < 1.0f)
+			glDisable(GL_BLEND);
+	}
     break;
 
     default:
@@ -439,26 +459,36 @@ void finishRender()
 
 void drawText(const std::string& text, int x, int y)
 {
-	glMatrixMode(GL_PROJECTION);
-	double* matrix = new double[16];
-	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
-	glLoadIdentity();
-	glOrtho(0, 512, 0, 512, -5, 5);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glPushMatrix();
-	//glLoadIdentity();
-	glRasterPos2i(x, y);
+    int windowWidth = glutGet(GLUT_WINDOW_WIDTH);
+    int windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+	float scale = 0.2f;
+    float textWidth = 0.0f;
+    for (char c : text)
+        textWidth += glutStrokeWidth(GLUT_STROKE_ROMAN, c);
+    textWidth *= scale;
 
-	int length = text.length();
+    float xi = (windowWidth - textWidth) / 2.0f;
+	glColor3f(1.0f, 0.0f, 0.0f);
+    glMatrixMode(GL_PROJECTION);
+    double matrix[16];
+    glGetDoublev(GL_PROJECTION_MATRIX, matrix);
+    glLoadIdentity();
+    glOrtho(0, windowWidth, 0, windowHeight, -5, 5);
 
-	for (int i = 0; i < length; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, (int)text[i]);
-	}
-	glPopMatrix();
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixd(matrix);
-	glMatrixMode(GL_MODELVIEW);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glPushMatrix();
+
+    glTranslatef(xi, y, 0.0f);
+    glScalef(scale, scale, 1.0f); 
+
+    for (char c : text)
+        glutStrokeCharacter(GLUT_STROKE_ROMAN, c);
+
+    glPopMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glLoadMatrixd(matrix);
+    glMatrixMode(GL_MODELVIEW);
 }
 
 

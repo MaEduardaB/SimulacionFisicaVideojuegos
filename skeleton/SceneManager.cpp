@@ -18,40 +18,54 @@ void SceneManager::add_scene(Scene* s)
     if (s) _scenes.push_back(s);
 }
 
-void SceneManager::change_to_scene(int idx)
+void SceneManager::change_to_scene(SCENE_TYPE type)
 {
+    int idx = static_cast<int>(type);
     if (idx < 0 || idx >= _scenes.size()) return;
 
-    if (_curr_scene != -1)
-        _scenes[_curr_scene]->exit();
+    if (_curr_scene != type)
+        _scenes[static_cast<int>(_curr_scene)]->exit();
 
-    _curr_scene = idx;
-    _scenes[_curr_scene]->enter();
+    _curr_scene = type;
+    _scenes[idx]->enter();
 
-    display_text = _scenes[_curr_scene]->get_display_text();
-    std::cout << "Cambiando a escena " << idx << "\n";
+    display_text = _scenes[idx]->get_display_text();
+    //std::cout << "Cambiando a escena " << idx << "\n";
 }
 
 void SceneManager::update(double t)
 {
-    if (_curr_scene != -1 && _curr_scene < _scenes.size())
-        _scenes[_curr_scene]->update(t);
+    if (_scenes.empty()) return;
+    int idx = static_cast<int>(_curr_scene);
+    if (idx < 0 || idx >= _scenes.size()) return;
+    _scenes[idx]->update(t);
 }
 
 void SceneManager::key_input(unsigned char key)
 {
-    if (_curr_scene == -1) return;
-
-    // Cambiar de escena si es un número
-    if (key >= '0' && key <= '9')
-    {
-        int idx = key - '0';
-        change_to_scene(idx);
-        return;
+     if (_scenes.empty()) return;
+    int idx = static_cast<int>(_curr_scene);
+    if (idx < 0 || idx >= _scenes.size()) return;
+    switch (key) {
+        case '1':
+            change_to_scene(SCENE_TYPE::SCENE1);
+            return;
+        case '2':
+            change_to_scene(SCENE_TYPE::SCENE2);
+            return;
+        case '3':
+            change_to_scene(SCENE_TYPE::SCENE3);
+            return;
+        case '4':
+            change_to_scene(SCENE_TYPE::SCENE4);
+            return;
+        case '5':
+            change_to_scene(SCENE_TYPE::SCENE5);
+            return;
     }
 
     // Pasar input a la escena actual
-    _scenes[_curr_scene]->keyPressed(key);
+    _scenes[idx]->keyPressed(key);
 }
 
 void SceneManager::clear_scenes()
@@ -63,6 +77,8 @@ void SceneManager::clear_scenes()
 
 Scene* SceneManager::get_curr_scene()
 {
-    if (_curr_scene == -1 || _curr_scene >= _scenes.size()) return nullptr;
-    return _scenes[_curr_scene];
+    if (_scenes.empty()) return nullptr;
+    int idx = static_cast<int>(_curr_scene);
+    if (idx < 0 || idx >= _scenes.size()) return nullptr;
+    return _scenes[idx];
 }

@@ -49,7 +49,9 @@ public:
 	physx::PxVec3		getDir()	const;
 	physx::PxTransform	getTransform() const;
 
-	void moveTo(physx::PxTransform _n);
+	void moveTo(physx::PxTransform _n, bool isPlayer = false);
+	void setDir(const physx::PxVec3& dir) { mDir = dir.getNormalized(); }
+	void setEye(const physx::PxVec3& eye) { mEye = eye; }
 private:
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;

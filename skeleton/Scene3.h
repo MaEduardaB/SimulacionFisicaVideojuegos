@@ -1,5 +1,9 @@
 #pragma once
 #include "Scene.h"
+#include "core.hpp"
+
+namespace Snippets { class Camera; }
+
 class ParticleSystem;
 class Scene3 :
     public Scene
@@ -16,6 +20,6 @@ public:
 	void keyPressed(unsigned char key) override;
 
 protected:
-	Snippets::Camera* _cam
+	Snippets::Camera* _cam;
 };
 

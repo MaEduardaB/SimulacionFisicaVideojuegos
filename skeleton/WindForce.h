@@ -18,9 +18,14 @@ public:
 
     bool isInsideArea(const Vector3& pos) const;
 
+    bool isActive() const { return _active; }
+    void setActive(bool active) { _active = active; }
 protected:
     Vector3 _windVelocity;
     Vector3 _areaCenter;     // centro
     Vector3 _areaHalfSize;   // tamaño 
     float _k1, _k2;
+
+private:
+    bool _active;
 };

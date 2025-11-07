@@ -12,6 +12,11 @@
 #include "Scene2.h"
 #include "Scene.h"
 #include "Scene3.h"
+#include "Scene4.h"
+#include "Scene5.h"
+#include "StartScene.h"
+#include "GameOverScene.h"
+#include "WinScene.h"
 #include "SceneManager.h"
 #include "GameScene.h"
 
@@ -78,11 +83,16 @@ void initPhysics(bool interactive)
 	// RegisterRenderItem(new RenderItem(CreateShape(PxSphereGeometry(1)), new PxTransform(0.0, 0.0, 10.0), Vector4(0, 0, 1, 1)));
 
 	SceneManager& sm = SceneManager::instance();
+	sm.add_scene(new StartScene());
+	sm.add_scene(new GameScene(_cam));
+	sm.add_scene(new GameOverScene());
+	sm.add_scene(new WinScene(_cam));
 	sm.add_scene(new Scene1(_cam));
 	sm.add_scene(new Scene2(_cam));
 	sm.add_scene(new Scene3(_cam));
-	sm.add_scene(new GameScene(_cam));
-	sm.change_to_scene(0);
+	sm.add_scene(new Scene4(_cam));
+	sm.add_scene(new Scene5(_cam));
+	sm.change_to_scene(SCENE_TYPE::MAIN_MENU);
 	update_display_text(SceneManager::instance().get_display_text());
 }
 
@@ -118,7 +128,7 @@ void cleanupPhysics(bool interactive)
 
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
-	transport->release();
+	transport->release();			   
 	gFoundation->release();
 
 	SceneManager::instance().clear_scenes();

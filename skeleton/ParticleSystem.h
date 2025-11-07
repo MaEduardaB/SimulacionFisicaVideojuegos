@@ -1,65 +1,67 @@
 #pragma once
-#include<list>
-#include<memory>
+#include <list>
+#include <memory>
+#include <vector>
 #include <PxPhysicsAPI.h>
 #include "core.hpp"
+
 class Particle;
 class ParticleGen;
 class ForceRegestry;
 class GravityForce;
 class WindForce;
 class WindForceM;
-class ForceGenerator;
 class TorbellinoForce;
 class ExplosionsForce;
+
 class ParticleSystem
 {
 public:
-	ParticleSystem();
-	~ParticleSystem();
-	void update(double t);
-	void addGenerator(ParticleGen* gen);
-	void addForce();
-	void createParticles();
-	void clearForces();
-	void addParticle(Particle* p, bool applyGravity = true);
-	const std::list<std::unique_ptr<Particle>>& getParticles() const;
-	void createGravity();
-	void createWind(const Vector3& windVelocity,
-					const Vector3& areaCenter,
-					const Vector3& areaHalfSize,
-					float k1 = 1.0f,
-					float k2 = 0.0f);
+    ParticleSystem();
+    ~ParticleSystem();
 
-	void createTorbellino(const Vector3& center,
-		float radio,
-		float intensidad);
+    void update(double t);
+    void addGenerator(ParticleGen* gen);
+    void createParticles();
+    void addParticle(Particle* p, bool applyGravity = true);
+    const std::list<std::unique_ptr<Particle>>& getParticles() const;
 
-	void createExplosion(const Vector3& center, float K, float radius, float decaimento, float expansionVel = 0.0f);
-	void updateExplosions(float dt);
+    void createGravity();
+
+    void createWind(const Vector3& windVelocity,
+                    const Vector3& areaCenter,
+                    const Vector3& areaHalfSize,
+                    float k1 = 1.0f,
+                    float k2 = 0.0f);
+
+    void createWindM(const Vector3& windVelocity,
+                     const Vector3& areaCenter,
+                     const Vector3& areaHalfSize,
+                     float airDensity = 1.225f,
+                     float area = 80.0f,
+                     float dragCoeff = 0.5f,
+                     const Vector3& normal = Vector3(0,0,1));
+
+    void createTorbellino(const Vector3& center, float radio, float intensidad);
+    void createExplosion(const Vector3& center, float K, float radius,
+                         float decaimento, float expansionVel = 0.0f);
+
+    void updateExplosions(float dt);
 
 protected:
-	void generateGravityForce(const std::list<Particle*>& newParticles);
-	void generateWindForce(const std::list<Particle*>& newParticles);
-	void generateTorbellinoForce(const std::list<Particle*>& newParticles);
-	void generateGravityForce(const std::list<std::unique_ptr<Particle>>& newParticles);
+    void registerAllForces(Particle* p);
+    void registerAllForcesList(const std::list<Particle*>& plist);
 
+    std::list<std::unique_ptr<Particle>> _particles;
+    std::list<ParticleGen*> _generators;
 
+    std::unique_ptr<GravityForce> _gravityForce;
 
-	std::list<std::unique_ptr<Particle>> _particles; // lista de particulas del sistema
-	std::list<ParticleGen*> _generators; // lista de generadores de particulas
+    std::vector<std::unique_ptr<WindForce>> _windForces;
+    std::vector<std::unique_ptr<WindForceM>> _windMForces;
 
-	std::list<Particle*> _newParticles;
+    std::unique_ptr<TorbellinoForce> _torbellinoForce;
+    std::list<std::unique_ptr<ExplosionsForce>> _explosions;
 
-	//std::list<ForceGenerator*> _force_generators;
-	std::unique_ptr<GravityForce> _gravityForce;
-	std::unique_ptr<WindForce> _windForce;
-	std::unique_ptr<WindForceM> _windForceM;
-	std::unique_ptr<TorbellinoForce> _torbellinoForce;
-
-	ForceRegestry* _force_registry;
-
-	std::list<std::unique_ptr<ExplosionsForce>> _explosions;
-
+    ForceRegestry* _force_registry;
 };
-

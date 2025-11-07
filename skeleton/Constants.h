@@ -6,6 +6,8 @@
 class RenderItem;
 
 constexpr float GlobalGravity = -9.8f;
+constexpr float RightLimit = 100.0f;
+constexpr float LeftLimit = -100.0f;
 
 enum class PARTICLE_TYPE { NORMAL, FIREWORK, SPARK, FOG, RAIN };
 
@@ -28,4 +30,16 @@ struct PARTICLES {
     double _mass;
     double _damping;
     float _size = 0.5f;
+};
+
+enum class SCENE_TYPE {
+    MAIN_MENU,
+    GAME,
+    GAME_OVER,
+    WIN,
+    SCENE1,
+    SCENE2,
+    SCENE3,
+    SCENE4,
+    SCENE5
 };

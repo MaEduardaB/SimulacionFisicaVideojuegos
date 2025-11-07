@@ -1,8 +1,11 @@
 #pragma once
 #include "Scene.h"
 #include <vector>
+namespace Snippets { class Camera; }
 
 class Particle;
+class GravityForce;
+
 class Scene1 :
     public Scene
 {
@@ -19,6 +22,8 @@ public:
 
 protected:
 	Snippets::Camera* _cam;
+
+	GravityForce* _gravity;
 
 	std::vector<Particle*> _gObjects;
 };

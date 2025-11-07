@@ -1,17 +1,13 @@
+// Bullet.h
 #pragma once
 #include "Particle.h"
-class Bullet :
-    public Particle
+
+class Bullet : public Particle
 {
 public: 
-    Bullet(Vector3 pos, Vector3 dir, double massReal, double velReal, double velSim, Vector3 gravedad);
-    //~Bullet();
+    Bullet(Vector3 pos, Vector3 dir, double massReal, double velReal, double velSim);
+    ~Bullet() = default;
 
-    void integrate(double t) override;
 private:
-
-    double _mass;
-
     double _massReal;
 };
-
