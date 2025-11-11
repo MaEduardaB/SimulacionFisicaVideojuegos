@@ -283,6 +283,7 @@
     <ClCompile Include="Scene4.cpp" />
     <ClCompile Include="Scene5.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SpingForceGenerator.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TorbellinoForce.cpp" />
     <ClCompile Include="UniformGen.cpp" />
@@ -323,6 +324,7 @@
     <ClInclude Include="Scene4.h" />
     <ClInclude Include="Scene5.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SpingForceGenerator.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="TorbellinoForce.h" />
     <ClInclude Include="UniformGen.h" />
