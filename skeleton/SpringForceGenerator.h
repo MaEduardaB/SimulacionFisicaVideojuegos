@@ -1,11 +1,11 @@
 #pragma once
 #include "ForceGenerator.h"
-class SpingForceGenerator :
+class SpringForceGenerator :
     public ForceGenerator
 {
 public:
-    SpingForceGenerator(Particle* other, double k, double resting_length);
-    ~SpingForceGenerator() = default;
+    SpringForceGenerator(Particle* other, double k, double resting_length);
+    ~SpringForceGenerator() = default;
     
     void updateForce(Particle* p) override;
     Vector3 calculateForce(Particle* p) override;

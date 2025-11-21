@@ -17,43 +17,66 @@ endif()
 
 # Código fuente de la aplicación, añadirlos como si la raiz estuviera ya en /src 
 
+file(GLOB_RECURSE MY_SOURCE_FILES CONFIGURE_DEPENDS 
+    "${SKELETON_SRC_DIR}/*.cpp"
+)
+
 set(MY_SOURCE_FILES 
     "main.cpp" 
-    "callbacks.cpp"
-    "RenderUtils.cpp"
-    "stb_image.h"
-    "SceneManager.cpp"
-    "Bullet.cpp"
-    "Particle.cpp"
-    "Entity.cpp"
-    "Vector3D.cpp"
-    "ForceGenerator.cpp"
-    "GravityForce.cpp"
-    "ExplosionsForce.cpp"
-    "WindForce.cpp"
-    "TorbellinoForce.cpp"
-    "WindForceM.cpp"
-    "ForceRegestry.cpp"
-    "GaussianGen.cpp"
     
-    "ParticleGen.cpp"
-    "CloudSystem.cpp"
+    "Bullet.cpp"
+
+    "callbacks.cpp"
+    
     "Clouds.cpp"
+    "CloudSystem.cpp"
+
+    "Entity.cpp"
+    "ExplosionsForce.cpp"
+
+    "FireworkGen.cpp"
+    "FogGen.cpp"
+    "ForceGenerator.cpp"
+    "ForceRegestry.cpp"
+
+    "GameOverScene.cpp"
+    "GameScene.cpp"
+    "GaussianGen.cpp"
+    "GravityForce.cpp"
+
+
+    "Particle.cpp"
+    "ParticleGen.cpp"
     "ParticleSystem.cpp"
     "Render/Camera.cpp"
     "Render/Render.cpp"
+    "RainGen.cpp"
+
+    "RenderUtils.cpp"
     
     "Scene.cpp"
     "Scene1.cpp"
     "Scene2.cpp"
     "Scene3.cpp"
     "Scene4.cpp"
-    "FireworkGen.cpp"
-    "GameScene.cpp"
-    "RainGen.cpp"
-    "FogGen.cpp"
+    "Scene5.cpp"
+    "StartScene.cpp"
+    "SceneManager.cpp"
+    
+    "stb_image.h"
+    "SpringForceGenerator.cpp"
+
+    "TorbellinoForce.cpp"
+
     "UniformGen.cpp"
-    "SceneManager.cpp")
+
+    "Vector3D.cpp"
+    "WindForce.cpp"
+    "WindForceM.cpp"
+    
+    "WinScene.cpp"
+    
+    )
 
 # Include directories
 
