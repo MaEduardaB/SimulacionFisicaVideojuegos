@@ -41,7 +41,8 @@
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="WinScene.cpp" />
     <ClCompile Include="Scene5.cpp" />
-    <ClCompile Include="SpingForceGenerator.cpp" />
+    <ClCompile Include="SpringForceGenerator.cpp" />
+    <ClCompile Include="Scene6.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -86,7 +87,8 @@
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="WinScene.h" />
     <ClInclude Include="Scene5.h" />
-    <ClInclude Include="SpingForceGenerator.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
+    <ClInclude Include="Scene6.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
