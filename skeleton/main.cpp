@@ -14,6 +14,7 @@
 #include "Scene3.h"
 #include "Scene4.h"
 #include "Scene5.h"
+#include "Scene6.h"
 #include "StartScene.h"
 #include "GameOverScene.h"
 #include "WinScene.h"
@@ -92,6 +93,7 @@ void initPhysics(bool interactive)
 	sm.add_scene(new Scene3(_cam));
 	sm.add_scene(new Scene4(_cam));
 	sm.add_scene(new Scene5(_cam));
+	sm.add_scene(new Scene6(_cam));
 	sm.change_to_scene(SCENE_TYPE::MAIN_MENU);
 	update_display_text(SceneManager::instance().get_display_text());
 }

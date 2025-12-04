@@ -8,8 +8,8 @@ GravityForce::GravityForce(){
 
 void GravityForce::updateForce(Particle *p)
 {      
-    
-    p->addForce(calculateForce(p));   
+    if(p)
+        p->addForce(calculateForce(p));   
 }
 
 Vector3 GravityForce::calculateForce(Particle *p)

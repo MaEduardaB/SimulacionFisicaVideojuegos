@@ -254,6 +254,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnchoredSpringFG.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Clouds.cpp" />
@@ -294,6 +295,7 @@
     <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnchoredSpringFG.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Clouds.h" />

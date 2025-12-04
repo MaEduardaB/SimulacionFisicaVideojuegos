@@ -7,7 +7,7 @@
 #include "Constants.h"
 #include <random>
 
-Particle::Particle(PARTICLES p) : Entity(p._transform, Vector4(1 , 1 , 1 , 1), p._size), _velocity(p._velocity), _mass(p._mass),
+Particle::Particle(PARTICLES p) : Entity(p._transform, Vector4(1 , 1 , 1 , 1), p._size, p._shapeType), _velocity(p._velocity), _mass(p._mass),
 	_aceleration(p._aceleration), _type(p._type), _elim(false), _damping(p._damping), _age(0.0), _totalForce(0.0f)
 {
 	_transform_ant = physx::PxTransform(p._transform);

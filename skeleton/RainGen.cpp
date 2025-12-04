@@ -1,7 +1,7 @@
 #include "RainGen.h"
 #include "Constants.h"
 #include "Particle.h"
-#include "ParticleSystem.h" // Necesario para el callback
+#include "ParticleSystem.h"
 
 RainGen::RainGen()
     : ParticleGen(), _u(-1.0, 1.0)

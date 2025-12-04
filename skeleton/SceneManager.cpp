@@ -62,6 +62,9 @@ void SceneManager::key_input(unsigned char key)
         case '5':
             change_to_scene(SCENE_TYPE::SCENE5);
             return;
+        case '6':
+            change_to_scene(SCENE_TYPE::SCENE6);
+            return;
     }
 
     // Pasar input a la escena actual

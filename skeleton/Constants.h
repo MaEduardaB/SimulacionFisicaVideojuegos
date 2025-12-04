@@ -2,6 +2,7 @@
 
 #include "core.hpp"
 #include <PxPhysicsAPI.h>
+#include <string>
 
 class RenderItem;
 
@@ -30,6 +31,8 @@ struct PARTICLES {
     double _mass;
     double _damping;
     float _size = 0.5f;
+    std::string _shapeType = "SPHERE";
+
 };
 
 enum class SCENE_TYPE {
@@ -41,5 +44,6 @@ enum class SCENE_TYPE {
     SCENE2,
     SCENE3,
     SCENE4,
-    SCENE5
+    SCENE5,
+    SCENE6
 };

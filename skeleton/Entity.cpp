@@ -2,9 +2,14 @@
 #include "RenderUtils.hpp"
 
 
-Entity::Entity(Vector3 pos, Vector4 color, float size) : _transform({ pos.x, pos.y, pos.z })
+Entity::Entity(Vector3 pos, Vector4 color, float size, const std::string& _shape) : _transform({ pos.x, pos.y, pos.z })
 {
-	_render = new RenderItem(CreateShape(physx::PxSphereGeometry(size)), &_transform, color);
+	if(_shape == "BOX"){
+		_render = new RenderItem(CreateShape(physx::PxBoxGeometry(size, size, size)), &_transform, color);	
+
+	}else{
+		_render = new RenderItem(CreateShape(physx::PxSphereGeometry(size)), &_transform, color);
+	}
 
 	RegisterRenderItem(_render);
 }

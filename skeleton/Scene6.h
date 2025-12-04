@@ -4,7 +4,10 @@
 
 namespace Snippets { class Camera; }
 
-class ParticleSystem;
+class ForceGenerator;
+class GravityForce;
+
+class Particle;
 class Scene6:
     public Scene
 {
@@ -21,5 +24,8 @@ public:
 
 protected:
 	Snippets::Camera* _cam;
+	GravityForce* _gravity;
+
+	std::vector<Particle*> _gObjects;
 };
 

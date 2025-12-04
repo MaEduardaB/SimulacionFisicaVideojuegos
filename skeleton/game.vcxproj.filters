@@ -43,6 +43,7 @@
     <ClCompile Include="Scene5.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="Scene6.cpp" />
+    <ClCompile Include="AnchoredSpringFG.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Scene5.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Scene6.h" />
+    <ClInclude Include="AnchoredSpringFG.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
