@@ -12,6 +12,7 @@ AnchoredSpringFG::AnchoredSpringFG(double k, double resting_length, const Vector
 	prop._p_type = PARTICLE_TYPE::NORMAL;
 	prop._mass = 0.0;
 	prop._shapeType = "BOX";
+	prop._size = 2.0f;
 
 	_other = new Particle(prop);
 }

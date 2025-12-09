@@ -7,6 +7,7 @@
 #include "ForceRegestry.h"
 #include "GravityForce.h"
 #include "SpringForceGenerator.h"
+#include "BouyancyForceGenerator.h"
 #include "AnchoredSpringFG.h"
 #include "SceneManager.h"
 #include "Constants.h"
@@ -68,7 +69,7 @@ void Scene6::render() const
 void Scene6::enter()
 {
 	_cam->setDir(physx::PxVec3(0, 0,-1.0f));
-	_cam->setEye(physx::PxVec3(0, 50.0f, 80));
+	_cam->setEye(physx::PxVec3(0, 50.0f, 180));
 
     _particleSystems = std::list<ParticleSystem*>();
     _force_registry = new ForceRegestry();
@@ -76,7 +77,7 @@ void Scene6::enter()
     PARTICLES prop;
 			prop._velocity = Vector3(5,10,0);
 			prop._aceleration =  Vector3(0,0,0);
-			prop._transform = Vector3(0,0,0);
+			prop._transform = Vector3(0,20,0);
 			prop._mass = 1.0;
 			prop._damping = 0.99;
 			prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
@@ -85,9 +86,11 @@ void Scene6::enter()
     prop._shapeType = "SPHERE";
 
     Particle* p1 = new Particle(prop);
+	
+    prop._velocity = Vector3(0,-10,5);
 
     prop._mass = 2.0;
-    prop._shapeType = "SPHERE";
+    prop._transform = Vector3(0,30,0);
     Particle* p2 = new Particle(prop);
 
     SpringForceGenerator* spring = new SpringForceGenerator(p2, 1.0, 10.0);
@@ -97,22 +100,42 @@ void Scene6::enter()
     _force_registry->add(p2, spring2);
 
     prop._shapeType = "SPHERE";
+    prop._transform = Vector3(0,50,0);
 
     Particle* p3 = new Particle(prop);
     AnchoredSpringFG* anchoredSpring = new AnchoredSpringFG(1, 10, Vector3(0,70,0));
     _force_registry->add(p3, anchoredSpring);
+   
+   
+    prop._velocity = Vector3(0,0,0);
+    prop._shapeType = "BOX";
+    prop._mass = 1.0;
+    prop._transform = Vector3(0,10,0);
+    prop._size = 1.0f;
+    prop._damping = 0.98f;  
+    Particle* p4 = new Particle(prop);
+
+    RenderItem* water = new RenderItem(
+        CreateShape(PxBoxGeometry(40, 20, 40), false),
+        new PxTransform(PxVec3(0,-20,0)),
+        Vector4(0.2f, 0.3f, 1.0f, 0.7f)
+    );
+    
+
+    BouyancyForceGenerator* bouncy = new BouyancyForceGenerator(1, 1, 1000, 0);
+    _force_registry->add(p4, bouncy);
+    
+	_gravity = new GravityForce();
+    
+    _force_registry->add(p4, _gravity);
+
 
     _gObjects.push_back(p1);
     _gObjects.push_back(p2);
     _gObjects.push_back(p3);
+    _gObjects.push_back(p4);
 
-	//_gravity = new GravityForce();
 
-     RenderItem* water = new RenderItem(
-            CreateShape(PxBoxGeometry(40, 20, 40)),
-            new PxTransform(PxVec3(0,0,0)),
-            Vector4(0.5f, 0.5f, 1.0f, 1.0f)
-        );
     
     //_force_registry->add(p1, _gravity);
     // _force_registry->add(p2, _gravity);

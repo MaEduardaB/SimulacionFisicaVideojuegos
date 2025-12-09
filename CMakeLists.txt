@@ -23,8 +23,10 @@ file(GLOB_RECURSE MY_SOURCE_FILES CONFIGURE_DEPENDS
 
 set(MY_SOURCE_FILES 
     "main.cpp" 
+    "AnchoredSpringFG.cpp"
     
     "Bullet.cpp"
+    "BouyancyForceGenerator.cpp"
 
     "callbacks.cpp"
     
@@ -60,6 +62,7 @@ set(MY_SOURCE_FILES
     "Scene3.cpp"
     "Scene4.cpp"
     "Scene5.cpp"
+    "Scene6.cpp"
     "StartScene.cpp"
     "SceneManager.cpp"
     
