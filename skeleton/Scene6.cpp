@@ -112,7 +112,7 @@ void Scene6::enter()
     prop._mass = 1.0;
     prop._transform = Vector3(0,10,0);
     prop._size = 1.0f;
-    prop._damping = 0.98f;  
+    prop._damping = 0.3f;  
     Particle* p4 = new Particle(prop);
 
     RenderItem* water = new RenderItem(
@@ -122,7 +122,7 @@ void Scene6::enter()
     );
     
 
-    BouyancyForceGenerator* bouncy = new BouyancyForceGenerator(1, 1, 1000, 0);
+    BouyancyForceGenerator* bouncy = new BouyancyForceGenerator(1, 0.01, 1000, 0);
     _force_registry->add(p4, bouncy);
     
 	_gravity = new GravityForce();
