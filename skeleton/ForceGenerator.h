@@ -6,14 +6,14 @@
 
 #include<list>
 
-class Particle;
-
 class ForceGenerator
 {
 public:
 	ForceGenerator() = default;
-	virtual void updateForce(Particle* p) = 0;
-	virtual Vector3 calculateForce(Particle* p) = 0;
+	virtual Vector3 updateForce(Particle* p) = 0;
+	virtual void updateForce(physx::PxRigidDynamic* rb) = 0;
+	virtual Vector3 calculateForce(const Vector3& pos, const Vector3& vel, float mass) = 0;
+
 protected:
 	Vector3 _force;
 };

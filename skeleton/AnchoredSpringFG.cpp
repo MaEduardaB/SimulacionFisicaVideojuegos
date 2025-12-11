@@ -22,7 +22,7 @@ AnchoredSpringFG::~AnchoredSpringFG()
 	delete _other;
 }
 
-void AnchoredSpringFG::updateForce(Particle* p)
+Vector3 AnchoredSpringFG::updateForce(Particle* p)
 {
 	if(p)
 		p->addForce(calculateForce(p));

@@ -18,6 +18,19 @@ enum INTEGRATETYPES {
     VERLET
 };
 
+struct RIGID_BODY_PROPS {
+    Vector3 _transform;
+    Vector3 _velocity;
+    double _mass;
+    float _sizeX = 0.5f;
+    float _sizeY = 0.5f;
+    float _sizeZ = 0.5f;
+    std::string _shapeType = "SPHERE";
+    bool _isDynamic = true;
+    int _materialType = 0;
+    Vector3 _inertia = Vector3(0, 0, 0);
+};
+
 struct PARTICLES {
     Vector3 _transform;
 

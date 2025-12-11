@@ -30,25 +30,35 @@ void WindForceM::updateForce(Particle* p)
 {
     if (!p) return;
 
-    Vector3 pos;
-    pos = p->getTransform().p;
+    Vector3 pos = p->getTransform().p;
 
     if (fabs(pos.x - _areaCenter.x) > _areaHalfSize.x ||
         fabs(pos.y - _areaCenter.y) > _areaHalfSize.y ||
         fabs(pos.z - _areaCenter.z) > _areaHalfSize.z)
         return;
 
-    Vector3 f = calculateForce(p);
-
-
+    Vector3 f = calculateForce(pos, p->getVelocity(), p->getMass());
     p->addForce(f);
 }
 
-Vector3 WindForceM::calculateForce(Particle* p)
-{
-    if (!p) return Vector3(0.0f);
+void WindForceM::updateForce(physx::PxRigidDynamic* rb) {
+    if (!rb) return;
+    physx::PxVec3 posPx = rb->getGlobalPose().p;
+    physx::PxVec3 velPx = rb->getLinearVelocity();
+    Vector3 pos(posPx.x, posPx.y, posPx.z);
+    Vector3 vel(velPx.x, velPx.y, velPx.z);
+    Vector3 force = calculateForce(pos, vel, rb->getMass());
+    rb->addForce(physx::PxVec3(force.x, force.y, force.z));
+}
 
-    Vector3 vRel = _windVelocity - p->getVelocity();
+Vector3 WindForceM::calculateForce(const Vector3& pos, const Vector3& vel, float mass)
+{
+    if (fabs(pos.x - _areaCenter.x) > _areaHalfSize.x ||
+        fabs(pos.y - _areaCenter.y) > _areaHalfSize.y ||
+        fabs(pos.z - _areaCenter.z) > _areaHalfSize.z)
+        return Vector3(0.0f);
+
+    Vector3 vRel = _windVelocity - vel;
     float speed = vRel.magnitude();
 
     if (speed <= 1e-6f) return Vector3(0.0f);

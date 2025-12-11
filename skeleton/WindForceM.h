@@ -10,8 +10,10 @@ public:
                 const Vector3& areaHalfSize,
                 float airDensity = 1.225f);
 
-    void updateForce(Particle* p) override;
-    Vector3 calculateForce(Particle* p) override;
+    Vector3 updateForce(Particle* p) override;
+    void updateForce(physx::PxRigidDynamic* rb) override;
+
+    Vector3 calculateForce(const Vector3& pos, const Vector3& vel, float mass) override;
 
     void setObjectProperties(float area, float dragCoeff, const Vector3& normal);
 
