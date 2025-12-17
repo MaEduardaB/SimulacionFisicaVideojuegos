@@ -30,39 +30,37 @@ void TorbellinoForce::updateForce(physx::PxRigidDynamic* rb) {
     if (!rb) return;
     physx::PxVec3 posPx = rb->getGlobalPose().p;
     physx::PxVec3 velPx = rb->getLinearVelocity();
-    Vector3 pos(posPx.x, posPx.y, posPx.z);
-    Vector3 vel(velPx.x, velPx.y, velPx.z);
-    Vector3 force = calculateForce(pos, vel, rb->getMass());
-    rb->addForce(physx::PxVec3(force.x, force.y, force.z));
+    physx::PxVec3 force = calculateForce(posPx, velPx, rb->getMass());
+    rb->addForce(force);
 }
 
-Vector3 TorbellinoForce::updateForces(Particle* p)
+void TorbellinoForce::updateForce(Particle* p)
 {
-    if (!p) return Vector3(0.0f);
-    return calculateForce(p->getTransform().p, p->getVelocity(), p->getMass());
+    if (!p) return;
+    p->addForce(calculateForce(p->getTransform().p, p->getVelocity(), p->getMass()));
 }
 
-Vector3 TorbellinoForce::calculateForce(const Vector3& pos, const Vector3& vel, float mass)
+physx::PxVec3 TorbellinoForce::calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass)
 {
-    Vector3 diff = pos - _center;
+    physx::PxVec3 diff = pos - _center;
     float distXZ = sqrt(diff.x * diff.x + diff.z * diff.z);
     if (distXZ < 1e-4f || distXZ > _radius)
-        return Vector3(0.0f);
+        return physx::PxVec3(0.0f);
 
     // viento tangencial
-    Vector3 tang(-diff.z / distXZ, 0.0f, diff.x / distXZ);
+    physx::PxVec3 tang(-diff.z / distXZ, 0.0f, diff.x / distXZ);
 
     // un poco de viento hacia arriba
     float up = 1.0f - fabs(diff.y) / _radius;
     if (up < 0.0f) up = 0.0f;
 
-    Vector3 viento = tang * (_K * distXZ) + Vector3(0.0f, up * _K, 0.0f);
+    physx::PxVec3 viento = tang * (_K * distXZ) + physx::PxVec3(0.0f, up * _K, 0.0f);
 
-    Vector3 relVel = viento - vel;
+    physx::PxVec3 relVel = viento - vel;
     float v = relVel.magnitude();
-    if (v < 1e-5f) return Vector3(0.0f);
+    if (v < 1e-5f) return physx::PxVec3(0.0f);
 
-    Vector3 dir = relVel.getNormalized();
+    physx::PxVec3 dir = relVel.getNormalized();
     float fuerza = 0.5f * _air_density * 0.6f * 0.2f * v * v;
 
     return dir * fuerza;

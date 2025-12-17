@@ -13,9 +13,6 @@ FogGen::FogGen(std::mt19937 mt, Vector3 vel, Vector3 pos, double duration, doubl
 {
 }
 
-void FogGen::clearParticles()
-{
-}
 
 std::list<Particle*> FogGen::generateP()
 {

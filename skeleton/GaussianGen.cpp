@@ -13,11 +13,6 @@ GaussianGen::GaussianGen(std::mt19937 mt, Vector3 vel, Vector3 pos, double durat
 {
 }
 
-
-void GaussianGen::clearParticles()
-{
-}
-
 std::list<Particle*> GaussianGen::generateP()
 {
     std::list<Particle*> particles;

@@ -14,7 +14,6 @@ public:
 				int n_particles, 
 				float radius);
 
-	void clearParticles() override;
 	std::list<Particle*> generateP() override;
 
 private:

@@ -16,8 +16,7 @@
 #include "RigidBodySystem.h"
 #include "RigidBodyGen.h"
 #include "UniformRigidGen.h"
-#include "main.cpp"
-
+#include "core.hpp" 
 #include <PxPhysicsAPI.h>
 #include <iostream>
 using namespace physx;
@@ -62,14 +61,7 @@ void Scene7::exit()
 
 void Scene7::update(double t)
 {
-    for (auto force : _rigidForces) {
-    for (auto rb : _rigidBodySystem->getRigidBodies()) {
-        if (rb->is<physx::PxRigidDynamic>()) {
-            force->updateForce(static_cast<physx::PxRigidDynamic*>(rb));
-        }
-    }
-}
-
+    _rigidBodySystem->update(t);
 }
 
 void Scene7::render() const
@@ -85,7 +77,6 @@ void Scene7::enter()
 
     _rigidBodySystem = new RigidBodySystem();
     gScene->setGravity(physx::PxVec3(0.0f, 0.0f, 0.0f));
-    _gravity = new GravityForce();
 
     // Suelo
     RIGID_BODY_PROPS groundProps;

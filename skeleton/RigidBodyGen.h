@@ -17,7 +17,6 @@ public:
                  int n_rigidBodies);
 
     virtual std::list<RIGID_BODY_PROPS> generateProps() = 0;
-    virtual void clearRigidBodies() = 0;
 
     void setPosition(Vector3);
     const Vector3& getPosition() const;
@@ -38,4 +37,5 @@ protected:
     double _dur;
     double _prob_Gen;
     int _n_rigidBodies;
+    
 };

@@ -13,11 +13,10 @@ public:
               float k1 = 1.0f,
               float k2 = 0.0f);
 
-    Vector3 updateForce(Particle* p) override;
-    Vector3 calculateForce(const Vector3& pos, const Vector3& vel, float mass) override;
-
+    void updateForce(Particle* p) override;
     void updateForce(physx::PxRigidDynamic* rb) override;
 
+    physx::PxVec3 calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass) override;
 
     bool isInsideArea(const Vector3& pos) const;
 
@@ -29,8 +28,6 @@ protected:
     Vector3 _areaHalfSize;   // tamaño 
     float _k1, _k2;
 
-
-    Vector3 calculateForceAtPosition(const Vector3& pos, const Vector3& vel, float mass);
 private:
     bool _active;
 };

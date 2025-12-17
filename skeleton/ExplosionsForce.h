@@ -6,10 +6,10 @@ class ExplosionsForce :
 public:
     ExplosionsForce(const Vector3 & center, float K, float radius, float tau, float expansionVel = 0.0f);
 
-    Vector3 updateForce(Particle* p) override;
+    void updateForce(Particle* p) override;
     void updateForce(physx::PxRigidDynamic* rb) override;
 
-    Vector3 calculateForce(const Vector3& pos, const Vector3& vel, float mass) override;
+    physx::PxVec3 calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass) override;
     void updateTime(float dt);
     bool hasFaded() const;
     bool isInsideArea(const Vector3 & pos) const;

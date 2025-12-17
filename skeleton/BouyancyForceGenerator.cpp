@@ -10,18 +10,17 @@ BouyancyForceGenerator::BouyancyForceGenerator(float h, float v, float d, float 
 void BouyancyForceGenerator::updateForce(physx::PxRigidDynamic* rb) {
     if (!rb) return;
     physx::PxVec3 posPx = rb->getGlobalPose().p;
-    Vector3 pos(posPx.x, posPx.y, posPx.z);
-    Vector3 force = calculateForce(pos, Vector3(0,0,0), rb->getMass());
-    rb->addForce(physx::PxVec3(force.x, force.y, force.z));
+    physx::PxVec3 force = calculateForce(posPx, physx::PxVec3(0,0,0), rb->getMass());
+    rb->addForce(force);
 }
 
-Vector3 BouyancyForceGenerator::calculateForce(Particle* p)
+void BouyancyForceGenerator::updateForce(Particle* p)
 {
-    if (!p) return Vector3(0,0,0);
-    return calculateForce(p->getTransform().p, p->getVelocity(), p->getMass());
+    if (!p) return;
+    p->addForce(calculateForce(p->getTransform().p, p->getVelocity(), p->getMass()));
 }
 
-Vector3 BouyancyForceGenerator::calculateForce(const Vector3& pos, const Vector3& vel, float mass)
+physx::PxVec3 BouyancyForceGenerator::calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass)
 {
     float h = pos.y;
     float h0 = _posWater;
@@ -38,5 +37,5 @@ Vector3 BouyancyForceGenerator::calculateForce(const Vector3& pos, const Vector3
     if (immersed < 0.0f) immersed = 0.0f;
     if (immersed > 1.0f) immersed = 1.0f;
 
-    return Vector3(0, _liquid_density * _volume * immersed * 9.8f, 0);
+    return physx::PxVec3(0, _liquid_density * _volume * immersed * 9.8f, 0);
 }

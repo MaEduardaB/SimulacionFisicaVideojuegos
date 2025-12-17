@@ -1,38 +1,60 @@
 #include "RigidBodySystem.h"
 #include "RigidBodyGen.h"
+#include "ForceRegestry.h"
 #include "RenderUtils.hpp"
+#include "GravityForce.h"
+#include "core.hpp" 
 
-// variables globales de PhysX
-extern physx::PxScene* gScene;
-extern physx::PxPhysics* gPhysics;
+using namespace physx;
 
-RigidBodySystem::RigidBodySystem() : _rigidBodies(), _generators(), _materials() {
+RigidBodySystem::RigidBodySystem() : _rigidBodies(), _generators(), _materials(), _force_registry(new ForceRegestry()) {
     
     //DIFERENTES TIPOS DE MATERIALES
     _materials.push_back(gPhysics->createMaterial(0.5f, 0.5f, 0.6f)); // Material estándar
     
     _materials.push_back(gPhysics->createMaterial(1.0f, 1.0f, 0.1f)); // Material PEGAJOSO
     _materials.push_back(gPhysics->createMaterial(0.1f, 0.1f, 0.9f)); // Material resbaladizo
+
+    _gravityForce = new GravityForce();
 }
 
 RigidBodySystem::~RigidBodySystem() {
+    delete _gravityForce;
+    delete _force_registry;
+
     for (auto rb : _rigidBodies) {
-        if (rb) {
-            gScene->removeActor(*rb);
-            rb->release();
-        }
+        gScene->removeActor(*rb);
+        rb->release();
     }
     _rigidBodies.clear();
-    for (auto mat : _materials) {
-        if (mat) mat->release();
-    }
+
+    for (auto mat : _materials)
+        mat->release();
     _materials.clear();
+}
+
+void RigidBodySystem::update(double t)
+{
+   _force_registry->updateForces();
+}
+
+void RigidBodySystem::registerGravity(PxRigidActor* rb)
+{
+    if (!_gravityForce) return;
+
+    if (auto dyn = rb->is<PxRigidDynamic>()) {
+        dyn->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+        _force_registry->add(dyn, _gravityForce);
+    }
 }
 
 void RigidBodySystem::addRigidBody(physx::PxRigidActor* rb) {
     if (rb) {
         _rigidBodies.push_back(rb);
         gScene->addActor(*rb);
+
+        registerGravity(rb);
+
         physx::PxShape* shape = nullptr;
         rb->getShapes(&shape, 1);
         if (shape) {

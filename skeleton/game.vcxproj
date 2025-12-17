@@ -255,6 +255,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnchoredSpringFG.cpp" />
+    <ClCompile Include="BouyancyForceGenerator.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Clouds.cpp" />
@@ -277,6 +278,8 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="RigidBodyGen.cpp" />
+    <ClCompile Include="RigidBodySystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
@@ -284,11 +287,13 @@
     <ClCompile Include="Scene4.cpp" />
     <ClCompile Include="Scene5.cpp" />
     <ClCompile Include="Scene6.cpp" />
+    <ClCompile Include="Scene7.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TorbellinoForce.cpp" />
     <ClCompile Include="UniformGen.cpp" />
+    <ClCompile Include="UniformRigidGen.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="WindForceM.cpp" />
     <ClCompile Include="WindForce.cpp" />
@@ -296,6 +301,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnchoredSpringFG.h" />
+    <ClInclude Include="BouyancyForceGenerator.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Clouds.h" />
@@ -320,6 +326,8 @@
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="RigidBodyGen.h" />
+    <ClInclude Include="RigidBodySystem.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
@@ -327,11 +335,13 @@
     <ClInclude Include="Scene4.h" />
     <ClInclude Include="Scene5.h" />
     <ClInclude Include="Scene6.h" />
+    <ClInclude Include="Scene7.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="TorbellinoForce.h" />
     <ClInclude Include="UniformGen.h" />
+    <ClInclude Include="UniformRigidGen.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WindForceM.h" />
     <ClInclude Include="WindForce.h" />

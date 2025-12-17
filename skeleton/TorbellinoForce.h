@@ -13,9 +13,9 @@ public:
                     float airDensity = 1.225f);
 
     void updateForce(physx::PxRigidDynamic* rb) override;
-	Vector3 updateForce(Particle* p) override;
+	void updateForce(Particle* p) override;
 
-    Vector3 calculateForce(const Vector3& pos, const Vector3& vel, float mass) override;
+    physx::PxVec3 calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass) override;
 
 
     void setParameters(float K, float radius);

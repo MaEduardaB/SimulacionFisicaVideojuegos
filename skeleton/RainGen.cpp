@@ -13,10 +13,6 @@ RainGen::RainGen(std::mt19937 mt, Vector3 vel, Vector3 pos, double duration, dou
 {
 }
 
-void RainGen::clearParticles()
-{
-}
-
 std::list<Particle*> RainGen::generateP()
 {
     std::list<Particle*> particles;

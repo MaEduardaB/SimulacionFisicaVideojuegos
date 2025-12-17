@@ -45,25 +45,23 @@ void WindForceM::updateForce(physx::PxRigidDynamic* rb) {
     if (!rb) return;
     physx::PxVec3 posPx = rb->getGlobalPose().p;
     physx::PxVec3 velPx = rb->getLinearVelocity();
-    Vector3 pos(posPx.x, posPx.y, posPx.z);
-    Vector3 vel(velPx.x, velPx.y, velPx.z);
-    Vector3 force = calculateForce(pos, vel, rb->getMass());
-    rb->addForce(physx::PxVec3(force.x, force.y, force.z));
+    physx::PxVec3 force = calculateForce(posPx, velPx, rb->getMass());
+    rb->addForce(force);
 }
 
-Vector3 WindForceM::calculateForce(const Vector3& pos, const Vector3& vel, float mass)
+physx::PxVec3 WindForceM::calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass)
 {
     if (fabs(pos.x - _areaCenter.x) > _areaHalfSize.x ||
         fabs(pos.y - _areaCenter.y) > _areaHalfSize.y ||
         fabs(pos.z - _areaCenter.z) > _areaHalfSize.z)
-        return Vector3(0.0f);
+        return physx::PxVec3(0.0f);
 
-    Vector3 vRel = _windVelocity - vel;
+    physx::PxVec3 vRel = _windVelocity - vel;
     float speed = vRel.magnitude();
 
-    if (speed <= 1e-6f) return Vector3(0.0f);
+    if (speed <= 1e-6f) return physx::PxVec3(0.0f);
 
-    Vector3 vDir = vRel.getNormalized();
+    physx::PxVec3 vDir = vRel.getNormalized();
 
     float cosTheta = fabs(vDir.dot(_normal));
     if (cosTheta < 0.01f) cosTheta = 0.01f;

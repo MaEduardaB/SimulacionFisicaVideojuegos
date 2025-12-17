@@ -15,6 +15,7 @@
 #include "Scene4.h"
 #include "Scene5.h"
 #include "Scene6.h"
+#include "Scene7.h"
 #include "StartScene.h"
 #include "GameOverScene.h"
 #include "WinScene.h"
@@ -68,7 +69,7 @@ void initPhysics(bool interactive)
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
+	//sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
@@ -94,6 +95,7 @@ void initPhysics(bool interactive)
 	sm.add_scene(new Scene4(_cam));
 	sm.add_scene(new Scene5(_cam));
 	sm.add_scene(new Scene6(_cam));
+	sm.add_scene(new Scene7(_cam));
 	sm.change_to_scene(SCENE_TYPE::MAIN_MENU);
 	update_display_text(SceneManager::instance().get_display_text());
 }

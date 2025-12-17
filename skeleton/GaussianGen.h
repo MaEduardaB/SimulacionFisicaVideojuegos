@@ -13,7 +13,6 @@ public:
 		double prob_Gen,
 		int n_particles);
 
-	void clearParticles() override;
 	std::list<Particle*> generateP() override;
 
 private:

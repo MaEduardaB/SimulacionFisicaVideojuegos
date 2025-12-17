@@ -13,23 +13,18 @@ UniformGen::UniformGen(std::mt19937 mt, Vector3 vel, Vector3 pos, double duratio
 {
 }
 
-
-void UniformGen::clearParticles()
-{
-}
-
 std::list<Particle*> UniformGen::generateP()
 {
     std::list<Particle*> particles;
     std::uniform_real_distribution<double> prob(0.0, 1.0);
 
-    // Probabilidad de emisión
+    // Probabilidad de emisiï¿½n
     if (prob(_mt) > _prob_Gen)
         return particles;
 
     for (int i = 0; i < _n_particles; ++i)
     {
-        // Variación uniforme en posición y velocidad
+        // Variaciï¿½n uniforme en posiciï¿½n y velocidad
         Vector3 pos = Vector3(
             _pos.x + _u(_mt),
             _pos.y + _u(_mt),
@@ -51,7 +46,7 @@ std::list<Particle*> UniformGen::generateP()
         prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
 
         Particle* p = new Particle(prop);
-        p->setTime(_dur + 0.5 * _u(_mt)); // duración con ligera variación
+        p->setTime(_dur + 0.5 * _u(_mt)); // duraciï¿½n con ligera variaciï¿½n
 
         particles.push_back(p);
     }

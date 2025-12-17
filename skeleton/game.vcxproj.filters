@@ -44,6 +44,11 @@
     <ClCompile Include="SpringForceGenerator.cpp" />
     <ClCompile Include="Scene6.cpp" />
     <ClCompile Include="AnchoredSpringFG.cpp" />
+    <ClCompile Include="Scene7.cpp" />
+    <ClCompile Include="UniformRigidGen.cpp" />
+    <ClCompile Include="RigidBodyGen.cpp" />
+    <ClCompile Include="RigidBodySystem.cpp" />
+    <ClCompile Include="BouyancyForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -91,6 +96,11 @@
     <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="Scene6.h" />
     <ClInclude Include="AnchoredSpringFG.h" />
+    <ClInclude Include="Scene7.h" />
+    <ClInclude Include="UniformRigidGen.h" />
+    <ClInclude Include="RigidBodyGen.h" />
+    <ClInclude Include="RigidBodySystem.h" />
+    <ClInclude Include="BouyancyForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

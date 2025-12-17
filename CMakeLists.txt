@@ -55,6 +55,8 @@ set(MY_SOURCE_FILES
     "RainGen.cpp"
 
     "RenderUtils.cpp"
+    "RigidBodyGen.cpp"
+    "RigidBodySystem.cpp"
     
     "Scene.cpp"
     "Scene1.cpp"
@@ -63,6 +65,7 @@ set(MY_SOURCE_FILES
     "Scene4.cpp"
     "Scene5.cpp"
     "Scene6.cpp"
+    "Scene7.cpp"
     "StartScene.cpp"
     "SceneManager.cpp"
     
@@ -72,6 +75,7 @@ set(MY_SOURCE_FILES
     "TorbellinoForce.cpp"
 
     "UniformGen.cpp"
+    "UniformRigidGen.cpp"
 
     "Vector3D.cpp"
     "WindForce.cpp"

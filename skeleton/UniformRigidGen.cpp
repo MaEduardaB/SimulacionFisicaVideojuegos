@@ -30,6 +30,3 @@ std::list<RIGID_BODY_PROPS> UniformRigidGen::generateProps() {
     }
     return props;
 }
-
-void UniformRigidGen::clearRigidBodies() {
-}

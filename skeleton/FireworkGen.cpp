@@ -23,9 +23,6 @@ FireworkGen::FireworkGen(std::mt19937 mt, Vector3 vel, Vector3 pos, double durat
     prop._p_type = PARTICLE_TYPE::FIREWORK;
 }
 
-void FireworkGen::clearParticles()
-{
-}
 
 std::list<Particle*> FireworkGen::generateP()
 {

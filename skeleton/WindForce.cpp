@@ -23,7 +23,7 @@ void WindForce::updateForce(Particle* p)
 {
     if (!isInsideArea(p->getTransform().p) || !_active) return;
     
-    p->addForce(calculateForce(p));
+    p->addForce(calculateForce(p->getTransform().p, p->getVelocity(), p->getMass()));
 }
 
 void WindForce::updateForce(physx::PxRigidDynamic* rb) {
@@ -34,21 +34,11 @@ void WindForce::updateForce(physx::PxRigidDynamic* rb) {
     Vector3 vel(velPx.x, velPx.y, velPx.z);
 
     
-    Vector3 force = calculateForceAtPosition(pos, vel, rb->getMass());
+    Vector3 force = calculateForce(pos, vel, rb->getMass());
     rb->addForce(physx::PxVec3(force.x, force.y, force.z));
 }
-Vector3 WindForce::calculateForce(Particle* p)
-{
-    Vector3 relVel = _windVelocity - p->getVelocity();
-    Vector3 force = _k1 * relVel;
 
-    if (_k2 != 0.0f)
-        force += _k2 * relVel.magnitude() * relVel;
-
-    return force;
-}
-
-Vector3 WindForce::calculateForceAtPosition(const Vector3& pos, const Vector3& vel, float mass)
+physx::PxVec3 WindForce::calculateForce(const physx::PxVec3 &pos, const physx::PxVec3 &vel, float mass)
 {
     if (!isInsideArea(pos) || !_active) return Vector3(0, 0, 0);
     
@@ -58,5 +48,5 @@ Vector3 WindForce::calculateForceAtPosition(const Vector3& pos, const Vector3& v
     if (_k2 != 0.0f)
         force += _k2 * relVel.magnitude() * relVel;
 
-    return force;
+    return physx::PxVec3(force.x, force.y, force.z);
 }

@@ -6,13 +6,22 @@ GravityForce::GravityForce(){
     _force = Vector3(0.0f, _gravity, 0.0f);
 }
 
+void GravityForce::updateForce(physx::PxRigidDynamic *rb)
+{
+    if (!rb) return;
+    physx::PxVec3 posPx = rb->getGlobalPose().p;
+    physx::PxVec3 velPx = rb->getLinearVelocity();
+    physx::PxVec3 force = calculateForce(posPx, velPx, rb->getMass());
+    rb->addForce(force);
+}
+
 void GravityForce::updateForce(Particle *p)
 {      
     if(p)
-        p->addForce(calculateForce(p));   
+        p->addForce(calculateForce(p->getTransform().p, p->getVelocity(), p->getMass()));   
 }
 
-Vector3 GravityForce::calculateForce(Particle *p)
+physx::PxVec3 GravityForce::calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass)
 {
-    return _force * static_cast<float>(p->getMass());
+    return physx::PxVec3(0.0f, _gravity * mass, 0.0f);
 }

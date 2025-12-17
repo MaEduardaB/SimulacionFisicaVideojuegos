@@ -9,20 +9,28 @@ ExplosionsForce::ExplosionsForce(const Vector3& center, float K, float radius, f
 void ExplosionsForce::updateForce(Particle* p) {
     if (!p) return;
 
-    Vector3 f = calculateForce(p);
+    Vector3 f = calculateForce(p->getTransform().p, p->getVelocity(), p->getMass());
 
     p->addForce(f);
 }
 
-Vector3 ExplosionsForce::calculateForce(Particle* p)
+void ExplosionsForce::updateForce(physx::PxRigidDynamic* rb)
 {
-    Vector3 pos = p->getTransform().p;
-    Vector3 dif = pos - _center;
+    if (!rb) return;
+    physx::PxVec3 posPx = rb->getGlobalPose().p;
+    physx::PxVec3 velPx = rb->getLinearVelocity();
+    physx::PxVec3 force = calculateForce(posPx, velPx, rb->getMass());
+    rb->addForce(force);
+}
+
+physx::PxVec3 ExplosionsForce::calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass)
+{
+    physx::PxVec3 dif = pos - _center;
     float dist = dif.magnitude();
 
-    if (dist > _R) return Vector3(); // fuera del rango
+    if (dist > _R) return physx::PxVec3(); // fuera del rango
 
-    Vector3 dir = dif;
+    physx::PxVec3 dir = dif;
     dir.normalize();
 
     float f = _K / (dist * dist + 0.0001f);

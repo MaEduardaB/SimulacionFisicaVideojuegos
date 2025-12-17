@@ -13,12 +13,9 @@ public:
 				double prob_Gen,
 				int n_particles);
 
-	void clearParticles() override;
 	std::list<Particle*> generateP() override;
 
 private:
     std::uniform_real_distribution<double> _u{ 0,1 };
-
-
 };
 
