@@ -21,47 +21,31 @@
 #include <iostream>
 using namespace physx;
 
-Scene7::Scene7(Snippets::Camera* cam) : _gObjects(), _rigidForces()
+Scene7::Scene7(Snippets::Camera* cam) : _cam(cam), _rigidBodySystem(nullptr)
 {
-	display_text = "Scene 7: Press 'p' to create rain with explosions.";
-    _cam = cam;
-    _force_registry = nullptr;
-    _particleSystems = std::list<ParticleSystem*>();
-
-    _rigidBodySystem = nullptr;
+	display_text = "Scene 7: Press 'p' to create rigidBodies.";
 }
 
 Scene7::~Scene7()
 {
-    for (auto* ps : _particleSystems)
-        delete ps;
-
-    _particleSystems.clear();
-
-    delete _force_registry;
-    _force_registry = nullptr;
-
     delete _rigidBodySystem;
     _rigidBodySystem = nullptr;
 }
 
 void Scene7::exit()
 {
-    for (auto* ps : _particleSystems)
-        delete ps;
+    // delete _rigidBodySystem;
+    // _rigidBodySystem = nullptr;
 
-    _particleSystems.clear();
-
-    delete _force_registry;
-    _force_registry = nullptr;
-
-    delete _rigidBodySystem;
-    _rigidBodySystem = nullptr;
+    // _particleSystems.clear();
+    DeregisterAllRenderItem();
 }
 
 void Scene7::update(double t)
 {
-    _rigidBodySystem->update(t);
+    if (_rigidBodySystem) {
+        _rigidBodySystem->update(t);
+    }
 }
 
 void Scene7::render() const
@@ -91,7 +75,6 @@ void Scene7::enter()
     std::mt19937 mt(0);
     UniformRigidGen* gen = new UniformRigidGen(mt, Vector3(0, 0, 0), Vector3(0, 40, 0), 0, 1.0, 10);
     _rigidBodySystem->addGenerator(gen);
-
 }  
 
 

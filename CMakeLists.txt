@@ -53,10 +53,12 @@ set(MY_SOURCE_FILES
     "Render/Camera.cpp"
     "Render/Render.cpp"
     "RainGen.cpp"
+    "WindLineGen.cpp"
 
     "RenderUtils.cpp"
     "RigidBodyGen.cpp"
     "RigidBodySystem.cpp"
+    "RigidParticle.cpp"
     
     "Scene.cpp"
     "Scene1.cpp"

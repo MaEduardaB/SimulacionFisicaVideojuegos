@@ -7,9 +7,9 @@
 class RenderItem;
 
 constexpr float GlobalGravity = -9.8f;
-constexpr float RightLimit = 100.0f;
-constexpr float LeftLimit = -100.0f;
-
+constexpr float RightLimit = 280.0f;
+constexpr float LeftLimit = -280.0f;
+constexpr float lateralForce = 1200.0f;
 enum class PARTICLE_TYPE { NORMAL, FIREWORK, SPARK, FOG, RAIN };
 
 enum INTEGRATETYPES {
@@ -21,6 +21,7 @@ enum INTEGRATETYPES {
 struct RIGID_BODY_PROPS {
     Vector3 _transform;
     Vector3 _velocity;
+    Vector4 color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
     double _mass;
     float _sizeX = 0.5f;
     float _sizeY = 0.5f;
@@ -29,6 +30,20 @@ struct RIGID_BODY_PROPS {
     bool _isDynamic = true;
     int _materialType = 0;
     Vector3 _inertia = Vector3(0, 0, 0);
+    double _lifeTime;
+};
+
+struct Obstacle {
+    Vector3 position;
+    Vector3 size;
+    Vector4 color;
+};
+
+struct WindZone {
+    Vector3 windVelocity;
+    Vector3 areaCenter;
+    Vector3 areaHalfSize;
+    Vector4 color;
 };
 
 struct PARTICLES {

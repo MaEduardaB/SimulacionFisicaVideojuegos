@@ -14,7 +14,13 @@ ParticleSystem::ParticleSystem()
 {
 }
 
-ParticleSystem::~ParticleSystem() = default;
+ParticleSystem::~ParticleSystem() {
+    for (auto gen : _generators) {
+        delete gen;
+    }
+    _generators.clear();
+    _gravityForce.reset();
+}
 
 void ParticleSystem::update(double t)
 {

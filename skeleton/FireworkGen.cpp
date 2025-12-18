@@ -47,9 +47,9 @@ std::list<Particle*> FireworkGen::generateP()
         for (int i = 0; i < _n_particles; ++i)
         {
             Vector3 sparkVel(
-                10.0 * rand(_mt),
-                10.0 * rand(_mt),
-                10.0 * rand(_mt)
+                5.0 * rand(_mt),
+                5.0 * rand(_mt),
+                5.0 * rand(_mt)
             );
 
             PARTICLES sprop;

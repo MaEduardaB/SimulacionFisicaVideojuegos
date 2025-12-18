@@ -110,7 +110,7 @@ PxTransform Camera::getTransform() const
 void Camera::moveTo(physx::PxTransform _n, bool isPlayer)
 {
 	if(isPlayer){
-		PxVec3 targetEye(0, _n.p.y + 60.0f, 100.0f);
+		PxVec3 targetEye(0, _n.p.y + 160.0f, 200.0f);
 		mEye += (targetEye - mEye) * 0.05f;
 		mDir = PxVec3(0.0f, -0.3f, -1.0f).getNormalized();
 	}else{

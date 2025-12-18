@@ -12,14 +12,14 @@ Clouds::Clouds(Vector3 pos, Vector4 _color, float size) : _pos(pos)
 
     RenderItem* der = new RenderItem(
         CreateShape(physx::PxSphereGeometry(size * 0.7f)),
-        new physx::PxTransform(pos + Vector3(10, 0, 0)),
+        new physx::PxTransform(pos + Vector3(size * 0.7f, 0, 0)),
         _color);
     RegisterRenderItem(der);
     _items.push_back(der);
 
     RenderItem* izq = new RenderItem(
         CreateShape(physx::PxSphereGeometry(size * 0.7f)),
-        new physx::PxTransform(pos + Vector3(-10, 0, 0)),
+        new physx::PxTransform(pos + Vector3(-size * 0.7f, 0, 0)),
         _color);
     RegisterRenderItem(izq);
     _items.push_back(izq);

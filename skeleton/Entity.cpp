@@ -16,7 +16,8 @@ Entity::Entity(Vector3 pos, Vector4 color, float size, const std::string& _shape
 
 Entity::~Entity()
 {
-	DeregisterRenderItem(_render);
+	if(_render)
+		DeregisterRenderItem(_render);
 }
 
 void Entity::setColor(const Vector4 &color)

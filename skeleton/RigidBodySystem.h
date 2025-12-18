@@ -5,6 +5,7 @@
 #include "Constants.h"
 
 class RigidBodyGen;
+class RigidParticle;
 class ForceRegestry;
 class GravityForce;
 
@@ -14,16 +15,16 @@ public:
     ~RigidBodySystem();
     void update(double t);
 
-    void addRigidBody(physx::PxRigidActor* rb);
+    void addRigidBody(RigidParticle* rp);
     void createRigidBody(const RIGID_BODY_PROPS& props);
     void addGenerator(RigidBodyGen* gen);
     void createRigidBodies();
-    const std::list<physx::PxRigidActor*>& getRigidBodies() const;
+    const std::list<RigidParticle*>& getRigidBodies() const;
 
-    void registerGravity(physx::PxRigidActor* rb);
+    void registerGravity(RigidParticle* rp);
     
 private:
-    std::list<physx::PxRigidActor*> _rigidBodies;
+    std::list<RigidParticle*> _rigidBodies;
     std::list<RigidBodyGen*> _generators;
 
     std::vector<physx::PxMaterial*> _materials;

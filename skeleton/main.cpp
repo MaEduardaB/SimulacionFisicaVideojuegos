@@ -26,7 +26,7 @@
 #include <chrono>
 #include <thread>
 
-std::string display_text = "porra";
+std::string display_text = "Hola";
 
 using namespace physx;
 

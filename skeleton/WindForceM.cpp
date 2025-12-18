@@ -1,6 +1,7 @@
 // WindForceM.cpp
 #include "WindForceM.h"
 #include "Particle.h"
+#include "RigidParticle.h"
 #include <iostream>
 #include <cmath>
 
@@ -32,11 +33,6 @@ void WindForceM::updateForce(Particle* p)
 
     Vector3 pos = p->getTransform().p;
 
-    if (fabs(pos.x - _areaCenter.x) > _areaHalfSize.x ||
-        fabs(pos.y - _areaCenter.y) > _areaHalfSize.y ||
-        fabs(pos.z - _areaCenter.z) > _areaHalfSize.z)
-        return;
-
     Vector3 f = calculateForce(pos, p->getVelocity(), p->getMass());
     p->addForce(f);
 }
@@ -49,6 +45,17 @@ void WindForceM::updateForce(physx::PxRigidDynamic* rb) {
     rb->addForce(force);
 }
 
+void WindForceM::updateForce(RigidParticle* rp) {
+    if (!rp) return;
+
+    if (rp->isDynamic()) {
+        physx::PxVec3 posPx = rp->getRigidBody()->getGlobalPose().p;
+        physx::PxVec3 velPx = static_cast<physx::PxRigidDynamic*>(rp->getRigidBody())->getLinearVelocity();
+        physx::PxVec3 force = calculateForce(posPx, velPx, rp->getMass());
+        rp->addForce(force);
+    }
+
+}
 physx::PxVec3 WindForceM::calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass)
 {
     if (fabs(pos.x - _areaCenter.x) > _areaHalfSize.x ||

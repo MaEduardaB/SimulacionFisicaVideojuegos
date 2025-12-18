@@ -1,5 +1,6 @@
 #include "TorbellinoForce.h"
 #include "Particle.h"
+#include "RigidParticle.h"
 #include <cmath>
 #include <algorithm>
 
@@ -32,6 +33,10 @@ void TorbellinoForce::updateForce(physx::PxRigidDynamic* rb) {
     physx::PxVec3 velPx = rb->getLinearVelocity();
     physx::PxVec3 force = calculateForce(posPx, velPx, rb->getMass());
     rb->addForce(force);
+}
+
+void TorbellinoForce::updateForce(RigidParticle *rp)
+{
 }
 
 void TorbellinoForce::updateForce(Particle* p)

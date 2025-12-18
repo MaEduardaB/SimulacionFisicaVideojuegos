@@ -25,10 +25,6 @@ public:
 
 protected:
 	Snippets::Camera* _cam;
-	GravityForce* _gravity;
 	RigidBodySystem* _rigidBodySystem;
-	std::vector<Particle*> _gObjects;
-
-	std::vector<ForceGenerator*> _rigidForces;
 };
 

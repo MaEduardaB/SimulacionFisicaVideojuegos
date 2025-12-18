@@ -12,10 +12,13 @@ public:
 
     void updateForce(Particle* p) override;
     void updateForce(physx::PxRigidDynamic* rb) override;
+    void updateForce(RigidParticle* rp) override;
 
     physx::PxVec3 calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass) override;
 
     void setObjectProperties(float area, float dragCoeff, const Vector3& normal);
+
+    Vector3 getAreaCenter() const { return _areaCenter; }
 
 protected:
     Vector3 _windVelocity;

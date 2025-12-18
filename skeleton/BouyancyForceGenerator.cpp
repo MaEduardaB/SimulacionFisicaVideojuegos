@@ -1,5 +1,6 @@
 #include "BouyancyForceGenerator.h"
 #include "Particle.h"
+#include "RigidParticle.h"
 
 BouyancyForceGenerator::BouyancyForceGenerator(float h, float v, float d, float posWater):
 	_height(h), _volume(v), _liquid_density(d), _posWater(posWater)
@@ -18,6 +19,13 @@ void BouyancyForceGenerator::updateForce(Particle* p)
 {
     if (!p) return;
     p->addForce(calculateForce(p->getTransform().p, p->getVelocity(), p->getMass()));
+}
+
+void BouyancyForceGenerator::updateForce(RigidParticle* rp) {
+    if (!rp || !rp->isDynamic()) return;
+    physx::PxVec3 posPx = rp->getRigidBody()->getGlobalPose().p;
+    physx::PxVec3 force = calculateForce(posPx, physx::PxVec3(0,0,0), rp->getMass());
+    rp->addForce(force);
 }
 
 physx::PxVec3 BouyancyForceGenerator::calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass)
@@ -39,3 +47,4 @@ physx::PxVec3 BouyancyForceGenerator::calculateForce(const physx::PxVec3& pos, c
 
     return physx::PxVec3(0, _liquid_density * _volume * immersed * 9.8f, 0);
 }
+

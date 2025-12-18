@@ -1,5 +1,6 @@
 #include "WindForce.h"
 #include "Particle.h"
+#include "RigidParticle.h"
 
 WindForce::WindForce(const Vector3& windVelocity,
                      const Vector3& areaCenter,
@@ -36,6 +37,18 @@ void WindForce::updateForce(physx::PxRigidDynamic* rb) {
     
     Vector3 force = calculateForce(pos, vel, rb->getMass());
     rb->addForce(physx::PxVec3(force.x, force.y, force.z));
+}
+
+void WindForce::updateForce(RigidParticle *rp)
+{
+    if (!rp) return;
+
+    if (rp->isDynamic()) {
+        physx::PxVec3 posPx = rp->getRigidBody()->getGlobalPose().p;
+        physx::PxVec3 velPx = static_cast<physx::PxRigidDynamic*>(rp->getRigidBody())->getLinearVelocity();
+        physx::PxVec3 force = calculateForce(posPx, velPx, rp->getMass());
+        rp->addForce(force);
+    }
 }
 
 physx::PxVec3 WindForce::calculateForce(const physx::PxVec3 &pos, const physx::PxVec3 &vel, float mass)

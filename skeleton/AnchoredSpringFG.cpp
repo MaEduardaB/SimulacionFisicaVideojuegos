@@ -1,25 +1,28 @@
 #include "AnchoredSpringFG.h"
 #include "Particle.h"
+#include "RigidParticle.h"
 #include "Constants.h"
 
-AnchoredSpringFG::AnchoredSpringFG(double k, double resting_length, const Vector3& _anchorPos): SpringForceGenerator(nullptr, k, resting_length)
+AnchoredSpringFG::AnchoredSpringFG(double k, double resting_length, const Vector3& _anchorPos): SpringForceGenerator(static_cast<RigidParticle*>(nullptr), k, resting_length)
 {	
-	PARTICLES prop;
+	RIGID_BODY_PROPS prop;
 	prop._transform = _anchorPos;
 	prop._velocity = Vector3(0.0f);
-	prop._aceleration = Vector3(0.0f);
-	prop._type = INTEGRATETYPES::EULER_SEMI_IMPILICITO;
-	prop._p_type = PARTICLE_TYPE::NORMAL;
 	prop._mass = 0.0;
+	prop._sizeX = 20.0f;
+	prop._sizeY = 20.0f;
+	prop._sizeZ = 20.0f;
+	prop._lifeTime = 10000;
 	prop._shapeType = "BOX";
-	prop._size = 2.0f;
+	prop._isDynamic = false;
 
-	_other = new Particle(prop);
+	_isRigid = true;
+	_otherRigid = new RigidParticle(prop);
 }
 
 AnchoredSpringFG::~AnchoredSpringFG()
 {
-	delete _other;
+	delete _otherRigid;
 }
 
 void AnchoredSpringFG::updateForce(Particle* p)
@@ -39,9 +42,18 @@ void AnchoredSpringFG::updateForce(physx::PxRigidDynamic *rb)
 	rb->addForce(physx::PxVec3(force.x, force.y, force.z));
 }
 
+void AnchoredSpringFG::updateForce(RigidParticle* rp) {
+    if (!rp || !rp->isDynamic()) return;
+    physx::PxVec3 posPx = rp->getRigidBody()->getGlobalPose().p;
+    physx::PxVec3 velPx = static_cast<physx::PxRigidDynamic*>(rp->getRigidBody())->getLinearVelocity();
+    physx::PxVec3 force = calculateForce(posPx, velPx, rp->getMass());
+    rp->addForce(force);
+}
+
 Vector3 AnchoredSpringFG::calculateForce(const Vector3& pos, const Vector3& vel, float mass)
 {
-	Vector3 relative_pos_vector = _other->getTransform().p - pos;
+	Vector3 otherPos = _isRigid ? _otherRigid->getPosition() : _otherParticle->getTransform().p;
+	Vector3 relative_pos_vector = otherPos - pos;
 
 	const float length = relative_pos_vector.normalize();
 	const float delta_x = length - _resting_length;

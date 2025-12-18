@@ -1,5 +1,6 @@
 #include "ExplosionsForce.h"
 #include "Particle.h"
+#include "RigidParticle.h"
 
 
 ExplosionsForce::ExplosionsForce(const Vector3& center, float K, float radius, float tau, float expansionVel)
@@ -37,6 +38,14 @@ physx::PxVec3 ExplosionsForce::calculateForce(const physx::PxVec3& pos, const ph
     f *= exp(-_time / _decaimento);
 
     return dir * f;
+}
+
+void ExplosionsForce::updateForce(RigidParticle* rp) {
+    if (!rp || !rp->isDynamic()) return;
+    physx::PxVec3 posPx = rp->getRigidBody()->getGlobalPose().p;
+    physx::PxVec3 velPx = static_cast<physx::PxRigidDynamic*>(rp->getRigidBody())->getLinearVelocity();
+    physx::PxVec3 force = calculateForce(posPx, velPx, rp->getMass());
+    rp->addForce(force);
 }
 
 void ExplosionsForce::updateTime(float dt) {

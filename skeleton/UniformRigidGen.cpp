@@ -26,6 +26,7 @@ std::list<RIGID_BODY_PROPS> UniformRigidGen::generateProps() {
 
 
         p._inertia = Vector3(0, 0, 0);  
+        p._lifeTime = 10000.0;
         props.push_back(p);
     }
     return props;

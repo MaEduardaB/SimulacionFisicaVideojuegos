@@ -2,7 +2,7 @@
 #include "Particle.h"
 #include "ForceRegestry.h"
 #include "ForceGenerator.h"
-ForceRegestry::ForceRegestry() : _registryParticles(), _registryRigids()
+ForceRegestry::ForceRegestry() : _registryParticles(), _registryRigidParticles(), _registryRigids()
 {
 
 }
@@ -11,6 +11,12 @@ void ForceRegestry::add(Particle* p, ForceGenerator* fg)
 {
     if (p && fg)
         _registryParticles.emplace_back(p, fg);
+}
+
+void ForceRegestry::add(RigidParticle *p, ForceGenerator *fg)
+{
+    if (p && fg)
+        _registryRigidParticles.emplace_back(p, fg);
 }
 
 void ForceRegestry::add(physx::PxRigidActor *p, ForceGenerator *fg)
@@ -30,6 +36,15 @@ void ForceRegestry::remove(Particle* p, ForceGenerator* fg)
     });
 }
 
+void ForceRegestry::remove(RigidParticle *p, ForceGenerator *fg)
+{
+    _registryRigidParticles.remove_if([&](const std::pair<RigidParticle*, ForceGenerator*>& reg) {
+        bool sameP = (!p || reg.first == p);
+        bool sameF = (!fg || reg.second == fg);
+        return sameP && sameF;
+    });
+}
+
 void ForceRegestry::remove(physx::PxRigidActor *p, ForceGenerator *fg)
 {
     _registryRigids.remove_if([&](const std::pair<physx::PxRigidActor*, ForceGenerator*>& reg) {
@@ -42,6 +57,7 @@ void ForceRegestry::remove(physx::PxRigidActor *p, ForceGenerator *fg)
 void ForceRegestry::clear()
 {
     _registryParticles.clear();
+    _registryRigidParticles.clear();
     _registryRigids.clear();
 }
 
@@ -49,6 +65,13 @@ void ForceRegestry::updateForces()
 {
     for (auto& entry : _registryParticles) {
         Particle* p = entry.first;
+        ForceGenerator* fg = entry.second;
+        if (p && fg) {
+            fg->updateForce(p);
+        }
+    }
+    for (auto& entry : _registryRigidParticles) {
+        RigidParticle* p = entry.first;
         ForceGenerator* fg = entry.second;
         if (p && fg) {
             fg->updateForce(p);
@@ -73,6 +96,13 @@ void ForceRegestry::removeForce(ForceGenerator* fg)
         else
             ++it;
     }
+    for (auto it = _registryRigidParticles.begin(); it != _registryRigidParticles.end(); )
+    {
+        if (it->second == fg)
+            it = _registryRigidParticles.erase(it);
+        else
+            ++it;
+    }
     for (auto it = _registryRigids.begin(); it != _registryRigids.end(); )
     {
         if (it->second == fg)
@@ -90,6 +120,22 @@ void ForceRegestry::removeInvalid(const std::list<std::unique_ptr<Particle>>& pa
         bool alive = false;
         for (const auto& up : particles) {
             if (up.get() == p) {
+                alive = true;
+                break;
+            }
+        }
+        return !alive; // elimina si ya no existe
+    });
+}
+
+void ForceRegestry::removeInvalid(const std::list<RigidParticle*>& particles)
+{
+    _registryRigidParticles.remove_if([&](const std::pair<RigidParticle*, ForceGenerator*>& entry) {
+        RigidParticle* p = entry.first;
+        // Verifica si el puntero sigue existiendo en la lista de partículas
+        bool alive = false;
+        for (const auto* rp : particles) {
+            if (rp == p) {
                 alive = true;
                 break;
             }

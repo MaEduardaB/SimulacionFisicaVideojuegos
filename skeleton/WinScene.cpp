@@ -31,7 +31,7 @@ void WinScene::enter()
 
     Vector3 initVel(0.0f, 0.0f, 0.0f);
     Vector3 initPos(0.0f, 0.0f, 0.0f);
-    _fireworkGen = new FireworkGen(std::mt19937(std::random_device{}()), initVel, initPos, 1.0, 0.9, 20);
+    _fireworkGen = new FireworkGen(std::mt19937(std::random_device{}()), initVel, initPos, 1.0, 2.0, 5);
 
     _particleSystem->addGenerator(_fireworkGen);
 }

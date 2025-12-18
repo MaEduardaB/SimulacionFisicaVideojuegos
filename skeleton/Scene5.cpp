@@ -22,18 +22,21 @@ Scene5::Scene5(Snippets::Camera* cam){
 	display_text = "Scene 5: Press 'p' to create rain with explosions.";
     _cam = cam;
     _force_registry = nullptr;
-    _particleSystems = std::list<ParticleSystem*>();
 }
 
 Scene5::~Scene5()
 {
-    for (auto* ps : _particleSystems)
-        delete ps;
+    if(_particleSystems.size() > 0)
+        for (auto* ps : _particleSystems)
+            delete ps;
 
     _particleSystems.clear();
 
-    delete _force_registry;
-    _force_registry = nullptr;
+    if(_force_registry){
+        delete _force_registry;
+        _force_registry = nullptr;
+    }
+   
 }
 
 void Scene5::exit()

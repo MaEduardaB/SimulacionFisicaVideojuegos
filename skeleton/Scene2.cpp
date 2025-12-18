@@ -50,15 +50,12 @@ void Scene2::exit()
     delete _force_registry;
     _force_registry = nullptr;
 
-    delete _gravity;
-    _gravity = nullptr;
 }
 
 void Scene2::enter()
 {
     _force_registry = new ForceRegestry();
     _gravity = new GravityForce();
-
     _cam->setDir(PxVec3(-0.6f, -0.2f, -0.7f));
     _cam->setEye(PxVec3(50.0f, 50.0f, 50.0f));
 }

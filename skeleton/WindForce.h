@@ -15,6 +15,7 @@ public:
 
     void updateForce(Particle* p) override;
     void updateForce(physx::PxRigidDynamic* rb) override;
+    void updateForce(RigidParticle* rp) override;
 
     physx::PxVec3 calculateForce(const physx::PxVec3& pos, const physx::PxVec3& vel, float mass) override;
 
@@ -22,6 +23,8 @@ public:
 
     bool isActive() const { return _active; }
     void setActive(bool active) { _active = active; }
+
+    Vector3 getAreaCenter() const { return _areaCenter; }
 protected:
     Vector3 _windVelocity;
     Vector3 _areaCenter;     // centro

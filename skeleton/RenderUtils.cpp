@@ -197,13 +197,28 @@ void renderLoop()
 
 void RegisterRenderItem(const RenderItem* _item)
 {
+	if (!_item) {
+		std::cerr << "Error: Intento de registrar RenderItem nulo" << std::endl;
+		return;
+	}
+
+	// Verificar que no esté ya registrado
+	auto it = find(gRenderItems.begin(), gRenderItems.end(), _item);
+	if (it != gRenderItems.end()) {
+		std::cerr << "Warning: RenderItem ya está registrado" << std::endl;
+		return;
+	}
+
 	gRenderItems.push_back(_item);
 }
 
 void DeregisterRenderItem(const RenderItem* _item)
 {
-	auto it = find(gRenderItems.begin(), gRenderItems.end(), _item);
-	gRenderItems.erase(it);
+	if (_item) {
+		auto it = find(gRenderItems.begin(), gRenderItems.end(), _item);
+		gRenderItems.erase(it);
+	}
+	
 }
 
 
@@ -231,4 +246,36 @@ PxShape* CreateShape(const PxGeometry& geo, const PxMaterial* mat)
 
 	PxShape* shape = gPhysics->createShape(geo, *mat);
 	return shape;
+}
+
+void DebugRenderItems()
+{
+	std::cout << "=== DEBUG RENDERITEMS ===" << std::endl;
+	std::cout << "Total RenderItems: " << gRenderItems.size() << std::endl;
+
+	for (size_t i = 0; i < gRenderItems.size(); ++i) {
+		const RenderItem* item = gRenderItems[i];
+		std::cout << "  Item " << i << " [" << item << "]: ";
+
+		if (item->actor) {
+			std::cout << "Actor: " << item->actor;
+			try {
+				PxTransform pose = item->actor->getGlobalPose();
+				std::cout << " Pos: (" << pose.p.x << ", " << pose.p.y << ", " << pose.p.z << ")";
+			}
+			catch (...) {
+				std::cout << " ERROR al obtener pose";
+			}
+		}
+		else if (item->transform) {
+			std::cout << "Transform directo";
+		}
+		else {
+			std::cout << "Sin transform ni actor";
+		}
+
+		std::cout << std::endl;
+	}
+
+	std::cout << "=========================" << std::endl;
 }

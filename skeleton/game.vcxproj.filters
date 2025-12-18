@@ -49,6 +49,8 @@
     <ClCompile Include="RigidBodyGen.cpp" />
     <ClCompile Include="RigidBodySystem.cpp" />
     <ClCompile Include="BouyancyForceGenerator.cpp" />
+    <ClCompile Include="RigidParticle.cpp" />
+    <ClCompile Include="WindLineGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -101,6 +103,8 @@
     <ClInclude Include="RigidBodyGen.h" />
     <ClInclude Include="RigidBodySystem.h" />
     <ClInclude Include="BouyancyForceGenerator.h" />
+    <ClInclude Include="RigidParticle.h" />
+    <ClInclude Include="WindLineGen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
