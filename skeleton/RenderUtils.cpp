@@ -214,8 +214,10 @@ void RegisterRenderItem(const RenderItem* _item)
 
 void DeregisterRenderItem(const RenderItem* _item)
 {
-	if (_item) {
-		auto it = find(gRenderItems.begin(), gRenderItems.end(), _item);
+	if (!_item) return;
+
+	auto it = find(gRenderItems.begin(), gRenderItems.end(), _item);
+	if (it != gRenderItems.end()) {
 		gRenderItems.erase(it);
 	}
 	

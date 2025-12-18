@@ -16,8 +16,8 @@ WinScene::WinScene(Snippets::Camera* cam)
 
 WinScene::~WinScene()
 {
-    delete _particleSystem;
-    delete _fireworkGen;
+    //delete _particleSystem;
+    //delete _fireworkGen;
 
 
     DeregisterAllRenderItem();
@@ -64,11 +64,11 @@ void WinScene::render() const
 
 void WinScene::exit()
 {
-    delete _particleSystem;
+ /*   delete _particleSystem;
     _particleSystem = nullptr;
 
     delete _fireworkGen;
-    _fireworkGen = nullptr;     
+    _fireworkGen = nullptr;     */
 
 
     DeregisterAllRenderItem();
