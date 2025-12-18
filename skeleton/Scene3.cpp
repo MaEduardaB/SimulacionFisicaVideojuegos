@@ -27,24 +27,29 @@ Scene3::Scene3(Snippets::Camera* cam){
 
 Scene3::~Scene3()
 {
-    for (auto* ps : _particleSystems)
-        delete ps;
+  /*  for (auto* ps : _particleSystems)
+        delete ps;*/
 
     _particleSystems.clear();
 
     delete _force_registry;
     _force_registry = nullptr;
+
+    DeregisterAllRenderItem();
+
 }
 
 void Scene3::exit()
 {
-    for (auto* ps : _particleSystems)
-        delete ps;
+ /*   for (auto* ps : _particleSystems)
+        delete ps;*/
 
     _particleSystems.clear();
 
     delete _force_registry;
     _force_registry = nullptr;
+
+    DeregisterAllRenderItem();
 }
 
 void Scene3::update(double t)

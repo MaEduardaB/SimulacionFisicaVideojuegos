@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "Constants.h"
 
+#include "RenderUtils.hpp"
 #include "core.hpp"
 
 #include <PxPhysicsAPI.h>
@@ -23,10 +24,17 @@ Scene1::Scene1(Snippets::Camera* cam) : _gObjects()
 
 Scene1::~Scene1()
 {
-	for (auto e : _gObjects) {
-		delete e;
-	}
+
+	_gObjects.clear();
+	delete _force_registry;
+	_force_registry = nullptr;
+
+	delete _gravity;
+	_gravity = nullptr;
     _cam = nullptr;
+
+	DeregisterAllRenderItem();
+
 }
 
 void Scene1::update(double t)
@@ -44,14 +52,17 @@ void Scene1::render() const
 
 void Scene1::exit()
 {
-	for (auto e : _gObjects) {
-		delete e;
-	}
-	_gObjects.clear();
+	//for (auto e : _gObjects) {
+	//	delete e;
+	//}
+	//_gObjects.clear();
+
 	delete _force_registry;
 	_force_registry = nullptr;
+
 	delete _gravity;
 	_gravity = nullptr;
+	DeregisterAllRenderItem();
 }
 
 void Scene1::enter()

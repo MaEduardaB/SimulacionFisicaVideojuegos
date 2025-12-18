@@ -26,9 +26,9 @@ Scene5::Scene5(Snippets::Camera* cam){
 
 Scene5::~Scene5()
 {
-    if(_particleSystems.size() > 0)
+    /*if(_particleSystems.size() > 0)
         for (auto* ps : _particleSystems)
-            delete ps;
+            delete ps;*/
 
     _particleSystems.clear();
 
@@ -36,18 +36,22 @@ Scene5::~Scene5()
         delete _force_registry;
         _force_registry = nullptr;
     }
-   
+    DeregisterAllRenderItem();
+
 }
 
 void Scene5::exit()
 {
-    for (auto* ps : _particleSystems)
-        delete ps;
+    /*for (auto* ps : _particleSystems)
+        delete ps;*/
 
     _particleSystems.clear();
 
     delete _force_registry;
     _force_registry = nullptr;
+
+    DeregisterAllRenderItem();
+
 }
 
 void Scene5::update(double t)

@@ -30,20 +30,22 @@ Scene6::~Scene6()
     delete _force_registry;
     _force_registry = nullptr;
 
-    for (auto e : _gObjects)
-        delete e;
+    //for (auto e : _gObjects)
+    //    delete e;
     _gObjects.clear();
 
     _cam = nullptr;
+    DeregisterAllRenderItem();
 }
+
 
 void Scene6::exit()
 {
     delete _force_registry;
     _force_registry = nullptr;
 
-    for (auto e : _gObjects)
-        delete e;
+    /*for (auto e : _gObjects)
+        delete e;*/
     _gObjects.clear();
 
     DeregisterAllRenderItem();

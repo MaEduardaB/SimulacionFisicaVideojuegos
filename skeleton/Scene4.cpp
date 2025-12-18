@@ -28,13 +28,16 @@ Scene4::Scene4(Snippets::Camera* cam)
 
 Scene4::~Scene4()
 {
-    for (auto* ps : _particleSystems)
-        delete ps;
+  /*  for (auto* ps : _particleSystems)
+        delete ps;*/
 
     _particleSystems.clear();
 
     delete _force_registry;
     _force_registry = nullptr;
+
+    DeregisterAllRenderItem();
+
 }
 
 
@@ -53,13 +56,15 @@ void Scene4::render() const
 
 void Scene4::exit()
 {
-    for (auto* ps : _particleSystems)
-        delete ps;
+    /*for (auto* ps : _particleSystems)
+        delete ps;*/
 
     _particleSystems.clear();
 
     delete _force_registry;
     _force_registry = nullptr;
+    DeregisterAllRenderItem();
+
 }
 
 void Scene4::enter()

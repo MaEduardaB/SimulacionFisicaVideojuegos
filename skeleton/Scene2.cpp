@@ -7,6 +7,7 @@
 #include <PxPhysicsAPI.h>
 #include <iostream>
 #include "SceneManager.h"
+#include "RenderUtils.hpp"
 #include "Constants.h"
 using namespace physx;
 
@@ -43,13 +44,16 @@ void Scene2::render() const
 
 void Scene2::exit()
 {
-    for (auto e : _gObjects)
+	_force_registry->clear();
+   /* for (auto e : _gObjects)
         delete e;
-    _gObjects.clear();
+    _gObjects.clear();*/
 
     delete _force_registry;
     _force_registry = nullptr;
 
+
+    DeregisterAllRenderItem();
 }
 
 void Scene2::enter()

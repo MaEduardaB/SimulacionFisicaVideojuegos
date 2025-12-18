@@ -18,6 +18,9 @@ WinScene::~WinScene()
 {
     delete _particleSystem;
     delete _fireworkGen;
+
+
+    DeregisterAllRenderItem();
 }
 
 void WinScene::enter()
@@ -65,7 +68,10 @@ void WinScene::exit()
     _particleSystem = nullptr;
 
     delete _fireworkGen;
-    _fireworkGen = nullptr;
+    _fireworkGen = nullptr;     
+
+
+    DeregisterAllRenderItem();
 }
 
 void WinScene::keyPressed(unsigned char key)
